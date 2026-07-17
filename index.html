@@ -83,7 +83,10 @@
       </div>
 
       <div class="hero-visual" aria-hidden="true">
-        <div class="demo-stage">
+        <!-- Scène animée : le prix est modifié dans l'espace de gestion (s-edit),
+             puis apparaît mis à jour sur le site avec un flash et un toast (s-synced).
+             L'état par défaut .s-synced sert de rendu statique sans JS / reduced motion. -->
+        <div class="demo-stage s-synced" data-sync-scene>
           <div class="demo-desktop">
             <div class="demo-dots"><span></span><span></span><span></span></div>
             <div class="demo-screen">
@@ -97,15 +100,16 @@
                   <span class="name">Burrata & tomates anciennes<span class="desc">Basilic, huile d'olive</span></span>
                   <span class="price">14&nbsp;€</span>
                 </div>
-                <div class="demo-menu-row">
+                <div class="demo-menu-row row-live">
                   <span class="name">Risotto aux champignons<span class="desc">Parmesan affiné 18 mois</span></span>
-                  <span class="price"><span class="old">12&nbsp;€</span><span class="new">13&nbsp;€</span></span>
+                  <span class="price swap swap-dst"><span class="a">12&nbsp;€</span><span class="b"><span class="old">12&nbsp;€</span><span class="new">13&nbsp;€</span></span></span>
                 </div>
                 <div class="demo-menu-row">
                   <span class="name">Tarte au citron<span class="desc">Meringue italienne</span></span>
                   <span class="price">7&nbsp;€</span>
                 </div>
               </div>
+              <div class="demo-toast">Menu mis à jour</div>
             </div>
           </div>
 
@@ -116,7 +120,7 @@
             <div class="demo-screen">
               <div class="demo-manager">
                 <p class="label">Espace de gestion</p>
-                <div class="demo-field"><span>Risotto champignons</span><strong>13&nbsp;€</strong></div>
+                <div class="demo-field"><span>Risotto champignons</span><strong class="swap swap-src"><span class="a">12&nbsp;€</span><span class="b">13&nbsp;€</span></strong></div>
                 <div class="demo-field"><span>Disponible</span><strong>Oui</strong></div>
                 <div class="demo-field"><span>Catégorie</span><strong>Plats</strong></div>
                 <div class="demo-sync-pill"><span class="ping"></span>Synchronisé</div>
@@ -243,15 +247,17 @@
         </div>
       </div>
 
-      <div class="sync-demo" data-reveal aria-hidden="true">
+      <!-- Même moteur de scène que le hero : édition côté gestion, puis
+           répercussion côté site avec flash. Statique sur .s-synced sans JS. -->
+      <div class="sync-demo s-synced" data-sync-scene data-reveal aria-hidden="true">
         <div class="sync-card">
           <p class="label">Espace de gestion</p>
-          <p class="price-old">12&nbsp;€</p>
+          <p class="value swap swap-src"><span class="a">12&nbsp;€</span><span class="b">13&nbsp;€</span></p>
         </div>
         <span class="sync-arrow"><span class="pulse-dot">→</span></span>
-        <div class="sync-card">
+        <div class="sync-card card-dst">
           <p class="label">Site &amp; QR code</p>
-          <p class="price-new">13&nbsp;€</p>
+          <p class="value swap swap-dst"><span class="a">12&nbsp;€</span><span class="b">13&nbsp;€</span></p>
         </div>
       </div>
     </div>

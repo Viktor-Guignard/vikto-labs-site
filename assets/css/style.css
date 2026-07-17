@@ -166,7 +166,10 @@ textarea:focus-visible {
   background: var(--color-red);
   color: var(--color-white);
 }
-.btn-primary:hover { background: var(--color-red-dark); }
+.btn-primary:hover {
+  background: var(--color-red-dark);
+  box-shadow: 0 12px 28px -12px rgba(227, 6, 19, 0.55);
+}
 .btn-dark {
   background: var(--color-black);
   color: var(--color-white);
@@ -196,6 +199,10 @@ textarea:focus-visible {
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-gray-200);
+  transition: box-shadow var(--transition-base);
+}
+.site-header.is-scrolled {
+  box-shadow: 0 10px 30px -18px rgba(0,0,0,0.25);
 }
 .header-inner {
   display: flex;
@@ -312,7 +319,21 @@ textarea:focus-visible {
 .hero {
   padding: var(--space-2xl) 0 var(--space-3xl);
   overflow: hidden;
+  position: relative;
 }
+/* Trame de points discrète derrière la démo, fondue vers la gauche */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--color-gray-200) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+  -webkit-mask-image: linear-gradient(to left, black 30%, transparent 70%);
+  mask-image: linear-gradient(to left, black 30%, transparent 70%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.hero .container { position: relative; }
 .hero-inner {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
@@ -378,6 +399,7 @@ textarea:focus-visible {
   background: var(--color-white);
   border-radius: var(--radius-md);
   overflow: hidden;
+  position: relative; /* ancre du toast de confirmation */
 }
 .demo-hero-block {
   background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
@@ -494,9 +516,84 @@ textarea:focus-visible {
   top: 42%;
   left: 62%;
   width: 70px;
-  border-top: 2px dashed var(--color-red);
-  opacity: 0.6;
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg, var(--color-red) 0 6px, transparent 6px 12px);
+  opacity: 0.5;
+  animation: dash-move 0.7s linear infinite;
+  animation-play-state: paused;
+  transition: opacity var(--transition-base);
 }
+@keyframes dash-move {
+  from { background-position: 0 0; }
+  to { background-position: 12px 0; }
+}
+
+/* ==========================================================================
+   SCÈNE DE SYNCHRONISATION ANIMÉE
+   Un conteneur [data-sync-scene] passe en boucle par 3 phases pilotées en JS :
+   (repos) → .s-edit (le restaurateur modifie le prix) → .s-synced (le site
+   se met à jour). Sans JS ou avec prefers-reduced-motion, la scène reste
+   figée sur l'état final .s-synced posé dans le HTML.
+   ========================================================================== */
+[data-sync-scene] .swap { display: inline-grid; }
+[data-sync-scene] .swap > * {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+[data-sync-scene] .swap > .b { opacity: 0; transform: translateY(6px); }
+[data-sync-scene].s-edit .swap-src > .b,
+[data-sync-scene].s-synced .swap-src > .b,
+[data-sync-scene].s-synced .swap-dst > .b { opacity: 1; transform: none; }
+[data-sync-scene].s-edit .swap-src > .a,
+[data-sync-scene].s-synced .swap-src > .a,
+[data-sync-scene].s-synced .swap-dst > .a { opacity: 0; }
+/* Pendant l'édition, la nouvelle valeur côté gestion ressort en rouge */
+[data-sync-scene].s-edit .swap-src > .b { color: var(--color-red); }
+
+/* Flash de mise à jour sur la ligne du menu et la carte destination */
+@keyframes row-flash {
+  0% { background-color: #FCE9EA; }
+  100% { background-color: transparent; }
+}
+[data-sync-scene].s-synced .row-live { animation: row-flash 1.1s ease; }
+[data-sync-scene].s-synced .card-dst { animation: row-flash 1.1s ease; }
+
+/* La ligne pointillée « transporte » la modification pendant l'édition */
+[data-sync-scene].s-edit .demo-sync-line { animation-play-state: running; opacity: 1; }
+
+/* La pastille Synchronisé s'estompe tant que la synchro n'est pas faite */
+.demo-sync-pill { transition: opacity var(--transition-base); }
+[data-sync-scene]:not(.s-synced) .demo-sync-pill { opacity: 0.45; }
+
+/* Toast de confirmation sur l'écran du site */
+.demo-toast {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--color-black);
+  color: var(--color-white);
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 0.4rem 0.7rem;
+  border-radius: 20px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+.demo-toast::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-red);
+  flex-shrink: 0;
+}
+[data-sync-scene].s-synced .demo-toast { opacity: 1; transform: none; }
 @media (max-width: 980px) {
   .hero-inner { grid-template-columns: 1fr; }
   .demo-stage { margin-top: var(--space-lg); }
@@ -648,8 +745,14 @@ textarea:focus-visible {
   min-width: 180px;
 }
 .sync-card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-gray-400); font-weight: 600; margin-bottom: 0.5rem; }
-.sync-card .price-old { text-decoration: line-through; color: var(--color-gray-400); font-family: var(--font-heading); font-size: 1.4rem; }
-.sync-card .price-new { color: var(--color-red); font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; }
+.sync-card .value {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  justify-content: center;
+}
+.sync-card .value .a { color: var(--color-gray-400); }
+.card-dst .value .b { color: var(--color-red); }
 .sync-arrow {
   font-size: 1.6rem;
   color: var(--color-red);

@@ -26,11 +26,65 @@ const SITE_CONFIG = {
 
 document.addEventListener("DOMContentLoaded", () => {
   initNav();
+  initHeaderState();
   initFaq();
   initReveal();
+  initSyncScenes();
   initContactForm();
   injectContactEmail();
 });
+
+/* ---- Ombre du header dès que la page défile ---- */
+function initHeaderState() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+  const update = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+}
+
+/* ---- Scènes de synchronisation animées (hero + fonctionnement) ----
+   Boucle : repos (prix 12 €) → s-edit (modification côté gestion)
+   → s-synced (site mis à jour, flash + toast) → repos.
+   Avec prefers-reduced-motion, on laisse l'état statique .s-synced du HTML. */
+function initSyncScenes() {
+  const scenes = document.querySelectorAll("[data-sync-scene]");
+  if (!scenes.length) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  scenes.forEach((scene) => {
+    let started = false;
+
+    const cycle = () => {
+      scene.classList.remove("s-edit", "s-synced");
+      setTimeout(() => scene.classList.add("s-edit"), 900);
+      setTimeout(() => {
+        scene.classList.remove("s-edit");
+        scene.classList.add("s-synced");
+      }, 2400);
+    };
+
+    const start = () => {
+      if (started) return;
+      started = true;
+      cycle();
+      setInterval(cycle, 7000);
+    };
+
+    // La boucle ne démarre que lorsque la scène devient visible.
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          start();
+          io.disconnect();
+        }
+      }, { threshold: 0.3 });
+      io.observe(scene);
+    } else {
+      start();
+    }
+  });
+}
 
 /* ---- Navigation mobile ---- */
 function initNav() {
@@ -77,12 +131,24 @@ function initReveal() {
     return;
   }
 
+  // Cascade : les éléments d'un même parent apparaissent avec un léger décalage.
+  const siblingCount = new Map();
+  items.forEach((el) => {
+    const parent = el.parentElement;
+    const index = siblingCount.get(parent) || 0;
+    siblingCount.set(parent, index + 1);
+    el.style.transitionDelay = `${Math.min(index * 70, 350)}ms`;
+  });
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
           observer.unobserve(entry.target);
+          // Une fois révélé, on retire le délai pour ne pas retarder
+          // les transitions de survol de l'élément.
+          setTimeout(() => { entry.target.style.transitionDelay = ""; }, 1100);
         }
       });
     },
