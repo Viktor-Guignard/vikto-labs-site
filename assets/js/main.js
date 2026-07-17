@@ -30,9 +30,21 @@ document.addEventListener("DOMContentLoaded", () => {
   initFaq();
   initReveal();
   initSyncScenes();
+  initLiveDemos();
   initContactForm();
   injectContactEmail();
 });
+
+/* ---- Démos en direct : activer l'iframe au clic sur l'overlay ----
+   Par défaut les iframes ont pointer-events:none (pas de piège au scroll).
+   Un clic sur l'overlay rend la vraie page interactive. */
+function initLiveDemos() {
+  document.querySelectorAll(".live-viewport .live-overlay").forEach((overlay) => {
+    overlay.addEventListener("click", () => {
+      overlay.closest(".live-viewport").classList.add("is-active");
+    });
+  });
+}
 
 /* ---- Ombre du header dès que la page défile ---- */
 function initHeaderState() {
