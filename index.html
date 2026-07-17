@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIKTO LABS — Sites vitrines et menus numériques pour restaurants</title>
+<meta name="description" content="VIKTO LABS crée des sites vitrines et des menus numériques synchronisés pour restaurants, bars, cafés et commerces de bouche. Un seul menu à gérer, partout à afficher.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="VIKTO LABS — Votre site et votre menu, toujours à jour">
+<meta property="og:description" content="Sites vitrines et menus numériques synchronisés pour restaurants et commerces de bouche.">
+<meta property="og:image" content="assets/images/og-cover.jpg">
+<!-- TODO : remplacer par le domaine final avant publication -->
+<meta property="og:url" content="https://votre-domaine.fr/">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- TODO : remplacer par le domaine final avant publication -->
+<link rel="canonical" href="https://votre-domaine.fr/">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230D0D0D%22/><text x=%2250%22 y=%2266%22 font-size=%2250%22 font-family=%22sans-serif%22 font-weight=%22700%22 fill=%22%23E30613%22 text-anchor=%22middle%22>V</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "VIKTO LABS",
+  "description": "Studio indépendant de création de sites vitrines et de menus numériques synchronisés pour restaurants et commerces de bouche.",
+  "areaServed": "FR",
+  "priceRange": "€€",
+  "url": "https://votre-domaine.fr/"
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Aller au contenu principal</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo-slot" aria-label="VIKTO LABS — accueil">
+      <!-- Emplacement du logo définitif : remplacer .logo-mark par <img src="assets/images/logo.svg" alt="VIKTO LABS"> -->
+      <span class="logo-mark" aria-hidden="true">V</span>
+      <span>VIKTO <span class="accent">LABS</span></span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+      <ul class="nav-links">
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#fonctionnement">Fonctionnement</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="contact.html" class="btn btn-primary">Demander un devis</a>
+      </div>
+    </nav>
+
+    <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu de navigation">
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <h1>Votre site et votre menu, toujours à jour.</h1>
+        <p class="lead">Nous créons des sites vitrines pour les restaurants et commerces de bouche, avec un menu numérique que vous pouvez modifier vous-même.</p>
+        <p class="hero-support"><span class="dot" aria-hidden="true"></span>Une modification, partout à jour : sur votre site comme sur votre QR code.</p>
+        <div class="hero-actions">
+          <a href="#tarifs" class="btn btn-primary">Découvrir l'offre à 45&nbsp;€/mois</a>
+          <a href="contact.html" class="btn btn-outline">Créer uniquement mon site</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="demo-stage">
+          <div class="demo-desktop">
+            <div class="demo-dots"><span></span><span></span><span></span></div>
+            <div class="demo-screen">
+              <div class="demo-hero-block">
+                <div class="demo-brand">LE PETIT<span>BISTROT</span></div>
+                <h3>Cuisine de saison, en plein centre-ville</h3>
+                <p>Réservation en ligne · Livraison · Menu à jour</p>
+              </div>
+              <div class="demo-menu-list">
+                <div class="demo-menu-row">
+                  <span class="name">Burrata & tomates anciennes<span class="desc">Basilic, huile d'olive</span></span>
+                  <span class="price">14&nbsp;€</span>
+                </div>
+                <div class="demo-menu-row">
+                  <span class="name">Risotto aux champignons<span class="desc">Parmesan affiné 18 mois</span></span>
+                  <span class="price"><span class="old">12&nbsp;€</span><span class="new">13&nbsp;€</span></span>
+                </div>
+                <div class="demo-menu-row">
+                  <span class="name">Tarte au citron<span class="desc">Meringue italienne</span></span>
+                  <span class="price">7&nbsp;€</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <span class="demo-sync-line"></span>
+
+          <div class="demo-mobile">
+            <div class="demo-notch"></div>
+            <div class="demo-screen">
+              <div class="demo-manager">
+                <p class="label">Espace de gestion</p>
+                <div class="demo-field"><span>Risotto champignons</span><strong>13&nbsp;€</strong></div>
+                <div class="demo-field"><span>Disponible</span><strong>Oui</strong></div>
+                <div class="demo-field"><span>Catégorie</span><strong>Plats</strong></div>
+                <div class="demo-sync-pill"><span class="ping"></span>Synchronisé</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. SECTION PROBLÈME -->
+  <section class="section" id="probleme">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Le constat</span>
+        <h2>Votre carte change. Votre site doit pouvoir suivre.</h2>
+      </div>
+      <p class="problem-lead" data-reveal>Modifier un prix, ajouter un plat ou retirer un produit ne devrait pas nécessiter l'intervention d'un développeur. Avec VIKTO LABS, vous modifiez directement votre carte depuis votre espace de gestion. Les changements apparaissent automatiquement sur votre site et depuis votre QR code.</p>
+
+      <div class="problem-grid">
+        <div class="problem-card" data-reveal>
+          <div class="icon" aria-hidden="true">01</div>
+          <h3>Menu PDF illisible</h3>
+          <p>Difficile à lire sur téléphone, souvent flou ou trop petit.</p>
+        </div>
+        <div class="problem-card" data-reveal>
+          <div class="icon" aria-hidden="true">02</div>
+          <h3>Prix obsolètes</h3>
+          <p>Les tarifs affichés ne correspondent plus à la réalité en salle.</p>
+        </div>
+        <div class="problem-card" data-reveal>
+          <div class="icon" aria-hidden="true">03</div>
+          <h3>Plats indisponibles</h3>
+          <p>Des produits épuisés restent affichés, source de frustration.</p>
+        </div>
+        <div class="problem-card" data-reveal>
+          <div class="icon" aria-hidden="true">04</div>
+          <h3>Informations dispersées</h3>
+          <p>Horaires, contact et menu ne se trouvent jamais au même endroit.</p>
+        </div>
+        <div class="problem-card" data-reveal>
+          <div class="icon" aria-hidden="true">05</div>
+          <h3>Dépendance à un prestataire</h3>
+          <p>Chaque petit changement nécessite d'attendre une intervention externe.</p>
+        </div>
+        <div class="problem-card" data-reveal>
+          <div class="icon" aria-hidden="true">06</div>
+          <h3>Site ancien ou inexistant</h3>
+          <p>Une présence en ligne qui ne reflète plus l'établissement actuel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SECTION SOLUTIONS -->
+  <section class="section section--tint" id="solutions">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Notre offre</span>
+        <h2>Deux briques, une seule solution cohérente</h2>
+      </div>
+
+      <div class="solution-blocks">
+        <div class="solution-block is-site" data-reveal>
+          <h3>Un site vitrine clair et efficace</h3>
+          <ul>
+            <li>Design adapté à l'identité de l'établissement</li>
+            <li>Version mobile</li>
+            <li>Horaires et coordonnées</li>
+            <li>Galerie de photos</li>
+            <li>Localisation</li>
+            <li>Lien de réservation ou de livraison</li>
+            <li>Intégration du menu</li>
+            <li>Mise en ligne</li>
+          </ul>
+        </div>
+
+        <div class="solution-block is-menu" data-reveal>
+          <h3>Un menu que vous contrôlez</h3>
+          <ul>
+            <li>Modification des plats</li>
+            <li>Modification des descriptions</li>
+            <li>Mise à jour des prix</li>
+            <li>Gestion des catégories</li>
+            <li>Affichage ou masquage d'un produit</li>
+            <li>Accès par QR code</li>
+            <li>Synchronisation immédiate avec le site</li>
+          </ul>
+          <p class="solution-note">Nous concevons l'apparence du menu. Vous restez libre d'en modifier les contenus au quotidien.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. SECTION FONCTIONNEMENT -->
+  <section class="section" id="fonctionnement">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">Comment ça marche</span>
+        <h2>Une modification en quelques étapes</h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card" data-reveal>
+          <div class="step-num">01</div>
+          <h3>Nous créons votre site</h3>
+          <p>Nous concevons un site adapté à l'identité de votre établissement.</p>
+        </div>
+        <div class="step-card" data-reveal>
+          <div class="step-num">02</div>
+          <h3>Nous intégrons votre menu</h3>
+          <p>Vos catégories, plats, descriptions et tarifs sont ajoutés à votre espace.</p>
+        </div>
+        <div class="step-card" data-reveal>
+          <div class="step-num">03</div>
+          <h3>Vous gardez le contrôle</h3>
+          <p>Vous pouvez ensuite modifier vous-même les informations de votre carte.</p>
+        </div>
+        <div class="step-card" data-reveal>
+          <div class="step-num">04</div>
+          <h3>Tout reste synchronisé</h3>
+          <p>Chaque changement est automatiquement visible sur votre site et depuis votre QR code.</p>
+        </div>
+      </div>
+
+      <div class="sync-demo" data-reveal aria-hidden="true">
+        <div class="sync-card">
+          <p class="label">Espace de gestion</p>
+          <p class="price-old">12&nbsp;€</p>
+        </div>
+        <span class="sync-arrow"><span class="pulse-dot">→</span></span>
+        <div class="sync-card">
+          <p class="label">Site &amp; QR code</p>
+          <p class="price-new">13&nbsp;€</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SECTION TARIFS -->
+  <section class="section section--tint" id="tarifs">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">Tarifs</span>
+        <h2>Une offre simple, sans surprise</h2>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card" data-reveal>
+          <h3>Site vitrine</h3>
+          <div class="price-value">500&nbsp;€</div>
+          <p class="price-mention">Paiement unique</p>
+          <ul>
+            <li>Site adapté aux téléphones</li>
+            <li>Présentation de l'établissement</li>
+            <li>Horaires et coordonnées</li>
+            <li>Galerie de photos</li>
+            <li>Localisation</li>
+            <li>Menu classique ou fichier PDF</li>
+            <li>Mise en ligne</li>
+          </ul>
+          <a href="contact.html?prestation=site" class="btn btn-outline btn-block">Demander mon site</a>
+        </div>
+
+        <div class="price-card is-featured" data-reveal>
+          <span class="price-badge">Le plus choisi</span>
+          <h3>Site + menu synchronisé</h3>
+          <div class="price-value">45&nbsp;€/mois</div>
+          <p class="price-mention">Sans frais de création</p>
+          <p class="price-mention-alt">Engagement initial de 12 mois</p>
+          <ul>
+            <li>Création du site vitrine</li>
+            <li>Menu numérique modifiable</li>
+            <li>Espace de gestion</li>
+            <li>Synchronisation avec le site</li>
+            <li>QR code</li>
+            <li>Hébergement</li>
+            <li>Mises à jour techniques</li>
+          </ul>
+          <a href="contact.html?prestation=synchronise" class="btn btn-primary btn-block">Choisir cette formule</a>
+        </div>
+      </div>
+
+      <p class="pricing-footnote">Après les 12 premiers mois, l'abonnement se poursuit sans nouvel engagement et peut être résilié à tout moment.</p>
+    </div>
+  </section>
+
+  <!-- 6. SECTION CIBLES -->
+  <section class="section" id="cibles">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">Pour qui</span>
+        <h2>Une solution adaptée à votre établissement</h2>
+      </div>
+
+      <div class="target-grid">
+        <div class="target-chip" data-reveal><span class="glyph" aria-hidden="true">🍽️</span><span class="name">Restaurant</span></div>
+        <div class="target-chip" data-reveal><span class="glyph" aria-hidden="true">🍸</span><span class="name">Bar</span></div>
+        <div class="target-chip" data-reveal><span class="glyph" aria-hidden="true">☕</span><span class="name">Café</span></div>
+        <div class="target-chip" data-reveal><span class="glyph" aria-hidden="true">🍵</span><span class="name">Salon de thé</span></div>
+        <div class="target-chip" data-reveal><span class="glyph" aria-hidden="true">🥖</span><span class="name">Boulangerie</span></div>
+        <div class="target-chip" data-reveal><span class="glyph" aria-hidden="true">🍰</span><span class="name">Pâtisserie</span></div>
+        <div class="target-chip" data-reveal><span class="glyph" aria-hidden="true">🌮</span><span class="name">Snack</span></div>
+        <div class="target-chip" data-reveal><span class="glyph" aria-hidden="true">🍔</span><span class="name">Fast-food</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. SECTION DÉMONSTRATION -->
+  <section class="section section--tint" id="demonstration">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">En situation</span>
+        <h2>Découvrez la solution en situation</h2>
+      </div>
+      <span class="demo-disclaimer" data-reveal>Réalisation réelle — carte numérique de La Coursive des Alpes</span>
+
+      <div class="demo-showcase">
+        <div class="demo-showcase-visual" data-reveal aria-hidden="true">
+          <div class="demo-stage">
+            <div class="demo-desktop">
+              <div class="demo-dots"><span></span><span></span><span></span></div>
+              <div class="demo-screen">
+                <div class="demo-hero-block">
+                  <div class="demo-brand">LA<span>&nbsp;COURSIVE</span></div>
+                  <h3>La Coursive des Alpes</h3>
+                  <p>Carte numérique · QR code · export PDF</p>
+                </div>
+                <div class="demo-menu-list">
+                  <div class="demo-menu-row">
+                    <span class="name">Croque jambon à la truffe et beaufort<span class="desc">À partager</span></span>
+                    <span class="price">23&nbsp;€</span>
+                  </div>
+                  <div class="demo-menu-row">
+                    <span class="name">Foie gras maison en ballottine<span class="desc">100&nbsp;g</span></span>
+                    <span class="price">26&nbsp;€</span>
+                  </div>
+                  <div class="demo-menu-row">
+                    <span class="name">Planche de fromages des Alpes<span class="desc">Sélection locale</span></span>
+                    <span class="price">22&nbsp;€</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="demo-mobile">
+              <div class="demo-notch"></div>
+              <div class="demo-screen">
+                <div class="demo-manager">
+                  <p class="label">Espace de gestion</p>
+                  <div class="demo-field"><span>Frites maison</span><strong>8&nbsp;€</strong></div>
+                  <div class="demo-sync-pill"><span class="ping"></span>Publié</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ul class="demo-feature-list" data-reveal>
+          <li><span class="qr" aria-hidden="true"></span><span><strong>Un vrai établissement</strong>La Coursive des Alpes, restaurant en Savoie, utilise ce type d'outil pour sa carte.</span></li>
+          <li><span class="qr" aria-hidden="true"></span><span><strong>Carte modifiable</strong>Plats, prix et catégories mis à jour directement par l'équipe du restaurant.</span></li>
+          <li><span class="qr" aria-hidden="true"></span><span><strong>QR code &amp; export PDF</strong>Une carte consultable en salle par QR code, et imprimable au format A4.</span></li>
+          <li><span class="qr" aria-hidden="true"></span><span><strong>Voir la démonstration en ligne</strong><a href="https://viktor-guignard.github.io/la-coursive-carte" target="_blank" rel="noopener">viktor-guignard.github.io/la-coursive-carte →</a></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. SECTION MÉTHODE -->
+  <section class="section" id="methode">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Notre méthode</span>
+        <h2>De votre idée à la mise en ligne</h2>
+      </div>
+
+      <div class="method-list">
+        <div class="method-item" data-reveal>
+          <span class="method-index">01</span>
+          <div><h3>Échange et récupération des contenus</h3><p>Nous discutons de votre activité et rassemblons textes, photos et informations utiles.</p></div>
+        </div>
+        <div class="method-item" data-reveal>
+          <span class="method-index">02</span>
+          <div><h3>Définition de la direction visuelle</h3><p>Nous proposons une identité graphique cohérente avec votre établissement.</p></div>
+        </div>
+        <div class="method-item" data-reveal>
+          <span class="method-index">03</span>
+          <div><h3>Conception du site</h3><p>Nous développons votre site vitrine, page par page.</p></div>
+        </div>
+        <div class="method-item" data-reveal>
+          <span class="method-index">04</span>
+          <div><h3>Validation progressive avec le client</h3><p>Les principales décisions sont validées avec vous au fil de l'avancement, afin d'éviter les mauvaises surprises à la livraison.</p></div>
+        </div>
+        <div class="method-item" data-reveal>
+          <span class="method-index">05</span>
+          <div><h3>Intégration du menu</h3><p>Vos catégories, plats et tarifs sont ajoutés à votre espace de gestion.</p></div>
+        </div>
+        <div class="method-item" data-reveal>
+          <span class="method-index">06</span>
+          <div><h3>Mise en ligne et transmission des accès</h3><p>Votre site est publié et vous recevez vos accès à l'espace de gestion.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. SECTION À PROPOS -->
+  <section class="section section--dark" id="a-propos">
+    <div class="container">
+      <div class="about-wrap" data-reveal>
+        <span class="eyebrow">À propos</span>
+        <h2>Un studio pensé pour les commerces de proximité</h2>
+        <p style="margin-top: 1.25rem;">VIKTO LABS est un studio indépendant spécialisé dans la création de sites vitrines et de menus numériques pour les établissements de restauration. Nous concevons des solutions simples, modernes et accessibles, permettant aux restaurateurs de présenter leur activité et de conserver le contrôle sur leur carte. Notre objectif : rendre votre présence en ligne aussi claire et facile à gérer que possible.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">Questions fréquentes</span>
+        <h2>Tout ce qu'il faut savoir</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a1" id="faq-q1">
+            Puis-je modifier mon menu moi-même ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a1" role="region" aria-labelledby="faq-q1" data-open="false">
+            <p>Oui. Avec la formule Site + menu synchronisé, vous accédez à un espace de gestion pensé pour être simple et intuitif, sans compétence technique particulière.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a2" id="faq-q2">
+            Le menu est-il mis à jour automatiquement sur le site ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a2" role="region" aria-labelledby="faq-q2" data-open="false">
+            <p>Oui. Chaque modification enregistrée dans votre espace de gestion est automatiquement répercutée sur votre site et sur le menu accessible par QR code.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a3" id="faq-q3">
+            Le QR code change-t-il lorsque je modifie mon menu ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a3" role="region" aria-labelledby="faq-q3" data-open="false">
+            <p>Non. Le QR code reste identique. Il pointe vers votre menu numérique, dont le contenu se met à jour automatiquement.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a4" id="faq-q4">
+            Que comprend l'abonnement à 45 € par mois ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a4" role="region" aria-labelledby="faq-q4" data-open="false">
+            <p>Il comprend la création du site vitrine, le menu numérique modifiable, l'espace de gestion, la synchronisation avec le site, le QR code, l'hébergement et les mises à jour techniques.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a5" id="faq-q5">
+            Y a-t-il des frais de création ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a5" role="region" aria-labelledby="faq-q5" data-open="false">
+            <p>Non, pour la formule Site + menu synchronisé, il n'y a pas de frais de création à l'entrée.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a6" id="faq-q6">
+            Quelle est la durée d'engagement ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a6" role="region" aria-labelledby="faq-q6" data-open="false">
+            <p>L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a7" id="faq-q7">
+            Puis-je choisir uniquement le site vitrine ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a7" role="region" aria-labelledby="faq-q7" data-open="false">
+            <p>Oui. La formule Site vitrine seul, à 500 € en paiement unique, est disponible sans abonnement ni menu numérique.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a8" id="faq-q8">
+            Combien de temps faut-il pour mettre le site en ligne ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a8" role="region" aria-labelledby="faq-q8" data-open="false">
+            <p>Le délai dépend de la disponibilité de vos contenus et du nombre d'allers-retours de validation. Nous vous communiquons une estimation dès notre premier échange.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a9" id="faq-q9">
+            Dois-je fournir les textes et les photos ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a9" role="region" aria-labelledby="faq-q9" data-open="false">
+            <p>Idéalement oui, afin que le site reflète fidèlement votre établissement. Nous pouvons vous accompagner si certains éléments manquent.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a10" id="faq-q10">
+            Que se passe-t-il si je résilie l'abonnement ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a10" role="region" aria-labelledby="faq-q10" data-open="false">
+            <p>Les modalités précises de résiliation vous seront détaillées dans le contrat associé à votre formule.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. CTA FINAL -->
+  <section class="section--dark final-cta">
+    <div class="container">
+      <h2>Prêt à moderniser votre établissement ?</h2>
+      <p>Présentez-nous votre activité et vos besoins. Nous vous proposerons la formule la plus adaptée à votre établissement.</p>
+      <a href="contact.html" class="btn btn-primary">Parler de mon projet</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-slot">
+          <span class="logo-mark" aria-hidden="true">V</span>
+          <span>VIKTO LABS</span>
+        </span>
+        <p>Studio indépendant de sites vitrines et menus numériques pour restaurants et commerces de bouche.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#solutions">Solutions</a></li>
+          <li><a href="index.html#fonctionnement">Fonctionnement</a></li>
+          <li><a href="index.html#tarifs">Tarifs</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
+          <li><a href="#" data-contact-email>e-mail</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 VIKTO LABS. Tous droits réservés.</span>
+      <span>Studio indépendant — France</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
