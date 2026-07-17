@@ -1179,3 +1179,163 @@ textarea:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { opacity: 1; transform: none; transition: none; }
 }
+
+/* ==========================================================================
+   DA ÉDITORIALE — hero sombre, marquee, numéraux géants, header adaptatif
+   ========================================================================== */
+
+/* ---- Hero sombre monumental ---- */
+.hero--dark {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+.hero--dark::before {
+  background-image: radial-gradient(#2E2E2E 1.5px, transparent 1.5px);
+  opacity: 0.9;
+}
+.hero--dark h1 em {
+  font-style: normal;
+  color: var(--color-red);
+}
+.hero--dark .lead { color: #C9C9C9; }
+.hero--dark .hero-support { color: var(--color-white); }
+
+/* ---- Header : sombre en haut de l'accueil, blanc dès le scroll ---- */
+body.home .site-header:not(.is-scrolled):not(:has(.main-nav.is-open)) {
+  background: var(--color-black);
+  border-bottom-color: #262626;
+}
+body.home .site-header:not(.is-scrolled):not(:has(.main-nav.is-open)) .logo-slot,
+body.home .site-header:not(.is-scrolled):not(:has(.main-nav.is-open)) .nav-links a {
+  color: var(--color-white);
+}
+body.home .site-header:not(.is-scrolled):not(:has(.main-nav.is-open)) .logo-mark {
+  background: var(--color-white);
+  color: var(--color-black);
+}
+body.home .site-header:not(.is-scrolled):not(:has(.main-nav.is-open)) .nav-toggle span,
+body.home .site-header:not(.is-scrolled):not(:has(.main-nav.is-open)) .nav-toggle span::before,
+body.home .site-header:not(.is-scrolled):not(:has(.main-nav.is-open)) .nav-toggle span::after {
+  background: var(--color-white);
+}
+.site-header .logo-slot,
+.site-header .nav-links a,
+.site-header .logo-mark { transition: color var(--transition-base), background var(--transition-base); }
+
+/* ---- Bande signature défilante ---- */
+.marquee {
+  background: var(--color-black);
+  color: var(--color-white);
+  overflow: hidden;
+  padding: 1.05rem 0;
+  border-top: 1px solid #262626;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 26s linear infinite;
+}
+.marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding-right: 2.5rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.marquee .sep {
+  color: var(--color-red);
+  font-size: 0.55rem;
+}
+@keyframes marquee-scroll {
+  to { transform: translateX(-50%); }
+}
+
+/* ---- Numéraux géants derrière les titres de section ---- */
+.section-head { position: relative; }
+.section-head[data-num]::before {
+  content: attr(data-num);
+  position: absolute;
+  top: -0.55em;
+  right: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(5.5rem, 11vw, 9rem);
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(13, 13, 13, 0.05);
+  pointer-events: none;
+  user-select: none;
+}
+.section--dark .section-head[data-num]::before { color: rgba(255, 255, 255, 0.06); }
+
+/* ---- Soulignement rouge animé des titres de section ---- */
+.section-head h2::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  background: var(--color-red);
+  margin-top: 1.1rem;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease 0.25s;
+}
+.section-head.center h2::after { margin-inline: auto; transform-origin: center; }
+.section-head.is-visible h2::after { transform: scaleX(1); }
+.about-wrap h2::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  background: var(--color-red);
+  margin-top: 1.1rem;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease 0.25s;
+}
+.about-wrap.is-visible h2::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .section-head h2::after, .about-wrap h2::after { transform: scaleX(1); }
+}
+
+/* ---- Boutons avec flèche qui glisse ---- */
+.btn-arrow::after {
+  content: "→";
+  display: inline-block;
+  transition: transform var(--transition-base);
+}
+.btn-arrow:hover::after { transform: translateX(5px); }
+
+/* ---- Barre rouge latérale sur les cartes problème au survol ---- */
+.problem-card { overflow: hidden; }
+.problem-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--color-red);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--transition-base);
+}
+.problem-card { position: relative; }
+.problem-card:hover::before { transform: scaleY(1); }
+
+/* ---- Flottement léger du mobile dans la démo hero ---- */
+@keyframes demo-float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+.hero .demo-mobile {
+  animation: demo-float 3.6s ease-in-out infinite alternate;
+}
+
+/* ---- Carte tarif mise en avant : liseré rouge au survol ---- */
+.price-card.is-featured { transition: box-shadow var(--transition-base), border-color var(--transition-base); }
+.price-card.is-featured:hover {
+  border-color: var(--color-red);
+  box-shadow: 0 30px 60px -25px rgba(227, 6, 19, 0.35);
+}
