@@ -30,10 +30,71 @@ document.addEventListener("DOMContentLoaded", () => {
   initFaq();
   initReveal();
   initSyncScenes();
+  initDemoVideo();
   initLiveDemos();
   initContactForm();
   injectContactEmail();
 });
+
+/* ---- Démo animée « vidéo » : timeline scriptée ----
+   Fait avancer data-step 0→6 à intervalles ; barre de progression animée ;
+   autoplay une fois à l'affichage ; état final figé si reduced-motion. */
+function initDemoVideo() {
+  const dv = document.querySelector(".demo-video");
+  if (!dv) return;
+
+  const bar = dv.querySelector(".dv-progress-bar");
+  const poster = dv.querySelector(".dv-poster");
+  const replay = dv.querySelector(".dv-replay");
+  const STEPS = [500, 1900, 3300, 4600, 5900, 7600]; // ms → étapes 1..6
+  const TOTAL = 8200;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let timers = [];
+
+  const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
+
+  function play() {
+    clearTimers();
+    dv.classList.remove("is-ended");
+    dv.classList.add("is-playing");
+    dv.setAttribute("data-step", "0");
+
+    // barre de progression : reset puis remplissage linéaire
+    if (bar) {
+      bar.style.transition = "none";
+      bar.style.width = "0%";
+      void bar.offsetWidth; // force le reflow
+      bar.style.transition = `width ${TOTAL}ms linear`;
+      bar.style.width = "100%";
+    }
+
+    STEPS.forEach((t, i) => {
+      timers.push(setTimeout(() => dv.setAttribute("data-step", String(i + 1)), t));
+    });
+    timers.push(setTimeout(() => dv.classList.add("is-ended"), TOTAL));
+  }
+
+  // Reduced motion : on montre directement l'état final, sans animation.
+  if (reduce) {
+    dv.classList.add("is-playing", "is-ended");
+    dv.setAttribute("data-step", "6");
+    if (bar) bar.style.width = "100%";
+  }
+
+  if (poster) poster.addEventListener("click", play);
+  if (replay) replay.addEventListener("click", play);
+
+  // Autoplay une seule fois quand la démo est bien visible.
+  if (!reduce && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        play();
+        io.disconnect();
+      }
+    }, { threshold: 0.55 });
+    io.observe(dv);
+  }
+}
 
 /* ---- Démos en direct : activer l'iframe au clic sur l'overlay ----
    Par défaut les iframes ont pointer-events:none (pas de piège au scroll).
