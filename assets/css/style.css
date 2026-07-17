@@ -1440,3 +1440,285 @@ textarea:focus-visible {
   .live-demo-item.is-mobile { max-width: 280px; }
   .browser-frame .live-viewport { height: 400px; }
 }
+
+/* ==========================================================================
+   DÉMO ANIMÉE (« vidéo ») — séquence scriptée pilotée par [data-step]
+   ========================================================================== */
+.demo-video { margin: 0 0 var(--space-lg); }
+.demo-video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--color-black);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(0,0,0,0.45);
+}
+/* trame de points en fond du canevas */
+.demo-video-frame::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(#2e2a2b 1.4px, transparent 1.4px);
+  background-size: 22px 22px;
+  opacity: 0.7;
+}
+
+/* --- Panneau éditeur --- */
+.dv-editor {
+  position: absolute;
+  left: 5%; top: 18%;
+  width: 42%;
+  background: var(--color-white);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px -18px rgba(0,0,0,0.5);
+  overflow: hidden;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.dv-bar {
+  display: flex; align-items: center; gap: 5px;
+  background: #eceae4; padding: 7px 10px;
+}
+.dv-bar span { width: 7px; height: 7px; border-radius: 50%; background: #c3bfb8; }
+.dv-bar em {
+  font-style: normal; font-size: clamp(0.5rem, 1.1vw, 0.72rem);
+  color: #8a857f; margin-left: 6px; font-family: var(--font-heading);
+}
+.dv-editor-body { padding: clamp(0.7rem, 1.8vw, 1.2rem); }
+.dv-editor-title {
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: clamp(0.6rem, 1.3vw, 0.85rem);
+  color: var(--color-gray-400); margin-bottom: 0.6rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.dv-field {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  border: 2px solid transparent; border-radius: 8px;
+  padding: clamp(0.4rem, 1.1vw, 0.7rem) clamp(0.5rem, 1.2vw, 0.8rem);
+  background: #f6f5f0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.dv-field-label {
+  font-size: clamp(0.6rem, 1.35vw, 0.9rem); font-weight: 600;
+}
+.dv-price { position: relative; font-family: var(--font-heading); font-weight: 700; font-size: clamp(0.7rem, 1.5vw, 1rem); white-space: nowrap; }
+.dv-price-old { transition: opacity 0.25s ease; }
+.dv-price-new {
+  color: var(--color-red);
+  position: absolute; right: 0; top: 0;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.dv-caret {
+  display: inline-block; width: 2px; height: 1em;
+  background: var(--color-red); margin-left: 2px;
+  vertical-align: middle; opacity: 0;
+}
+.dv-publish {
+  margin-top: clamp(0.5rem, 1.4vw, 0.9rem);
+  background: var(--color-red); color: #fff; border: 0;
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: clamp(0.55rem, 1.2vw, 0.8rem);
+  padding: clamp(0.35rem, 1vw, 0.55rem) clamp(0.7rem, 1.6vw, 1.1rem);
+  border-radius: 40px; transition: transform 0.15s ease, filter 0.2s ease;
+}
+.dv-saved {
+  display: inline-block; margin-left: 0.5rem;
+  color: #157347; font-weight: 700;
+  font-size: clamp(0.55rem, 1.2vw, 0.8rem);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* --- Connecteur --- */
+.dv-link {
+  position: absolute; left: 47%; top: 46%; width: 8%; height: 3px;
+  background-image: repeating-linear-gradient(90deg, var(--color-red) 0 6px, transparent 6px 12px);
+  background-size: 12px 3px;
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.dv-link-label {
+  position: absolute; top: -1.6em; left: 50%; transform: translateX(-50%);
+  white-space: nowrap; color: #d8d4d0;
+  font-size: clamp(0.5rem, 1vw, 0.7rem); font-family: var(--font-heading);
+}
+
+/* --- Panneau téléphone --- */
+.dv-phone {
+  position: absolute; right: 6%; top: 12%; width: 24%;
+  background: #000; border-radius: 22px; padding: 7px;
+  box-shadow: 0 20px 45px -18px rgba(0,0,0,0.6);
+}
+.dv-phone-notch { width: 34%; height: 4px; background: #333; border-radius: 3px; margin: 2px auto 5px; }
+.dv-phone-screen {
+  background: #141013; border-radius: 16px;
+  padding: clamp(0.5rem, 1.3vw, 0.9rem) clamp(0.45rem, 1.1vw, 0.75rem);
+  position: relative;
+}
+.dv-phone-head {
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: clamp(0.5rem, 1.1vw, 0.72rem); color: #e7c873;
+  letter-spacing: 0.03em; margin-bottom: 0.6rem;
+}
+.dv-phone-head span { color: #8a8378; font-weight: 400; }
+.dv-phone-row {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 0.4rem;
+  color: #f3efe9; font-size: clamp(0.5rem, 1.1vw, 0.72rem);
+  padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.dv-phone-row.muted { color: #9a948c; }
+.dv-phone-price { position: relative; font-family: var(--font-heading); color: #e7c873; white-space: nowrap; }
+.dv-phone-price .old { transition: opacity 0.25s ease; }
+.dv-phone-price .new {
+  position: absolute; right: 0; top: 0; color: #e7c873;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.dv-qr {
+  width: clamp(26px, 5vw, 44px); aspect-ratio: 1; margin: 0.7rem auto 0.3rem;
+  background:
+    linear-gradient(#e7c873, #e7c873) padding-box,
+    repeating-conic-gradient(#141013 0% 25%, #e7c873 0% 50%) border-box;
+  background-size: 6px 6px;
+  background-color: #e7c873;
+  background-image: repeating-conic-gradient(#141013 0 25%, #f3efe9 0 50%);
+  background-size: 7px 7px;
+  border-radius: 4px;
+}
+.dv-phone-caption {
+  display: block; text-align: center; color: #8a8378;
+  font-size: clamp(0.42rem, 0.9vw, 0.6rem);
+}
+.dv-phone-toast {
+  position: absolute; left: 50%; bottom: 8px; transform: translate(-50%, 8px);
+  background: var(--color-red); color: #fff;
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: clamp(0.45rem, 1vw, 0.65rem);
+  padding: 0.3rem 0.7rem; border-radius: 30px; white-space: nowrap;
+  opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* --- Curseur --- */
+.dv-cursor {
+  position: absolute; width: clamp(16px, 2.4vw, 24px); height: auto;
+  left: 0; top: 0;
+  transform: translate(20vw, 60%);
+  transition: transform 0.7s cubic-bezier(0.5, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4));
+  z-index: 5; opacity: 0;
+}
+
+/* --- Carte de fin --- */
+.dv-endcard {
+  position: absolute; inset: 0;
+  background: rgba(31,27,28,0.82); backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: opacity 0.5s ease;
+}
+.dv-end-title {
+  font-family: var(--font-heading); font-weight: 700; color: #fff;
+  font-size: clamp(1.3rem, 4vw, 2.6rem); text-align: center; line-height: 1.1;
+  transform: translateY(10px); transition: transform 0.5s ease;
+}
+.dv-end-title em { font-style: normal; color: var(--color-red); }
+
+/* --- Poster / lecture --- */
+.dv-poster {
+  position: absolute; inset: 0; border: 0; z-index: 8;
+  background: rgba(31,27,28,0.35);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.8rem; cursor: pointer; transition: opacity 0.3s ease;
+}
+.dv-play {
+  width: clamp(48px, 8vw, 74px); aspect-ratio: 1; border-radius: 50%;
+  background: var(--color-red); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(1rem, 2.4vw, 1.6rem); padding-left: 4px;
+  box-shadow: 0 14px 30px -8px rgba(229,40,36,0.6);
+  transition: transform 0.2s ease;
+}
+.dv-poster:hover .dv-play { transform: scale(1.08); }
+.dv-poster-label {
+  color: #fff; font-family: var(--font-heading); font-weight: 600;
+  font-size: clamp(0.7rem, 1.5vw, 0.95rem);
+}
+
+/* --- Contrôles sous la vidéo --- */
+.dv-controls {
+  display: flex; align-items: center; gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+.dv-progress { flex: 1; height: 4px; background: var(--color-gray-200); border-radius: 3px; overflow: hidden; }
+.dv-progress-bar { display: block; height: 100%; width: 0; background: var(--color-red); }
+.dv-replay {
+  background: transparent; border: 0; color: var(--color-gray-600);
+  font-family: var(--font-heading); font-weight: 600; font-size: 0.85rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.demo-video.is-ended .dv-replay { opacity: 1; pointer-events: auto; }
+
+/* =========================================================
+   ÉTATS DE LA SÉQUENCE (data-step)
+   ========================================================= */
+/* dès qu'on joue, le poster disparaît */
+.demo-video.is-playing .dv-poster { opacity: 0; pointer-events: none; }
+.demo-video.is-playing .dv-cursor { opacity: 1; }
+
+/* step 1 : curseur sur le champ prix, champ focus */
+.demo-video[data-step="1"] .dv-cursor,
+.demo-video[data-step="2"] .dv-cursor { transform: translate(34%, 42%); }
+.demo-video[data-step="1"] .dv-field,
+.demo-video[data-step="2"] .dv-field { border-color: var(--color-red); box-shadow: 0 0 0 4px rgba(229,40,36,0.12); }
+.demo-video[data-step="1"] .dv-caret,
+.demo-video[data-step="2"] .dv-caret { opacity: 1; animation: dv-blink 0.8s step-end infinite; }
+@keyframes dv-blink { 50% { opacity: 0; } }
+
+/* step 2 : prix éditeur passe à 13 € rouge */
+.demo-video[data-step="2"] .dv-price-old,
+.demo-video[data-step="3"] .dv-price-old,
+.demo-video[data-step="4"] .dv-price-old,
+.demo-video[data-step="5"] .dv-price-old,
+.demo-video[data-step="6"] .dv-price-old { opacity: 0; }
+.demo-video[data-step="2"] .dv-price-new,
+.demo-video[data-step="3"] .dv-price-new,
+.demo-video[data-step="4"] .dv-price-new,
+.demo-video[data-step="5"] .dv-price-new,
+.demo-video[data-step="6"] .dv-price-new { opacity: 1; transform: none; }
+
+/* step 3 : curseur sur Publier, bouton pressé + Publié ✓ */
+.demo-video[data-step="3"] .dv-cursor { transform: translate(20%, 74%); }
+.demo-video[data-step="3"] .dv-publish { transform: scale(0.94); filter: brightness(0.9); }
+.demo-video[data-step="3"] .dv-saved,
+.demo-video[data-step="4"] .dv-saved,
+.demo-video[data-step="5"] .dv-saved { opacity: 1; transform: none; }
+
+/* step 4 : synchro active, curseur file vers le téléphone */
+.demo-video[data-step="4"] .dv-cursor,
+.demo-video[data-step="5"] .dv-cursor { transform: translate(66%, 42%); }
+.demo-video[data-step="4"] .dv-link,
+.demo-video[data-step="5"] .dv-link { opacity: 1; animation: dv-dash 0.6s linear infinite; }
+@keyframes dv-dash { to { background-position: 12px 0; } }
+
+/* step 5 : le menu client se met à jour + toast */
+.demo-video[data-step="5"] .dv-phone-price .old,
+.demo-video[data-step="6"] .dv-phone-price .old { opacity: 0; }
+.demo-video[data-step="5"] .dv-phone-price .new,
+.demo-video[data-step="6"] .dv-phone-price .new { opacity: 1; transform: none; }
+.demo-video[data-step="5"] .dv-phone,
+.demo-video[data-step="6"] .dv-phone { animation: dv-pop 0.5s ease; }
+@keyframes dv-pop { 30% { transform: scale(1.04); } }
+.demo-video[data-step="5"] .dv-phone-toast { opacity: 1; transform: translate(-50%, 0); }
+.demo-video[data-step="5"] .dv-cursor { opacity: 0; }
+
+/* step 6 : carte de fin */
+.demo-video[data-step="6"] .dv-cursor { opacity: 0; }
+.demo-video[data-step="6"] .dv-endcard { opacity: 1; visibility: visible; }
+.demo-video[data-step="6"] .dv-end-title { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dv-cursor, .dv-progress-bar { transition: none; }
+}
+
+@media (max-width: 620px) {
+  .dv-editor { top: 12%; }
+  .dv-editor-title { display: none; }
+  .demo-video-frame { aspect-ratio: 4 / 3; }
+}
