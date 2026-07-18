@@ -24,6 +24,24 @@ const SITE_CONFIG = {
   CONTACT_EMAIL: "contact@viktolabs.fr" // <-- À REMPLACER par l'adresse de destination réelle
 };
 
+// Un rechargement de page doit toujours ramener en haut (le client voit
+// clairement que la page s'est rechargée). On désactive la restauration
+// automatique du scroll par le navigateur ; les liens d'ancre cliqués
+// (#tarifs, #demonstration…) continuent de fonctionner normalement.
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+(function resetScrollOnReload() {
+  let navType = "navigate";
+  const nav = performance.getEntriesByType && performance.getEntriesByType("navigation");
+  if (nav && nav.length) navType = nav[0].type;
+  if (navType === "reload") {
+    // on retire l'ancre éventuelle et on remonte en haut
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    window.scrollTo(0, 0);
+  }
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
   initNav();
   initHeaderState();
