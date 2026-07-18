@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/css/style.css?v=20260718c">
+<link rel="stylesheet" href="assets/css/style.css?v=20260718d">
 
 <script type="application/ld+json">
 {
@@ -153,7 +153,7 @@
         <span class="eyebrow">La démo</span>
         <h2>Vu en 8 secondes : une modification, partout à jour.</h2>
       </div>
-      <span class="demo-disclaimer" data-reveal>Exemple réel — La Coursive des Alpes, Méribel</span>
+      <span class="demo-disclaimer" data-reveal>Notre éditeur de carte VIKTO LABS · démo en cours de construction</span>
 
       <!-- ============ DÉMO ANIMÉE (« vidéo ») ============
            Séquence scriptée en JS : data-step 0→6 pilote les transitions CSS.
@@ -188,7 +188,7 @@
           <div class="dv-phone">
             <div class="dv-phone-notch"></div>
             <div class="dv-phone-screen">
-              <div class="dv-phone-head">LA&nbsp;COURSIVE <span>· carte</span></div>
+              <div class="dv-phone-head">LE&nbsp;CAFÉ <span>· carte</span></div>
               <div class="dv-phone-row">
                 <span>Risotto aux champignons</span>
                 <strong class="dv-phone-price">
@@ -225,43 +225,42 @@
 
       <p class="problem-lead" data-reveal style="margin: var(--space-2xl) 0 var(--space-lg); font-weight: 600; color: var(--color-black);">Envie de la manipuler pour de vrai ? La voici en direct.</p>
 
-      <!-- Démo en direct : vraies pages de La Coursive intégrées en iframe.
-           pointer-events désactivés par défaut (pas de piège au scroll) ;
-           un clic sur l'overlay active l'interaction. -->
+      <!-- Démo en direct : notre propre éditeur de carte (vikto-labs-cafe),
+           encore en construction. pointer-events désactivés par défaut
+           (pas de piège au scroll) ; clic sur l'overlay = interaction. -->
       <div class="live-demo">
         <figure class="live-demo-item is-desktop" data-reveal>
           <div class="browser-frame">
             <div class="browser-bar">
               <span class="browser-dots"><span></span><span></span><span></span></span>
-              <span class="browser-url">la-coursive-carte · espace de gestion</span>
+              <span class="browser-url">vikto-labs · éditeur de carte</span>
             </div>
             <div class="live-viewport" data-live>
-              <iframe src="https://viktor-guignard.github.io/la-coursive-carte/" title="Espace de gestion de la carte — La Coursive des Alpes" loading="lazy"></iframe>
+              <iframe src="https://viktor-guignard.github.io/vikto-labs-cafe/" title="Éditeur de carte VIKTO LABS — démo" loading="lazy"></iframe>
               <button type="button" class="live-overlay" aria-label="Activer l'interaction avec la démo">
                 <span class="live-overlay-btn">▶ Cliquer pour tester</span>
               </button>
             </div>
           </div>
-          <figcaption><strong>L'espace de gestion</strong> — le restaurateur modifie plats, prix et catégories lui-même.</figcaption>
+          <figcaption><strong>L'espace de gestion</strong> — vous modifiez plats, prix et catégories vous-même.</figcaption>
         </figure>
 
         <figure class="live-demo-item is-mobile" data-reveal>
           <div class="phone-frame">
             <div class="phone-notch"></div>
             <div class="live-viewport" data-live>
-              <iframe src="https://viktor-guignard.github.io/la-coursive-carte/carte.html" title="Menu client par QR code — La Coursive des Alpes" loading="lazy"></iframe>
-              <button type="button" class="live-overlay" aria-label="Activer l'interaction avec le menu">
+              <iframe src="https://viktor-guignard.github.io/vikto-labs-cafe/" title="La carte VIKTO LABS sur mobile — démo" loading="lazy"></iframe>
+              <button type="button" class="live-overlay" aria-label="Activer l'interaction avec la démo mobile">
                 <span class="live-overlay-btn">▶ Cliquer pour tester</span>
               </button>
             </div>
           </div>
-          <figcaption><strong>Le menu client</strong> — consulté en salle par QR code, toujours à jour.</figcaption>
+          <figcaption><strong>La même carte, sur mobile</strong> — pensée pour l'écran de vos clients.</figcaption>
         </figure>
       </div>
 
       <div class="live-demo-actions" data-reveal>
-        <a href="https://viktor-guignard.github.io/la-coursive-carte/carte.html" class="btn btn-outline btn-arrow" target="_blank" rel="noopener">Ouvrir le menu client</a>
-        <a href="https://viktor-guignard.github.io/la-coursive-carte/" class="btn btn-dark btn-arrow" target="_blank" rel="noopener">Ouvrir l'espace de gestion</a>
+        <a href="https://viktor-guignard.github.io/vikto-labs-cafe/" class="btn btn-dark btn-arrow" target="_blank" rel="noopener">Ouvrir l'éditeur de démo</a>
       </div>
     </div>
   </section>
@@ -669,6 +668,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20260718c"></script>
+<script src="assets/js/main.js?v=20260718d"></script>
 </body>
 </html>
