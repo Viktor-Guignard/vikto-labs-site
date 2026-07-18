@@ -991,7 +991,7 @@ textarea:focus-visible {
 }
 .faq-answer[data-open="true"] {
   max-height: 40rem; /* assez grand pour les réponses longues sur mobile */
-  padding: 0 var(--space-md) var(--space-md);
+  padding: var(--space-md) var(--space-md) var(--space-md); /* marge haute pour décoller le texte de la bordure */
 }
 
 /* ==========================================================================
