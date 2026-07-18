@@ -984,7 +984,7 @@ textarea:focus-visible {
 .faq-answer {
   max-height: 0;
   overflow: hidden;
-  transition: max-height var(--transition-base) ease, padding var(--transition-base);
+  transition: max-height var(--transition-base), padding var(--transition-base);
   padding: 0 var(--space-md);
   color: var(--color-gray-600);
   font-size: 0.94rem;
