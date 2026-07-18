@@ -1408,6 +1408,13 @@ textarea:focus-visible {
   height: 460px;
 }
 
+/* Démo à un seul cadre : pleine largeur, plus haut pour voir la planche */
+.live-demo--single { grid-template-columns: 1fr; }
+.live-demo--single .browser-frame .live-viewport { height: 620px; }
+@media (max-width: 700px) {
+  .live-demo--single .browser-frame .live-viewport { height: 460px; }
+}
+
 /* --- Cadre téléphone (menu client) --- */
 .live-demo-item.is-mobile { justify-self: center; max-width: 300px; }
 .phone-frame {
