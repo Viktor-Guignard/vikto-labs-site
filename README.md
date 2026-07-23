@@ -67,20 +67,29 @@ Toute la configuration se trouve en haut du fichier
 
 ```js
 const SITE_CONFIG = {
-  FORM_PROVIDER: "formspree", // "formspree" | "web3forms"
-  FORM_ENDPOINT: "https://formspree.io/f/xaqrwzzy",
-  WEB3FORMS_ACCESS_KEY: "VOTRE_CLE_WEB3FORMS",
+  FORM_PROVIDER: "web3forms",
+  WEB3FORMS_ACCESS_KEY: "",            // <-- coller la clé ici
+  FORM_ENDPOINT: "",
   CONTACT_EMAIL: "vikto.labs@gmail.com"
 };
 ```
 
-Le formulaire réutilise actuellement le compte Formspree déjà créé pour le
-projet « livret-messe ». Les deux sites envoient donc leurs messages dans le
-même formulaire Formspree, à l'adresse e-mail configurée sur ce compte.
-Pour les distinguer, `contact.html` envoie un champ caché `_subject` fixé à
-« VIKTO LABS — Nouvelle demande de contact », qui apparaît comme objet du
-mail reçu. Si vous préférez isoler complètement les demandes VIKTO LABS,
-créez un formulaire Formspree dédié et remplacez `FORM_ENDPOINT`.
+Le formulaire envoie les demandes **directement à `vikto.labs@gmail.com`**
+via Web3Forms (aucun compte partagé avec un autre projet).
+
+### Obtenir la clé Web3Forms (30 secondes)
+
+1. Aller sur [web3forms.com](https://web3forms.com)
+2. Saisir `vikto.labs@gmail.com` → la clé d'accès arrive par mail
+3. Coller cette clé dans `WEB3FORMS_ACCESS_KEY` (fichier `assets/js/main.js`)
+
+Cette clé est **publique par conception** (prévue pour tourner dans le
+navigateur) : ce n'est pas un secret, elle peut rester dans le dépôt.
+
+**Filet de sécurité :** tant que la clé n'est pas renseignée, le formulaire
+n'échoue pas silencieusement — il ouvre le logiciel de messagerie du
+visiteur avec sa demande déjà rédigée, adressée à `CONTACT_EMAIL`.
+Aucune demande n'est perdue.
 
 ### Avec Formspree
 
