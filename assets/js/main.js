@@ -25,8 +25,33 @@ const SITE_CONFIG = {
   // Utilisé seulement si FORM_PROVIDER repasse à "formspree"
   FORM_ENDPOINT: "",
 
-  CONTACT_EMAIL: "vikto.labs@gmail.com" // destination des demandes + adresse affichée
+  CONTACT_EMAIL: "vikto.labs@gmail.com", // destination des demandes + adresse affichée
+
+  // ⚠️ LIENS DE PAIEMENT STRIPE EN MODE TEST — à remplacer par les liens de
+  // PRODUCTION avant tout vrai client (dashboard Stripe → basculer sur le
+  // compte de production → recréer les 2 liens → coller les URLs ci-dessous).
+  // Ce sont des URLs publiques (faites pour être partagées/cliquées),
+  // aucun souci à les laisser dans ce fichier.
+  STRIPE_LINK_SITE: "https://buy.stripe.com/test_4gMeV60ne5Zy3J19aWefC01", // 500 € — paiement unique
+  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/test_00weV6da0ew4a7p4UGefC00" // 45 €/mois — abonnement
 };
+
+// Branche les boutons de tarifs sur les liens de paiement Stripe.
+// L'attribut data-stripe-link vaut "site" (500 €) ou "subscription" (45 €/mois).
+function injectStripeLinks() {
+  const map = {
+    site: SITE_CONFIG.STRIPE_LINK_SITE,
+    subscription: SITE_CONFIG.STRIPE_LINK_SUBSCRIPTION
+  };
+  document.querySelectorAll("[data-stripe-link]").forEach((el) => {
+    const url = map[el.getAttribute("data-stripe-link")];
+    if (url) {
+      el.href = url;
+      el.target = "_blank";
+      el.rel = "noopener";
+    }
+  });
+}
 
 // Le formulaire est-il configuré ? (sinon on bascule sur un envoi par mail)
 function isFormConfigured() {
@@ -64,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initLiveDemos();
   initContactForm();
   injectContactEmail();
+  injectStripeLinks();
 });
 
 /* ---- Démo animée « vidéo » : timeline scriptée ----
