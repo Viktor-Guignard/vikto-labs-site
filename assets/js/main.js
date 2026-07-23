@@ -21,7 +21,7 @@ const SITE_CONFIG = {
   // "_subject" du formulaire (contact.html) permet de distinguer les demandes VIKTO LABS.
   FORM_ENDPOINT: "https://formspree.io/f/xaqrwzzy",
   WEB3FORMS_ACCESS_KEY: "VOTRE_CLE_WEB3FORMS", // non utilisé (provider = formspree)
-  CONTACT_EMAIL: "contact@viktolabs.fr" // <-- À REMPLACER par l'adresse de destination réelle
+  CONTACT_EMAIL: "vikto.labs@gmail.com" // adresse affichée sur le site et de contact direct
 };
 
 // Un rechargement de page doit toujours ramener en haut (le client voit

@@ -70,7 +70,7 @@ const SITE_CONFIG = {
   FORM_PROVIDER: "formspree", // "formspree" | "web3forms"
   FORM_ENDPOINT: "https://formspree.io/f/xaqrwzzy",
   WEB3FORMS_ACCESS_KEY: "VOTRE_CLE_WEB3FORMS",
-  CONTACT_EMAIL: "contact@viktolabs.fr"
+  CONTACT_EMAIL: "vikto.labs@gmail.com"
 };
 ```
 
