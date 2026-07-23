@@ -15,14 +15,27 @@
    doivent apparaître dans ce fichier.
 --------------------------------------------------------------- */
 const SITE_CONFIG = {
-  FORM_PROVIDER: "formspree", // "formspree" | "web3forms"
-  // Formspree du compte déjà utilisé pour le projet "livret-messe" (même compte, réutilisé ici).
-  // Les envois des deux sites arrivent dans le même formulaire Formspree : le champ caché
-  // "_subject" du formulaire (contact.html) permet de distinguer les demandes VIKTO LABS.
-  FORM_ENDPOINT: "https://formspree.io/f/xaqrwzzy",
-  WEB3FORMS_ACCESS_KEY: "VOTRE_CLE_WEB3FORMS", // non utilisé (provider = formspree)
-  CONTACT_EMAIL: "vikto.labs@gmail.com" // adresse affichée sur le site et de contact direct
+  FORM_PROVIDER: "web3forms", // "web3forms" | "formspree"
+
+  // ⬇️ COLLER ICI LA CLÉ WEB3FORMS (à la place de "" )
+  // Comment l'obtenir en 30 s : aller sur https://web3forms.com,
+  // saisir vikto.labs@gmail.com → la clé arrive par mail. Aucun compte à créer.
+  // Cette clé est PUBLIQUE par conception (prévue pour le navigateur), pas un secret.
+  WEB3FORMS_ACCESS_KEY: "",
+
+  // Utilisé seulement si FORM_PROVIDER repasse à "formspree"
+  FORM_ENDPOINT: "",
+
+  CONTACT_EMAIL: "vikto.labs@gmail.com" // destination des demandes + adresse affichée
 };
+
+// Le formulaire est-il configuré ? (sinon on bascule sur un envoi par mail)
+function isFormConfigured() {
+  if (SITE_CONFIG.FORM_PROVIDER === "web3forms") {
+    return SITE_CONFIG.WEB3FORMS_ACCESS_KEY.trim().length > 10;
+  }
+  return /^https:\/\/formspree\.io\/f\/\w+/.test(SITE_CONFIG.FORM_ENDPOINT);
+}
 
 // Un rechargement de page doit toujours ramener en haut (le client voit
 // clairement que la page s'est rechargée). On désactive la restauration
@@ -257,6 +270,47 @@ function injectContactEmail() {
   });
 }
 
+/* ---- Secours : si aucun service d'envoi n'est configuré, on ouvre le
+   logiciel de mail du visiteur avec sa demande déjà rédigée. Aucune
+   demande n'est ainsi perdue avant le branchement de Web3Forms. ---- */
+function sendByMailFallback(form) {
+  const val = (n) => {
+    const f = form.elements[n];
+    if (!f) return "";
+    if (f.tagName === "SELECT") return f.options[f.selectedIndex]?.text || f.value;
+    return f.value;
+  };
+  const lignes = [
+    `Nom : ${val("full-name")}`,
+    `Établissement : ${val("establishment-name")} (${val("establishment-type")})`,
+    `Ville : ${val("city")}`,
+    `E-mail : ${val("email")}`,
+    `Téléphone : ${val("phone") || "—"}`,
+    `Site actuel : ${val("current-site") || "—"}`,
+    `Prestation souhaitée : ${val("service")}`,
+    `Mise en ligne souhaitée : ${val("launch-date") || "—"}`,
+    "",
+    "Message :",
+    val("message")
+  ].join("\n");
+
+  const href =
+    `mailto:${SITE_CONFIG.CONTACT_EMAIL}` +
+    `?subject=${encodeURIComponent("Demande via le site VIKTO LABS")}` +
+    `&body=${encodeURIComponent(lignes)}`;
+
+  window.location.href = href;
+
+  const statusBox = document.getElementById("form-status");
+  if (statusBox) {
+    statusBox.textContent =
+      `Votre logiciel de messagerie s'ouvre avec votre demande pré-remplie. ` +
+      `Si rien ne s'ouvre, écrivez-nous directement à ${SITE_CONFIG.CONTACT_EMAIL}.`;
+    statusBox.setAttribute("data-state", "success");
+    statusBox.setAttribute("role", "status");
+  }
+}
+
 /* ---- Formulaire de contact : validation + envoi ---- */
 function initContactForm() {
   const form = document.getElementById("contact-form");
@@ -324,6 +378,14 @@ function initContactForm() {
       return;
     }
 
+    // Tant que le service d'envoi n'est pas configuré, on ne perd aucune
+    // demande : on ouvre le logiciel de mail du visiteur avec tout le
+    // contenu déjà rempli, à destination de CONTACT_EMAIL.
+    if (!isFormConfigured()) {
+      sendByMailFallback(form);
+      return;
+    }
+
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) {
       submitBtn.disabled = true;
@@ -336,6 +398,8 @@ function initContactForm() {
 
       if (SITE_CONFIG.FORM_PROVIDER === "web3forms") {
         formData.append("access_key", SITE_CONFIG.WEB3FORMS_ACCESS_KEY);
+        formData.append("subject", "VIKTO LABS — Nouvelle demande de contact");
+        formData.append("from_name", "Site VIKTO LABS");
         endpoint = "https://api.web3forms.com/submit";
       }
 
