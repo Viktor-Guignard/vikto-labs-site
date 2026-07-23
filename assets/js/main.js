@@ -17,11 +17,10 @@
 const SITE_CONFIG = {
   FORM_PROVIDER: "web3forms", // "web3forms" | "formspree"
 
-  // ⬇️ COLLER ICI LA CLÉ WEB3FORMS (à la place de "" )
-  // Comment l'obtenir en 30 s : aller sur https://web3forms.com,
-  // saisir vikto.labs@gmail.com → la clé arrive par mail. Aucun compte à créer.
-  // Cette clé est PUBLIQUE par conception (prévue pour le navigateur), pas un secret.
-  WEB3FORMS_ACCESS_KEY: "",
+  // Clé publique Web3Forms du formulaire « VIKTO LABS ».
+  // Publique par conception (elle tourne dans le navigateur) : ce n'est pas un secret.
+  // Le destinataire des mails se règle sur app.web3forms.com, pas ici.
+  WEB3FORMS_ACCESS_KEY: "beb79406-6199-4a86-98af-4ef85f3d2661",
 
   // Utilisé seulement si FORM_PROVIDER repasse à "formspree"
   FORM_ENDPOINT: "",
