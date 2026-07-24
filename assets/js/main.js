@@ -99,60 +99,137 @@ document.addEventListener("DOMContentLoaded", () => {
    si aucune correspondance suffisante, renvoie vers le formulaire de contact.
    ========================================================================== */
 const CHATBOT_KB = [
+  /* ---- Les petits malins qui veulent faire le site eux-mêmes 😄 ---- */
   {
-    keywords: ["modifier", "moi meme", "moi-même", "changer menu", "gerer", "gérer"],
-    answer: "Oui. Avec la formule Site + menu synchronisé, vous accédez à un espace de gestion pensé pour être simple et intuitif, sans compétence technique particulière."
+    keywords: ["faire moi meme", "faire mon site", "site moi meme", "refaire le site", "faire pareil", "faire le meme", "copier votre", "tuto", "tutoriel", "apprendre a coder", "comment vous faites", "quelle techno", "technologie utilisee", "code source", "wordpress", "wix", "squarespace", "site gratuit"],
+    answer: "Excellente idée&nbsp;! La recette&nbsp;: apprenez le HTML, le CSS, le JavaScript, le DNS, l'hébergement, le référencement et le design. Comptez ~300 heures — le temps que votre carte change 40 fois. 😄 Ou alors&nbsp;: vous cuisinez, nous on code. 45&nbsp;€ HT/mois et c'est réglé."
   },
   {
-    keywords: ["mise a jour", "mis a jour", "automatique", "synchronise", "synchro"],
-    answer: "Oui. Chaque modification enregistrée dans votre espace de gestion est automatiquement répercutée sur votre site et sur le menu accessible par QR code."
+    keywords: ["chatgpt", "intelligence artificielle", "une ia", "avec l ia", "ia peut le faire", "ia gratuite"],
+    answer: "Ah, l'IA&nbsp;! Elle fera sûrement un super brouillon… qu'il faudra héberger, brancher au nom de domaine, sécuriser, maintenir et resynchroniser à chaque changement de carte. Devinez qui fait déjà tout ça pour vous&nbsp;? 😉 Indice&nbsp;: vous êtes sur son site."
   },
   {
-    keywords: ["qr code", "qr-code", "code qr"],
-    answer: "Le QR code reste identique quand vous modifiez votre menu : il pointe vers votre menu numérique, dont le contenu se met à jour automatiquement."
+    keywords: ["trop cher", "moins cher", "tarif eleve", "reduction", "remise", "negocier", "prix d ami"],
+    answer: "45&nbsp;€ HT/mois, c'est un plat du jour et demi. 😄 Pour un site pro + un menu toujours à jour + l'hébergement + le QR code, votre carte ne rougira plus jamais d'un prix périmé. On trouve ça honnête."
+  },
+
+  /* ---- Offres & tarifs ---- */
+  {
+    keywords: ["tarif", "prix", "combien", "coute", "coûte", "offre", "formule"],
+    answer: "Deux formules&nbsp;: <strong>Site vitrine</strong> à 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC), ou <strong>Site + menu synchronisé</strong> à 45&nbsp;€ HT/mois soit 54&nbsp;€ TTC (sans frais de création, engagement initial de 12 mois)."
   },
   {
-    keywords: ["45", "abonnement", "mensuel", "mois", "comprend"],
+    keywords: ["45", "abonnement", "mensuel", "comprend", "inclus"],
     answer: "L'abonnement à 45&nbsp;€ HT/mois (54&nbsp;€ TTC) comprend la création du site vitrine, le menu numérique modifiable, l'espace de gestion, la synchronisation, le QR code, l'hébergement et les mises à jour techniques."
   },
   {
-    keywords: ["frais", "creation", "création", "entree", "entrée", "cout initial"],
+    keywords: ["frais", "creation", "création", "cout initial", "a l entree"],
     answer: "Non, pour la formule Site + menu synchronisé, il n'y a pas de frais de création à l'entrée."
   },
   {
-    keywords: ["engagement", "duree", "durée", "12 mois", "resilier", "résilier", "resiliation", "résiliation", "annuler"],
-    answer: "L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement. Les modalités précises de résiliation sont détaillées dans le contrat."
-  },
-  {
-    keywords: ["500", "site seul", "juste le site", "sans abonnement", "paiement unique"],
+    keywords: ["500", "site seul", "juste le site", "sans abonnement", "paiement unique", "une seule fois"],
     answer: "Oui. La formule Site vitrine seul, à 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC), est disponible sans abonnement ni menu numérique."
   },
   {
-    keywords: ["delai", "délai", "combien de temps", "mettre en ligne", "rapide", "duree creation"],
+    keywords: ["engagement", "duree", "durée", "12 mois", "resilier", "résilier", "resiliation", "annuler", "arreter"],
+    answer: "L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement. Les modalités précises de résiliation sont détaillées dans le contrat."
+  },
+  {
+    keywords: ["facture", "tva", "ht ou ttc", "hors taxe", "toutes taxes"],
+    answer: "Nos prix sont affichés HT, TVA de 20&nbsp;% en sus&nbsp;: 500&nbsp;€ HT soit 600&nbsp;€ TTC pour le site seul, 45&nbsp;€ HT soit 54&nbsp;€ TTC/mois pour la formule complète. Une facture conforme est fournie à chaque paiement."
+  },
+  {
+    keywords: ["payer", "paiement", "carte bancaire", "stripe", "apple pay", "prelevement", "moyen de paiement", "virement"],
+    answer: "Le règlement se fait en ligne de façon sécurisée via Stripe (carte bancaire, Apple Pay…)&nbsp;: paiement unique pour le site vitrine, prélèvement mensuel automatique pour la formule à 45&nbsp;€ HT/mois."
+  },
+
+  /* ---- Fonctionnement du menu ---- */
+  {
+    keywords: ["modifier", "moi meme le menu", "changer menu", "changer un prix", "gerer", "gérer", "espace de gestion"],
+    answer: "Oui. Avec la formule Site + menu synchronisé, vous accédez à un espace de gestion pensé pour être simple et intuitif, sans compétence technique particulière."
+  },
+  {
+    keywords: ["mise a jour", "mis a jour", "automatique", "synchronise", "synchro", "temps reel"],
+    answer: "Oui. Chaque modification enregistrée dans votre espace de gestion est automatiquement répercutée sur votre site et sur le menu accessible par QR code."
+  },
+  {
+    keywords: ["qr code", "qr-code", "code qr", "reimprimer"],
+    answer: "Le QR code reste identique quand vous modifiez votre menu&nbsp;: il pointe vers votre menu numérique, dont le contenu se met à jour automatiquement. Pas besoin de réimprimer quoi que ce soit."
+  },
+  {
+    keywords: ["combien de modification", "limite", "nombre de changement", "illimite", "souvent"],
+    answer: "Aucune limite&nbsp;: vous modifiez votre carte aussi souvent que nécessaire, c'est compris dans l'abonnement."
+  },
+  {
+    keywords: ["allergene", "allergie", "vegetarien", "vegan", "sans gluten", "pictogramme", "fait maison"],
+    answer: "La carte numérique peut afficher les pictogrammes utiles&nbsp;: végétarien, allergènes, fait maison… Vos clients trouvent l'information sans avoir à demander."
+  },
+  {
+    keywords: ["materiel", "tablette", "ordinateur", "telephone pour gerer", "besoin d un pc"],
+    answer: "Aucun matériel particulier&nbsp;: l'espace de gestion fonctionne depuis n'importe quel navigateur, sur ordinateur, tablette ou téléphone."
+  },
+
+  /* ---- Le site vitrine ---- */
+  {
+    keywords: ["reservation", "réservation", "livraison", "uber eats", "deliveroo", "click and collect", "clic and collect"],
+    answer: "Le site vitrine peut intégrer vos liens de réservation et de livraison (module de réservation, Uber Eats, Deliveroo…) pour tout centraliser au même endroit."
+  },
+  {
+    keywords: ["google", "referencement", "seo", "trouve sur internet", "visible sur google", "maps"],
+    answer: "Votre site est construit pour être bien référencé&nbsp;: structure propre, rapide, adapté au mobile, avec les informations locales que Google met en avant (horaires, adresse, localisation)."
+  },
+  {
+    keywords: ["hebergement", "domaine", "nom de domaine", "serveur", "adresse du site"],
+    answer: "L'hébergement est inclus dans l'abonnement. Pour le nom de domaine (www.votre-restaurant.fr), nous vous accompagnons pour le réserver — et il reste votre propriété."
+  },
+  {
+    keywords: ["proprietaire", "appartient", "recuperer mon site", "mes donnees", "si je pars"],
+    answer: "Votre nom de domaine et vos contenus (textes, photos, carte) restent les vôtres. Les modalités précises en cas de départ sont détaillées dans le contrat."
+  },
+  {
+    keywords: ["plusieurs", "deuxieme etablissement", "deux restaurants", "multi", "chaine", "franchise"],
+    answer: "C'est possible&nbsp;! Chaque établissement a son site et sa carte. Contactez-nous pour un devis adapté à plusieurs établissements."
+  },
+  {
+    keywords: ["anglais", "langue", "traduction", "bilingue", "touriste"],
+    answer: "Oui, votre carte peut afficher les descriptions en français et en anglais — pratique en zone touristique. Parlons-en lors de notre premier échange."
+  },
+  {
+    keywords: ["delai", "délai", "combien de temps", "mettre en ligne", "rapidement", "pret quand"],
     answer: "Le délai dépend de la disponibilité de vos contenus et du nombre d'allers-retours de validation. Nous vous communiquons une estimation dès notre premier échange."
   },
   {
-    keywords: ["textes", "photos", "images", "contenu", "fournir"],
+    keywords: ["textes", "photos", "images", "contenu a fournir", "fournir"],
     answer: "Idéalement oui, afin que le site reflète fidèlement votre établissement. Nous pouvons vous accompagner si certains éléments manquent."
   },
+
+  /* ---- Contact & découverte ---- */
   {
-    keywords: ["tarif", "prix", "combien", "coute", "coûte"],
-    answer: "Deux formules : <strong>Site vitrine</strong> à 500&nbsp;€ HT en paiement unique, ou <strong>Site + menu synchronisé</strong> à 45&nbsp;€ HT/mois (sans frais de création, engagement initial de 12 mois)."
+    keywords: ["essai", "essayer", "tester", "demo", "démo", "demonstration", "voir un exemple"],
+    answer: 'Une démo interactive est disponible sur cette page, section «&nbsp;La démo&nbsp;» — vous pouvez manipuler l\'éditeur en direct. Et au premier échange, on vous montre tout en visio si vous préférez.'
   },
   {
-    keywords: ["bonjour", "salut", "hello", "coucou", "bonsoir"],
+    keywords: ["parler a quelqu un", "telephone", "appeler", "rendez vous", "humain", "conseiller", "rappeler"],
+    answer: 'Le plus simple&nbsp;: passez par la <a href="contact.html">page contact</a> — nous revenons vers vous rapidement pour échanger de vive voix.'
+  },
+  {
+    keywords: ["bonjour", "salut", "hello", "coucou", "bonsoir", "hey"],
     answer: "Bonjour&nbsp;! Je peux répondre à vos questions sur nos offres, les tarifs, les délais ou le fonctionnement du menu numérique. Que voulez-vous savoir&nbsp;?"
   },
   {
-    keywords: ["qui etes vous", "qui êtes-vous", "c'est quoi vikto", "vikto labs c'est quoi", "vous faites quoi"],
-    answer: "VIKTO LABS est un studio indépendant qui crée des sites vitrines et des menus numériques pour les restaurants et commerces de bouche."
+    keywords: ["merci", "parfait", "super", "top", "genial"],
+    answer: "Avec plaisir&nbsp;! Si vous voulez aller plus loin, direction la <a href=\"contact.html\">page contact</a> — on s'occupe du reste. 👋"
+  },
+  {
+    keywords: ["qui etes vous", "qui êtes-vous", "c est quoi vikto", "vikto labs c est quoi", "vous faites quoi", "presentez vous"],
+    answer: "VIKTO LABS est un studio indépendant qui crée des sites vitrines et des menus numériques pour les restaurants et commerces de bouche. Un seul menu à gérer, partout à afficher."
   }
 ];
 
 const CHATBOT_SUGGESTIONS = [
   "Quels sont vos tarifs ?",
   "Puis-je modifier mon menu moi-même ?",
-  "Quelle est la durée d'engagement ?"
+  "Et si je fais le site moi-même ?"
 ];
 
 function chatbotNormalize(str) {
