@@ -90,7 +90,206 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   injectContactEmail();
   injectStripeLinks();
+  initChatbot();
 });
+
+/* ==========================================================================
+   CHATBOT MAISON — 100% local, aucun service tiers, aucune clé à exposer.
+   Base de connaissance = le contenu FAQ du site. Recherche par mots-clés ;
+   si aucune correspondance suffisante, renvoie vers le formulaire de contact.
+   ========================================================================== */
+const CHATBOT_KB = [
+  {
+    keywords: ["modifier", "moi meme", "moi-même", "changer menu", "gerer", "gérer"],
+    answer: "Oui. Avec la formule Site + menu synchronisé, vous accédez à un espace de gestion pensé pour être simple et intuitif, sans compétence technique particulière."
+  },
+  {
+    keywords: ["mise a jour", "mis a jour", "automatique", "synchronise", "synchro"],
+    answer: "Oui. Chaque modification enregistrée dans votre espace de gestion est automatiquement répercutée sur votre site et sur le menu accessible par QR code."
+  },
+  {
+    keywords: ["qr code", "qr-code", "code qr"],
+    answer: "Le QR code reste identique quand vous modifiez votre menu : il pointe vers votre menu numérique, dont le contenu se met à jour automatiquement."
+  },
+  {
+    keywords: ["45", "abonnement", "mensuel", "mois", "comprend"],
+    answer: "L'abonnement à 45&nbsp;€ HT/mois (54&nbsp;€ TTC) comprend la création du site vitrine, le menu numérique modifiable, l'espace de gestion, la synchronisation, le QR code, l'hébergement et les mises à jour techniques."
+  },
+  {
+    keywords: ["frais", "creation", "création", "entree", "entrée", "cout initial"],
+    answer: "Non, pour la formule Site + menu synchronisé, il n'y a pas de frais de création à l'entrée."
+  },
+  {
+    keywords: ["engagement", "duree", "durée", "12 mois", "resilier", "résilier", "resiliation", "résiliation", "annuler"],
+    answer: "L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement. Les modalités précises de résiliation sont détaillées dans le contrat."
+  },
+  {
+    keywords: ["500", "site seul", "juste le site", "sans abonnement", "paiement unique"],
+    answer: "Oui. La formule Site vitrine seul, à 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC), est disponible sans abonnement ni menu numérique."
+  },
+  {
+    keywords: ["delai", "délai", "combien de temps", "mettre en ligne", "rapide", "duree creation"],
+    answer: "Le délai dépend de la disponibilité de vos contenus et du nombre d'allers-retours de validation. Nous vous communiquons une estimation dès notre premier échange."
+  },
+  {
+    keywords: ["textes", "photos", "images", "contenu", "fournir"],
+    answer: "Idéalement oui, afin que le site reflète fidèlement votre établissement. Nous pouvons vous accompagner si certains éléments manquent."
+  },
+  {
+    keywords: ["tarif", "prix", "combien", "coute", "coûte"],
+    answer: "Deux formules : <strong>Site vitrine</strong> à 500&nbsp;€ HT en paiement unique, ou <strong>Site + menu synchronisé</strong> à 45&nbsp;€ HT/mois (sans frais de création, engagement initial de 12 mois)."
+  },
+  {
+    keywords: ["bonjour", "salut", "hello", "coucou", "bonsoir"],
+    answer: "Bonjour&nbsp;! Je peux répondre à vos questions sur nos offres, les tarifs, les délais ou le fonctionnement du menu numérique. Que voulez-vous savoir&nbsp;?"
+  },
+  {
+    keywords: ["qui etes vous", "qui êtes-vous", "c'est quoi vikto", "vikto labs c'est quoi", "vous faites quoi"],
+    answer: "VIKTO LABS est un studio indépendant qui crée des sites vitrines et des menus numériques pour les restaurants et commerces de bouche."
+  }
+];
+
+const CHATBOT_SUGGESTIONS = [
+  "Quels sont vos tarifs ?",
+  "Puis-je modifier mon menu moi-même ?",
+  "Quelle est la durée d'engagement ?"
+];
+
+function chatbotNormalize(str) {
+  return str
+    .toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "") // enlève les accents
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function chatbotFindAnswer(userText) {
+  const normalized = chatbotNormalize(userText);
+  let best = null;
+  let bestScore = 0;
+  CHATBOT_KB.forEach((entry) => {
+    let score = 0;
+    entry.keywords.forEach((kw) => {
+      if (normalized.includes(chatbotNormalize(kw))) score += kw.split(" ").length;
+    });
+    if (score > bestScore) {
+      bestScore = score;
+      best = entry;
+    }
+  });
+  if (best && bestScore > 0) return best.answer;
+  return (
+    "Je n'ai pas de réponse toute faite pour cette question. " +
+    `Le plus simple : <a href="contact.html">contactez-nous directement</a>, ` +
+    "nous vous répondrons rapidement."
+  );
+}
+
+function initChatbot() {
+  const launcher = document.createElement("button");
+  launcher.className = "vl-chat-launcher";
+  launcher.type = "button";
+  launcher.setAttribute("aria-expanded", "false");
+  launcher.setAttribute("aria-controls", "vl-chat-panel");
+  launcher.setAttribute("aria-label", "Ouvrir l'assistant VIKTO LABS");
+  launcher.innerHTML =
+    '<svg class="vl-chat-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>' +
+    '<svg class="vl-chat-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+
+  const panel = document.createElement("div");
+  panel.className = "vl-chat-panel";
+  panel.id = "vl-chat-panel";
+  panel.setAttribute("role", "dialog");
+  panel.setAttribute("aria-label", "Assistant VIKTO LABS");
+  panel.innerHTML = `
+    <div class="vl-chat-header">
+      <span class="vl-chat-avatar" aria-hidden="true">V</span>
+      <span class="vl-chat-header-text"><strong>Assistant VIKTO LABS</strong><span>Répond en quelques secondes</span></span>
+    </div>
+    <div class="vl-chat-messages" id="vl-chat-messages" role="log" aria-live="polite"></div>
+    <div class="vl-chat-suggestions" id="vl-chat-suggestions"></div>
+    <form class="vl-chat-form" id="vl-chat-form">
+      <label for="vl-chat-input" class="skip-link">Votre question</label>
+      <input type="text" id="vl-chat-input" placeholder="Posez votre question…" autocomplete="off">
+      <button type="submit" aria-label="Envoyer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </form>
+  `;
+
+  document.body.appendChild(launcher);
+  document.body.appendChild(panel);
+
+  const messagesBox = panel.querySelector("#vl-chat-messages");
+  const suggestionsBox = panel.querySelector("#vl-chat-suggestions");
+  const form = panel.querySelector("#vl-chat-form");
+  const input = panel.querySelector("#vl-chat-input");
+  let started = false;
+
+  function addMessage(text, who) {
+    const el = document.createElement("div");
+    el.className = "vl-msg " + (who === "user" ? "vl-msg-user" : "vl-msg-bot");
+    el.innerHTML = text;
+    messagesBox.appendChild(el);
+    messagesBox.scrollTop = messagesBox.scrollHeight;
+  }
+
+  function renderSuggestions() {
+    suggestionsBox.innerHTML = "";
+    CHATBOT_SUGGESTIONS.forEach((s) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "vl-chat-chip";
+      chip.textContent = s;
+      chip.addEventListener("click", () => {
+        addMessage(s, "user");
+        addMessage(chatbotFindAnswer(s), "bot");
+      });
+      suggestionsBox.appendChild(chip);
+    });
+  }
+
+  function openPanel() {
+    panel.classList.add("is-open");
+    launcher.setAttribute("aria-expanded", "true");
+    if (!started) {
+      started = true;
+      addMessage(
+        "Bonjour&nbsp;! Je suis l'assistant VIKTO LABS. Posez-moi une question sur nos offres, les tarifs ou le fonctionnement du menu numérique.",
+        "bot"
+      );
+      renderSuggestions();
+    }
+    input.focus();
+  }
+
+  function closePanel() {
+    panel.classList.remove("is-open");
+    launcher.setAttribute("aria-expanded", "false");
+  }
+
+  launcher.addEventListener("click", () => {
+    if (panel.classList.contains("is-open")) closePanel();
+    else openPanel();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && panel.classList.contains("is-open")) {
+      closePanel();
+      launcher.focus();
+    }
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    addMessage(text.replace(/</g, "&lt;"), "user");
+    input.value = "";
+    setTimeout(() => addMessage(chatbotFindAnswer(text), "bot"), 300);
+  });
+}
 
 /* ---- Démo animée « vidéo » : timeline scriptée ----
    Fait avancer data-step 0→6 à intervalles ; barre de progression animée ;
