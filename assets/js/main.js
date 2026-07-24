@@ -131,7 +131,7 @@ const CHATBOT_KB = [
     answer: "Oui. La formule Site vitrine seul, à 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC), est disponible sans abonnement ni menu numérique."
   },
   {
-    keywords: ["engagement", "duree", "durée", "12 mois", "resilier", "résilier", "resiliation", "annuler", "arreter"],
+    keywords: ["engagement", "duree", "durée", "12 mois", "resili", "résili", "annuler", "arret", "arrêt", "stopper", "mettre fin", "me desengager"],
     answer: "L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement. Les modalités précises de résiliation sont détaillées dans le contrat."
   },
   {
@@ -145,7 +145,7 @@ const CHATBOT_KB = [
 
   /* ---- Fonctionnement du menu ---- */
   {
-    keywords: ["modifier", "moi meme le menu", "changer menu", "changer un prix", "gerer", "gérer", "espace de gestion"],
+    keywords: ["modifier", "moi meme le menu", "changer menu", "changer un prix", "changer mes prix", "changer les prix", "modifier les prix", "modifier mes prix", "changer un plat", "modifier un plat", "mettre a jour ma carte", "gerer", "gérer", "espace de gestion"],
     answer: "Oui. Avec la formule Site + menu synchronisé, vous accédez à un espace de gestion pensé pour être simple et intuitif, sans compétence technique particulière."
   },
   {
@@ -171,7 +171,7 @@ const CHATBOT_KB = [
 
   /* ---- Le site vitrine ---- */
   {
-    keywords: ["reservation", "réservation", "livraison", "uber eats", "deliveroo", "click and collect", "clic and collect"],
+    keywords: ["reserv", "réserv", "prendre une table", "livraison", "uber eats", "deliveroo", "the fork", "thefork", "click and collect", "clic and collect"],
     answer: "Le site vitrine peut intégrer vos liens de réservation et de livraison (module de réservation, Uber Eats, Deliveroo…) pour tout centraliser au même endroit."
   },
   {
@@ -191,7 +191,7 @@ const CHATBOT_KB = [
     answer: "C'est possible&nbsp;! Chaque établissement a son site et sa carte. Contactez-nous pour un devis adapté à plusieurs établissements."
   },
   {
-    keywords: ["anglais", "langue", "traduction", "bilingue", "touriste"],
+    keywords: ["anglais", "langue", "plusieurs langues", "en plusieurs langues", "traduction", "traduire", "bilingue", "touriste", "etranger", "étranger"],
     answer: "Oui, votre carte peut afficher les descriptions en français et en anglais — pratique en zone touristique. Parlons-en lors de notre premier échange."
   },
   {
@@ -205,7 +205,7 @@ const CHATBOT_KB = [
 
   /* ---- Contact & découverte ---- */
   {
-    keywords: ["essai", "essayer", "tester", "demo", "démo", "demonstration", "voir un exemple"],
+    keywords: ["essai", "essayer", "tester", "une demo", "une démo", "la demo", "la démo", "voir la demo", "demonstration", "démonstration", "voir un exemple"],
     answer: 'Une démo interactive est disponible sur cette page, section «&nbsp;La démo&nbsp;» — vous pouvez manipuler l\'éditeur en direct. Et au premier échange, on vous montre tout en visio si vous préférez.'
   },
   {
@@ -228,7 +228,7 @@ const CHATBOT_KB = [
 
   /* ---- Refonte & projets ---- */
   {
-    keywords: ["deja un site", "refaire mon site", "refaire notre site", "refonte", "ancien site", "moderniser", "changer de site", "site existant", "site vieillissant"],
+    keywords: ["deja un site", "refaire mon site", "refaire notre site", "refaire", "refonte", "ancien site", "vieux", "vieillot", "obsolete", "obsolète", "demode", "démodé", "moderniser", "changer de site", "site existant", "site vieillissant"],
     answer: "Bien sûr&nbsp;! Beaucoup d'établissements ont déjà un site vieillissant. Nous repartons sur une base propre, moderne et adaptée au mobile — et nous pouvons récupérer vos contenus existants."
   },
   {
@@ -244,7 +244,7 @@ const CHATBOT_KB = [
     answer: "Restaurants, bars, cafés, boulangeries, food trucks, traiteurs… si vous avez une carte et des clients, la solution s'adapte à votre établissement."
   },
   {
-    keywords: ["ou etes vous", "quelle region", "deplacement", "sur place", "loin de chez", "partout en france", "quelle ville"],
+    keywords: ["ou etes vous", "vous etes ou", "etes vous ou", "vous situez", "quelle region", "quel departement", "zone geographique", "secteur geographique", "deplacement", "sur place", "loin de chez", "partout en france", "en france", "quelle ville", "a distance"],
     answer: "Nous travaillons à distance avec des établissements partout en France — échanges en visio ou par téléphone. Rien n'oblige à se voir sur place (mais on veut bien venir goûter, si vous insistez 😄)."
   },
 
@@ -296,12 +296,34 @@ const CHATBOT_KB = [
     answer: 'Une démo interactive est visible sur cette page, section «&nbsp;La démo&nbsp;». Pour en voir plus, demandez-nous via la <a href="contact.html">page contact</a> — on vous montre tout.'
   },
   {
-    keywords: ["vente en ligne", "commander en ligne", "e commerce", "boutique en ligne", "click collect"],
+    keywords: ["vente en ligne", "vendre en ligne", "vendre mes produits", "vendre sur le site", "commander en ligne", "prendre les commandes", "e commerce", "boutique en ligne", "panier", "click collect"],
     answer: 'Le site vitrine n\'est pas une boutique en ligne, mais il peut pointer vers vos solutions de commande et de livraison existantes. Pour un besoin e-commerce complet, parlons-en via la <a href="contact.html">page contact</a>.'
   },
   {
-    keywords: ["quand repondez", "delai de reponse", "joignable", "vous repondez quand", "temps de reponse"],
+    keywords: ["quand repondez", "delai de reponse", "vous repondez en combien de temps", "repondez en combien de temps", "vous repondez sous combien", "joignable", "vous repondez quand", "temps de reponse", "vous rappelez quand"],
     answer: 'Nous répondons généralement sous 24&nbsp;h ouvrées. Le plus rapide&nbsp;: la <a href="contact.html">page contact</a>.'
+  }
+  ,
+  {
+    keywords: ["on commence", "par ou commencer", "comment ca se passe", "comment ça se passe", "demarrer", "démarrer", "premiere etape", "les etapes", "deroulement", "déroulement", "how to start", "on fait comment"],
+    answer: 'Simple&nbsp;: vous nous décrivez votre établissement via la <a href="contact.html">page contact</a>, nous échangeons sur vos besoins, puis nous vous proposons la formule adaptée. Ensuite&nbsp;: récupération de vos contenus, conception, validation avec vous, mise en ligne.'
+  },
+  {
+    keywords: ["contrat", "signer", "signature", "cgv", "conditions generales", "conditions générales", "papiers", "engagement ecrit", "devis a signer"],
+    answer: "Oui, la prestation est encadrée par un contrat clair qui reprend le périmètre, le tarif et les conditions (dont la résiliation). Il vous est transmis avant tout démarrage — rien ne commence sans votre accord écrit."
+  },
+  {
+    keywords: ["a qui appartient", "proprietaire du site", "propriétaire", "je suis proprietaire", "si je pars", "recuperer mon site", "récupérer", "garder mon site", "mon nom de domaine"],
+    answer: 'Votre contenu et votre nom de domaine vous appartiennent. Les modalités précises de reprise en fin de contrat sont détaillées dans le contrat — parlons-en via la <a href="contact.html">page contact</a>.'
+  },
+  {
+    keywords: ["j ai pas de photo", "pas de photos", "pas de texte", "je n ai rien", "rien de pret", "pas de contenu", "aucun visuel", "pas de logo"],
+    answer: "Ce n'est pas bloquant&nbsp;: nous partons de ce que vous avez et vous guidons sur ce qui manque. Beaucoup d'établissements démarrent avec quelques photos prises au téléphone — on fait avec, et bien."
+  }
+  ,
+  {
+    keywords: ["periode d essai", "période d'essai", "essai gratuit", "tester avant", "essayer avant", "avant de m engager", "avant de signer", "sans engagement au depart", "satisfait ou rembourse"],
+    answer: 'Le premier échange et la proposition sont gratuits et sans engagement, et la démo de cette page vous montre concrètement le produit. Pour les conditions d\'essai propres à votre situation, parlons-en via la <a href="contact.html">page contact</a>.'
   }
 ];
 
