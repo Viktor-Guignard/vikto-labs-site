@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const CHATBOT_KB = [
   /* ---- Les petits malins qui veulent faire le site eux-mêmes 😄 ---- */
   {
-    keywords: ["faire moi meme", "faire mon site", "site moi meme", "refaire le site", "faire pareil", "faire le meme", "copier votre", "tuto", "tutoriel", "apprendre a coder", "comment vous faites", "quelle techno", "technologie utilisee", "code source", "wordpress", "wix", "squarespace", "site gratuit"],
+    keywords: ["moi meme le site", "site moi meme", "le site moi meme", "refaire le site moi meme", "faire le site moi meme", "je fais le site", "je peux le faire", "tout seul", "sans vous", "faire pareil", "copier votre", "tuto", "tutoriel", "apprendre a coder", "comment vous faites", "quelle techno", "technologie utilisee", "code source", "wordpress", "wix", "squarespace", "site gratuit"],
     answer: "Excellente idée&nbsp;! La recette&nbsp;: apprenez le HTML, le CSS, le JavaScript, le DNS, l'hébergement, le référencement et le design. Comptez ~300 heures — le temps que votre carte change 40 fois. 😄 Ou alors&nbsp;: vous cuisinez, nous on code. 45&nbsp;€ HT/mois et c'est réglé."
   },
   {
@@ -223,6 +223,85 @@ const CHATBOT_KB = [
   {
     keywords: ["qui etes vous", "qui êtes-vous", "c est quoi vikto", "vikto labs c est quoi", "vous faites quoi", "presentez vous"],
     answer: "VIKTO LABS est un studio indépendant qui crée des sites vitrines et des menus numériques pour les restaurants et commerces de bouche. Un seul menu à gérer, partout à afficher."
+  }
+  ,
+
+  /* ---- Refonte & projets ---- */
+  {
+    keywords: ["deja un site", "refaire mon site", "refaire notre site", "refonte", "ancien site", "moderniser", "changer de site", "site existant", "site vieillissant"],
+    answer: "Bien sûr&nbsp;! Beaucoup d'établissements ont déjà un site vieillissant. Nous repartons sur une base propre, moderne et adaptée au mobile — et nous pouvons récupérer vos contenus existants."
+  },
+  {
+    keywords: ["devis", "sur mesure", "besoin specifique", "personnalise", "cas particulier"],
+    answer: 'Chaque projet démarre par un échange gratuit et sans engagement&nbsp;: décrivez votre établissement via la <a href="contact.html">page contact</a> et nous revenons vers vous avec une proposition adaptée.'
+  },
+  {
+    keywords: ["changer de formule", "passer a l abonnement", "upgrade", "evoluer", "ajouter le menu plus tard", "commencer petit"],
+    answer: "Oui, vous pouvez commencer par le site vitrine seul et passer à la formule avec menu synchronisé plus tard. Parlons-en&nbsp;!"
+  },
+  {
+    keywords: ["food truck", "foodtruck", "traiteur", "cave a vin", "epicerie", "brasserie", "pizzeria", "creperie", "glacier"],
+    answer: "Restaurants, bars, cafés, boulangeries, food trucks, traiteurs… si vous avez une carte et des clients, la solution s'adapte à votre établissement."
+  },
+  {
+    keywords: ["ou etes vous", "quelle region", "deplacement", "sur place", "loin de chez", "partout en france", "quelle ville"],
+    answer: "Nous travaillons à distance avec des établissements partout en France — échanges en visio ou par téléphone. Rien n'oblige à se voir sur place (mais on veut bien venir goûter, si vous insistez 😄)."
+  },
+
+  /* ---- Usage au quotidien ---- */
+  {
+    keywords: ["menu du jour", "plat du jour", "ardoise", "suggestion du jour", "change tous les jours"],
+    answer: "C'est LE cas d'usage idéal&nbsp;: vous changez votre plat du jour en 30 secondes depuis votre téléphone, et c'est à jour partout, tous les jours."
+  },
+  {
+    keywords: ["horaires", "coordonnees", "fermeture", "conges", "vacances", "jours feries"],
+    answer: "Oui, votre site affiche vos horaires, coordonnées et localisation — et vous pouvez les modifier vous-même (fermeture exceptionnelle, congés…)."
+  },
+  {
+    keywords: ["imprimer", "papier", "pdf", "version imprimee", "porte menu", "carte physique"],
+    answer: "Le menu numérique peut être exporté en PDF prêt à imprimer pour vos cartes papier — même contenu, zéro double saisie."
+  },
+  {
+    keywords: ["formation", "accompagnement", "pas doue", "nul en informatique", "trop complique", "difficile a utiliser", "y arriver"],
+    answer: "Pas d'inquiétude&nbsp;: l'espace de gestion est pensé pour être aussi simple qu'écrire un SMS, et nous vous montrons tout à la livraison. Si vous bloquez un jour, nous sommes là."
+  },
+  {
+    keywords: ["panne", "bug", "probleme technique", "marche pas", "fonctionne pas", "erreur sur le site", "assistance", "depannage"],
+    answer: 'La maintenance et les mises à jour techniques sont incluses dans l\'abonnement. Un souci&nbsp;? Écrivez-nous via la <a href="contact.html">page contact</a>, nous intervenons rapidement.'
+  },
+  {
+    keywords: ["application", "appli", "app mobile", "telecharger"],
+    answer: "Pas besoin d'appli&nbsp;: le menu s'ouvre instantanément dans le navigateur via le QR code, sans rien télécharger. Vos clients scannent, c'est ouvert."
+  },
+
+  /* ---- Visibilité & confiance ---- */
+  {
+    keywords: ["instagram", "facebook", "reseaux sociaux", "tiktok", "insta"],
+    answer: "Le site peut afficher vos liens vers Instagram et Facebook, et devient le point central que vous partagez sur vos réseaux."
+  },
+  {
+    keywords: ["avis google", "avis clients", "etoiles", "note google", "laisser un avis"],
+    answer: "Nous pouvons mettre en avant un lien vers votre fiche Google pour encourager les avis — et un site pro renforce déjà votre crédibilité."
+  },
+  {
+    keywords: ["statistique", "visites", "combien de gens", "frequentation", "analytics", "audience"],
+    answer: "Nous pouvons intégrer une mesure d'audience simple et respectueuse de la vie privée pour suivre les visites de votre site. À voir ensemble selon vos besoins."
+  },
+  {
+    keywords: ["rgpd", "donnees personnelles", "securite", "securise", "pirate", "https"],
+    answer: 'Le site est servi en HTTPS (connexion chiffrée) et ne collecte que le strict nécessaire, conformément au RGPD. Détails dans notre <a href="politique-confidentialite.html">politique de confidentialité</a>.'
+  },
+  {
+    keywords: ["references", "realisations", "portfolio", "vos clients", "exemples de sites", "deja fait"],
+    answer: 'Une démo interactive est visible sur cette page, section «&nbsp;La démo&nbsp;». Pour en voir plus, demandez-nous via la <a href="contact.html">page contact</a> — on vous montre tout.'
+  },
+  {
+    keywords: ["vente en ligne", "commander en ligne", "e commerce", "boutique en ligne", "click collect"],
+    answer: 'Le site vitrine n\'est pas une boutique en ligne, mais il peut pointer vers vos solutions de commande et de livraison existantes. Pour un besoin e-commerce complet, parlons-en via la <a href="contact.html">page contact</a>.'
+  },
+  {
+    keywords: ["quand repondez", "delai de reponse", "joignable", "vous repondez quand", "temps de reponse"],
+    answer: 'Nous répondons généralement sous 24&nbsp;h ouvrées. Le plus rapide&nbsp;: la <a href="contact.html">page contact</a>.'
   }
 ];
 
