@@ -229,7 +229,7 @@ const CHATBOT_KB = [
 const CHATBOT_SUGGESTIONS = [
   "Quels sont vos tarifs ?",
   "Puis-je modifier mon menu moi-même ?",
-  "Et si je fais le site moi-même ?"
+  "Quelle est la durée d'engagement ?"
 ];
 
 function chatbotNormalize(str) {
