@@ -90,358 +90,354 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   injectContactEmail();
   injectStripeLinks();
-  initChatbot();
+  initHelpCenter();
 });
 
 /* ==========================================================================
-   CHATBOT MAISON — 100% local, aucun service tiers, aucune clé à exposer.
-   Base de connaissance = le contenu FAQ du site. Recherche par mots-clés ;
-   si aucune correspondance suffisante, renvoie vers le formulaire de contact.
+   CENTRE D'AIDE — navigation par catégories, 100% local.
+   Pas de champ de saisie libre : le visiteur choisit sa question dans une
+   liste, donc la réponse est toujours exacte (aucun risque de « réponse à
+   côté », contrairement à un chatbot qui devine l'intention).
    ========================================================================== */
-const CHATBOT_KB = [
-  /* ---- Les petits malins qui veulent faire le site eux-mêmes 😄 ---- */
+const HELP_CENTER = [
   {
-    keywords: ["moi meme le site", "site moi meme", "le site moi meme", "refaire le site moi meme", "faire le site moi meme", "je fais le site", "je peux le faire", "tout seul", "sans vous", "faire pareil", "copier votre", "tuto", "tutoriel", "apprendre a coder", "comment vous faites", "quelle techno", "technologie utilisee", "code source", "wordpress", "wix", "squarespace", "site gratuit"],
-    answer: "Excellente idée&nbsp;! La recette&nbsp;: apprenez le HTML, le CSS, le JavaScript, le DNS, l'hébergement, le référencement et le design. Comptez ~300 heures — le temps que votre carte change 40 fois. 😄 Ou alors&nbsp;: vous cuisinez, nous on code. 45&nbsp;€ HT/mois et c'est réglé."
-  },
-  {
-    keywords: ["chatgpt", "intelligence artificielle", "une ia", "avec l ia", "ia peut le faire", "ia gratuite"],
-    answer: "Ah, l'IA&nbsp;! Elle fera sûrement un super brouillon… qu'il faudra héberger, brancher au nom de domaine, sécuriser, maintenir et resynchroniser à chaque changement de carte. Devinez qui fait déjà tout ça pour vous&nbsp;? 😉 Indice&nbsp;: vous êtes sur son site."
-  },
-  {
-    keywords: ["trop cher", "moins cher", "tarif eleve", "reduction", "remise", "negocier", "prix d ami"],
-    answer: "45&nbsp;€ HT/mois, c'est un plat du jour et demi. 😄 Pour un site pro + un menu toujours à jour + l'hébergement + le QR code, votre carte ne rougira plus jamais d'un prix périmé. On trouve ça honnête."
-  },
-
-  /* ---- Offres & tarifs ---- */
-  {
-    keywords: ["tarif", "prix", "combien", "coute", "coûte", "offre", "formule"],
-    answer: "Deux formules&nbsp;: <strong>Site vitrine</strong> à 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC), ou <strong>Site + menu synchronisé</strong> à 45&nbsp;€ HT/mois soit 54&nbsp;€ TTC (sans frais de création, engagement initial de 12 mois)."
-  },
-  {
-    keywords: ["45", "abonnement", "mensuel", "comprend", "inclus"],
-    answer: "L'abonnement à 45&nbsp;€ HT/mois (54&nbsp;€ TTC) comprend la création du site vitrine, le menu numérique modifiable, l'espace de gestion, la synchronisation, le QR code, l'hébergement et les mises à jour techniques."
-  },
-  {
-    keywords: ["frais", "creation", "création", "cout initial", "a l entree"],
-    answer: "Non, pour la formule Site + menu synchronisé, il n'y a pas de frais de création à l'entrée."
-  },
-  {
-    keywords: ["500", "site seul", "juste le site", "sans abonnement", "paiement unique", "une seule fois"],
-    answer: "Oui. La formule Site vitrine seul, à 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC), est disponible sans abonnement ni menu numérique."
-  },
-  {
-    keywords: ["engagement", "duree", "durée", "12 mois", "resili", "résili", "annuler", "arret", "arrêt", "stopper", "mettre fin", "me desengager"],
-    answer: "L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement. Les modalités précises de résiliation sont détaillées dans le contrat."
-  },
-  {
-    keywords: ["facture", "tva", "ht ou ttc", "hors taxe", "toutes taxes"],
-    answer: "Nos prix sont affichés HT, TVA de 20&nbsp;% en sus&nbsp;: 500&nbsp;€ HT soit 600&nbsp;€ TTC pour le site seul, 45&nbsp;€ HT soit 54&nbsp;€ TTC/mois pour la formule complète. Une facture conforme est fournie à chaque paiement."
-  },
-  {
-    keywords: ["payer", "paiement", "carte bancaire", "stripe", "apple pay", "prelevement", "moyen de paiement", "virement"],
-    answer: "Le règlement se fait en ligne de façon sécurisée via Stripe (carte bancaire, Apple Pay…)&nbsp;: paiement unique pour le site vitrine, prélèvement mensuel automatique pour la formule à 45&nbsp;€ HT/mois."
+    id: "tarifs",
+    icon: "01",
+    title: "Tarifs & formules",
+    teaser: "Prix, abonnement, engagement",
+    questions: [
+      {
+        q: "Quels sont vos tarifs ?",
+        a: "Deux formules&nbsp;:<br><br><strong>Site vitrine</strong> — 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC).<br><br><strong>Site + menu synchronisé</strong> — 45&nbsp;€ HT/mois soit 54&nbsp;€ TTC, sans frais de création, avec un engagement initial de 12 mois."
+      },
+      {
+        q: "Que comprend l'abonnement à 45 € HT/mois ?",
+        a: "La création du site vitrine, le menu numérique modifiable, l'espace de gestion, la synchronisation site&nbsp;↔&nbsp;QR code, le QR code lui-même, l'hébergement et les mises à jour techniques."
+      },
+      {
+        q: "Y a-t-il des frais de création ?",
+        a: "Non. Pour la formule Site + menu synchronisé, il n'y a aucun frais de création à l'entrée&nbsp;: vous payez uniquement l'abonnement mensuel."
+      },
+      {
+        q: "Puis-je prendre seulement le site vitrine ?",
+        a: "Oui. La formule Site vitrine seul, à 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC), est disponible sans abonnement ni menu numérique."
+      },
+      {
+        q: "Quelle est la durée d'engagement ?",
+        a: "L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement. Les modalités précises de résiliation sont détaillées dans le contrat."
+      },
+      {
+        q: "Vos prix sont-ils HT ou TTC ?",
+        a: "Nos prix sont affichés <strong>hors taxes</strong>, TVA de 20&nbsp;% en sus&nbsp;:<br><br>• Site vitrine&nbsp;: 500&nbsp;€ HT → <strong>600&nbsp;€ TTC</strong><br>• Abonnement&nbsp;: 45&nbsp;€ HT → <strong>54&nbsp;€ TTC</strong>/mois<br><br>Une facture conforme est fournie à chaque paiement."
+      },
+      {
+        q: "Puis-je passer du site seul à la formule complète ?",
+        a: "Oui. Vous pouvez commencer par le site vitrine seul et basculer plus tard vers la formule avec menu synchronisé. Parlons-en quand vous le souhaitez."
+      },
+      {
+        q: "Y a-t-il une période d'essai ?",
+        a: 'Le premier échange et la proposition sont gratuits et sans engagement, et la démo de cette page vous montre concrètement le produit. Pour les conditions propres à votre situation, écrivez-nous via la <a href="contact.html">page contact</a>.'
+      }
+    ]
   },
 
-  /* ---- Fonctionnement du menu ---- */
   {
-    keywords: ["modifier", "moi meme le menu", "changer menu", "changer un prix", "changer mes prix", "changer les prix", "modifier les prix", "modifier mes prix", "changer un plat", "modifier un plat", "mettre a jour ma carte", "gerer", "gérer", "espace de gestion"],
-    answer: "Oui. Avec la formule Site + menu synchronisé, vous accédez à un espace de gestion pensé pour être simple et intuitif, sans compétence technique particulière."
-  },
-  {
-    keywords: ["mise a jour", "mis a jour", "automatique", "synchronise", "synchro", "temps reel"],
-    answer: "Oui. Chaque modification enregistrée dans votre espace de gestion est automatiquement répercutée sur votre site et sur le menu accessible par QR code."
-  },
-  {
-    keywords: ["qr code", "qr-code", "code qr", "reimprimer"],
-    answer: "Le QR code reste identique quand vous modifiez votre menu&nbsp;: il pointe vers votre menu numérique, dont le contenu se met à jour automatiquement. Pas besoin de réimprimer quoi que ce soit."
-  },
-  {
-    keywords: ["combien de modification", "limite", "nombre de changement", "illimite", "souvent"],
-    answer: "Aucune limite&nbsp;: vous modifiez votre carte aussi souvent que nécessaire, c'est compris dans l'abonnement."
-  },
-  {
-    keywords: ["allergene", "allergie", "vegetarien", "vegan", "sans gluten", "pictogramme", "fait maison"],
-    answer: "La carte numérique peut afficher les pictogrammes utiles&nbsp;: végétarien, allergènes, fait maison… Vos clients trouvent l'information sans avoir à demander."
-  },
-  {
-    keywords: ["materiel", "tablette", "ordinateur", "telephone pour gerer", "besoin d un pc"],
-    answer: "Aucun matériel particulier&nbsp;: l'espace de gestion fonctionne depuis n'importe quel navigateur, sur ordinateur, tablette ou téléphone."
-  },
-
-  /* ---- Le site vitrine ---- */
-  {
-    keywords: ["reserv", "réserv", "prendre une table", "livraison", "uber eats", "deliveroo", "the fork", "thefork", "click and collect", "clic and collect"],
-    answer: "Le site vitrine peut intégrer vos liens de réservation et de livraison (module de réservation, Uber Eats, Deliveroo…) pour tout centraliser au même endroit."
-  },
-  {
-    keywords: ["google", "referencement", "seo", "trouve sur internet", "visible sur google", "maps"],
-    answer: "Votre site est construit pour être bien référencé&nbsp;: structure propre, rapide, adapté au mobile, avec les informations locales que Google met en avant (horaires, adresse, localisation)."
-  },
-  {
-    keywords: ["hebergement", "domaine", "nom de domaine", "serveur", "adresse du site"],
-    answer: "L'hébergement est inclus dans l'abonnement. Pour le nom de domaine (www.votre-restaurant.fr), nous vous accompagnons pour le réserver — et il reste votre propriété."
-  },
-  {
-    keywords: ["proprietaire", "appartient", "recuperer mon site", "mes donnees", "si je pars"],
-    answer: "Votre nom de domaine et vos contenus (textes, photos, carte) restent les vôtres. Les modalités précises en cas de départ sont détaillées dans le contrat."
-  },
-  {
-    keywords: ["plusieurs", "deuxieme etablissement", "deux restaurants", "multi", "chaine", "franchise"],
-    answer: "C'est possible&nbsp;! Chaque établissement a son site et sa carte. Contactez-nous pour un devis adapté à plusieurs établissements."
-  },
-  {
-    keywords: ["anglais", "langue", "plusieurs langues", "en plusieurs langues", "traduction", "traduire", "bilingue", "touriste", "etranger", "étranger"],
-    answer: "Oui, votre carte peut afficher les descriptions en français et en anglais — pratique en zone touristique. Parlons-en lors de notre premier échange."
-  },
-  {
-    keywords: ["delai", "délai", "combien de temps", "mettre en ligne", "rapidement", "pret quand"],
-    answer: "Le délai dépend de la disponibilité de vos contenus et du nombre d'allers-retours de validation. Nous vous communiquons une estimation dès notre premier échange."
-  },
-  {
-    keywords: ["textes", "photos", "images", "contenu a fournir", "fournir"],
-    answer: "Idéalement oui, afin que le site reflète fidèlement votre établissement. Nous pouvons vous accompagner si certains éléments manquent."
+    id: "menu",
+    icon: "02",
+    title: "Le menu numérique",
+    teaser: "Modifications, QR code, synchro",
+    questions: [
+      {
+        q: "Puis-je modifier mon menu moi-même ?",
+        a: "Oui. Vous accédez à un espace de gestion pensé pour être simple et intuitif&nbsp;: vous modifiez plats, descriptions, prix et catégories sans aucune compétence technique."
+      },
+      {
+        q: "Le menu se met-il à jour automatiquement ?",
+        a: "Oui. Chaque modification enregistrée dans votre espace de gestion est automatiquement répercutée sur votre site <em>et</em> sur le menu accessible par QR code. Une seule saisie, partout à jour."
+      },
+      {
+        q: "Le QR code change-t-il quand je modifie la carte ?",
+        a: "Non, jamais. Le QR code reste identique&nbsp;: il pointe vers votre menu numérique, dont seul le contenu évolue. Vos supports imprimés restent donc valables."
+      },
+      {
+        q: "Mon plat du jour change quotidiennement, c'est gérable ?",
+        a: "C'est le cas d'usage idéal&nbsp;: vous modifiez votre plat du jour en quelques secondes depuis votre téléphone, et c'est à jour partout, tous les jours."
+      },
+      {
+        q: "Puis-je indiquer les allergènes et les plats végétariens ?",
+        a: "Oui. Chaque plat peut porter une description et des pictogrammes (végétarien, spécialité maison, allergènes…)&nbsp;: vous les gérez vous-même depuis l'espace de gestion."
+      },
+      {
+        q: "Puis-je masquer un plat indisponible ?",
+        a: "Oui, en un clic. Un produit épuisé peut être masqué immédiatement, puis réaffiché quand il revient — plus de client qui commande un plat que vous n'avez plus."
+      },
+      {
+        q: "Peut-on avoir la carte en plusieurs langues ?",
+        a: "C'est possible, notamment pour les établissements touristiques. Précisez-nous les langues souhaitées lors de notre échange."
+      },
+      {
+        q: "Puis-je imprimer ma carte sur papier ?",
+        a: "Oui&nbsp;: le menu numérique s'exporte en PDF prêt à imprimer pour vos cartes papier. Même contenu, zéro double saisie."
+      },
+      {
+        q: "Mes clients doivent-ils télécharger une application ?",
+        a: "Non. Le menu s'ouvre instantanément dans le navigateur du téléphone via le QR code&nbsp;: rien à installer, rien à créer comme compte."
+      }
+    ]
   },
 
-  /* ---- Contact & découverte ---- */
   {
-    keywords: ["essai", "essayer", "tester", "une demo", "une démo", "la demo", "la démo", "voir la demo", "demonstration", "démonstration", "voir un exemple"],
-    answer: 'Une démo interactive est disponible sur cette page, section «&nbsp;La démo&nbsp;» — vous pouvez manipuler l\'éditeur en direct. Et au premier échange, on vous montre tout en visio si vous préférez.'
-  },
-  {
-    keywords: ["parler a quelqu un", "telephone", "appeler", "rendez vous", "humain", "conseiller", "rappeler"],
-    answer: 'Le plus simple&nbsp;: passez par la <a href="contact.html">page contact</a> — nous revenons vers vous rapidement pour échanger de vive voix.'
-  },
-  {
-    keywords: ["bonjour", "salut", "hello", "coucou", "bonsoir", "hey"],
-    answer: "Bonjour&nbsp;! Je peux répondre à vos questions sur nos offres, les tarifs, les délais ou le fonctionnement du menu numérique. Que voulez-vous savoir&nbsp;?"
-  },
-  {
-    keywords: ["merci", "parfait", "super", "top", "genial"],
-    answer: "Avec plaisir&nbsp;! Si vous voulez aller plus loin, direction la <a href=\"contact.html\">page contact</a> — on s'occupe du reste. 👋"
-  },
-  {
-    keywords: ["qui etes vous", "qui êtes-vous", "c est quoi vikto", "vikto labs c est quoi", "vous faites quoi", "presentez vous"],
-    answer: "VIKTO LABS est un studio indépendant qui crée des sites vitrines et des menus numériques pour les restaurants et commerces de bouche. Un seul menu à gérer, partout à afficher."
-  }
-  ,
-
-  /* ---- Refonte & projets ---- */
-  {
-    keywords: ["deja un site", "refaire mon site", "refaire notre site", "refaire", "refonte", "ancien site", "vieux", "vieillot", "obsolete", "obsolète", "demode", "démodé", "moderniser", "changer de site", "site existant", "site vieillissant"],
-    answer: "Bien sûr&nbsp;! Beaucoup d'établissements ont déjà un site vieillissant. Nous repartons sur une base propre, moderne et adaptée au mobile — et nous pouvons récupérer vos contenus existants."
-  },
-  {
-    keywords: ["devis", "sur mesure", "besoin specifique", "personnalise", "cas particulier"],
-    answer: 'Chaque projet démarre par un échange gratuit et sans engagement&nbsp;: décrivez votre établissement via la <a href="contact.html">page contact</a> et nous revenons vers vous avec une proposition adaptée.'
-  },
-  {
-    keywords: ["changer de formule", "passer a l abonnement", "upgrade", "evoluer", "ajouter le menu plus tard", "commencer petit"],
-    answer: "Oui, vous pouvez commencer par le site vitrine seul et passer à la formule avec menu synchronisé plus tard. Parlons-en&nbsp;!"
-  },
-  {
-    keywords: ["food truck", "foodtruck", "traiteur", "cave a vin", "epicerie", "brasserie", "pizzeria", "creperie", "glacier"],
-    answer: "Restaurants, bars, cafés, boulangeries, food trucks, traiteurs… si vous avez une carte et des clients, la solution s'adapte à votre établissement."
-  },
-  {
-    keywords: ["ou etes vous", "vous etes ou", "etes vous ou", "vous situez", "quelle region", "quel departement", "zone geographique", "secteur geographique", "deplacement", "sur place", "loin de chez", "partout en france", "en france", "quelle ville", "a distance"],
-    answer: "Nous travaillons à distance avec des établissements partout en France — échanges en visio ou par téléphone. Rien n'oblige à se voir sur place (mais on veut bien venir goûter, si vous insistez 😄)."
+    id: "site",
+    icon: "03",
+    title: "Le site vitrine",
+    teaser: "Contenu, réservation, visibilité",
+    questions: [
+      {
+        q: "Que contient le site vitrine ?",
+        a: "La présentation de votre établissement, vos horaires et coordonnées, une galerie photos, votre localisation, l'intégration de votre menu et les liens utiles (réservation, livraison). Le tout adapté aux téléphones."
+      },
+      {
+        q: "J'ai déjà un site, pouvez-vous le refaire ?",
+        a: "Bien sûr. Beaucoup d'établissements ont un site vieillissant&nbsp;: nous repartons sur une base propre, moderne et adaptée au mobile, en récupérant vos contenus existants."
+      },
+      {
+        q: "Peut-on réserver une table depuis le site ?",
+        a: "Le site peut intégrer vos liens de réservation et de livraison existants (TheFork, Uber Eats, Deliveroo, votre propre système…). Vos clients y accèdent en un clic."
+      },
+      {
+        q: "Mes horaires et fermetures sont-ils modifiables ?",
+        a: "Oui. Horaires, coordonnées et fermetures exceptionnelles (congés, jours fériés) se modifient depuis votre espace, sans nous solliciter."
+      },
+      {
+        q: "Le site apparaîtra-t-il sur Google ?",
+        a: "Le site est conçu pour être correctement lu par les moteurs de recherche (structure, contenus, rapidité). Le référencement dépend ensuite de votre activité et de la concurrence locale&nbsp;; nous mettons toutes les bases techniques en place."
+      },
+      {
+        q: "Peut-on lier mes réseaux sociaux et mes avis Google ?",
+        a: "Oui. Le site peut afficher vos liens Instagram et Facebook, ainsi qu'un lien vers votre fiche Google pour encourager les avis clients."
+      },
+      {
+        q: "Puis-je vendre en ligne depuis le site ?",
+        a: 'Le site vitrine n\'est pas une boutique en ligne, mais il peut pointer vers vos solutions de commande et de livraison existantes. Pour un besoin e-commerce complet, parlons-en via la <a href="contact.html">page contact</a>.'
+      },
+      {
+        q: "J'ai plusieurs établissements, comment ça marche ?",
+        a: 'Chaque établissement a son propre site et sa propre carte. Pour plusieurs adresses, décrivez-nous votre organisation via la <a href="contact.html">page contact</a> et nous adapterons la proposition.'
+      }
+    ]
   },
 
-  /* ---- Usage au quotidien ---- */
   {
-    keywords: ["menu du jour", "plat du jour", "ardoise", "suggestion du jour", "change tous les jours"],
-    answer: "C'est LE cas d'usage idéal&nbsp;: vous changez votre plat du jour en 30 secondes depuis votre téléphone, et c'est à jour partout, tous les jours."
-  },
-  {
-    keywords: ["horaires", "coordonnees", "fermeture", "conges", "vacances", "jours feries"],
-    answer: "Oui, votre site affiche vos horaires, coordonnées et localisation — et vous pouvez les modifier vous-même (fermeture exceptionnelle, congés…)."
-  },
-  {
-    keywords: ["imprimer", "papier", "pdf", "version imprimee", "porte menu", "carte physique"],
-    answer: "Le menu numérique peut être exporté en PDF prêt à imprimer pour vos cartes papier — même contenu, zéro double saisie."
-  },
-  {
-    keywords: ["formation", "accompagnement", "pas doue", "nul en informatique", "trop complique", "difficile a utiliser", "y arriver"],
-    answer: "Pas d'inquiétude&nbsp;: l'espace de gestion est pensé pour être aussi simple qu'écrire un SMS, et nous vous montrons tout à la livraison. Si vous bloquez un jour, nous sommes là."
-  },
-  {
-    keywords: ["panne", "bug", "probleme technique", "marche pas", "fonctionne pas", "erreur sur le site", "assistance", "depannage"],
-    answer: 'La maintenance et les mises à jour techniques sont incluses dans l\'abonnement. Un souci&nbsp;? Écrivez-nous via la <a href="contact.html">page contact</a>, nous intervenons rapidement.'
-  },
-  {
-    keywords: ["application", "appli", "app mobile", "telecharger"],
-    answer: "Pas besoin d'appli&nbsp;: le menu s'ouvre instantanément dans le navigateur via le QR code, sans rien télécharger. Vos clients scannent, c'est ouvert."
+    id: "demarrage",
+    icon: "04",
+    title: "Mise en route",
+    teaser: "Étapes, délais, contenus, contrat",
+    questions: [
+      {
+        q: "Comment ça commence, concrètement ?",
+        a: 'Vous nous décrivez votre établissement via la <a href="contact.html">page contact</a>. Nous échangeons sur vos besoins, puis nous vous proposons la formule adaptée. Ensuite&nbsp;: récupération de vos contenus, conception, validation avec vous, mise en ligne.'
+      },
+      {
+        q: "Combien de temps pour être en ligne ?",
+        a: "Le délai dépend surtout de la disponibilité de vos contenus (textes, photos, carte) et du nombre d'allers-retours de validation. Nous vous communiquons une estimation dès notre premier échange."
+      },
+      {
+        q: "Dois-je fournir les textes et les photos ?",
+        a: "Idéalement oui, pour que le site reflète fidèlement votre établissement. Mais nous vous accompagnons si certains éléments manquent."
+      },
+      {
+        q: "Je n'ai ni photos ni textes prêts, c'est bloquant ?",
+        a: "Pas du tout. Nous partons de ce que vous avez et vous guidons sur ce qui manque. Beaucoup d'établissements démarrent avec quelques photos prises au téléphone — et le résultat tient très bien la route."
+      },
+      {
+        q: "Y a-t-il un contrat à signer ?",
+        a: "Oui. La prestation est encadrée par un contrat clair reprenant le périmètre, le tarif et les conditions (dont la résiliation). Il vous est transmis avant tout démarrage&nbsp;: rien ne commence sans votre accord écrit."
+      },
+      {
+        q: "À qui appartiennent le site et le nom de domaine ?",
+        a: 'Votre contenu et votre nom de domaine vous appartiennent. Les modalités précises de reprise en fin de contrat sont détaillées dans le contrat — nous en parlons ouvertement dès le départ.'
+      },
+      {
+        q: "Où êtes-vous situés ? Travaillez-vous à distance ?",
+        a: "Nous travaillons à distance avec des établissements partout en France&nbsp;: échanges en visio ou par téléphone. Rien n'oblige à se rencontrer sur place (mais nous ne refusons jamais une invitation à goûter&nbsp;😄)."
+      }
+    ]
   },
 
-  /* ---- Visibilité & confiance ---- */
   {
-    keywords: ["instagram", "facebook", "reseaux sociaux", "tiktok", "insta"],
-    answer: "Le site peut afficher vos liens vers Instagram et Facebook, et devient le point central que vous partagez sur vos réseaux."
+    id: "quotidien",
+    icon: "05",
+    title: "Au quotidien",
+    teaser: "Prise en main, pannes, sécurité",
+    questions: [
+      {
+        q: "Je ne suis pas à l'aise avec l'informatique…",
+        a: "L'espace de gestion est pensé pour être aussi simple qu'écrire un message, et nous vous montrons tout à la livraison. Si vous bloquez un jour, nous restons joignables."
+      },
+      {
+        q: "Que se passe-t-il en cas de panne ?",
+        a: 'La maintenance et les mises à jour techniques sont incluses dans l\'abonnement. En cas de souci, écrivez-nous via la <a href="contact.html">page contact</a>&nbsp;: nous intervenons rapidement.'
+      },
+      {
+        q: "Le site est-il sécurisé ? Et le RGPD ?",
+        a: 'Le site est servi en HTTPS (connexion chiffrée) et ne collecte que le strict nécessaire, conformément au RGPD. Les détails figurent dans notre <a href="politique-confidentialite.html">politique de confidentialité</a>.'
+      },
+      {
+        q: "Puis-je suivre le nombre de visites ?",
+        a: "Nous pouvons intégrer une mesure d'audience simple et respectueuse de la vie privée pour suivre la fréquentation de votre site. À définir ensemble selon vos besoins."
+      },
+      {
+        q: "Sous quel délai répondez-vous ?",
+        a: 'Nous répondons généralement sous 24&nbsp;h ouvrées. Le plus rapide reste la <a href="contact.html">page contact</a>.'
+      },
+      {
+        q: "Que se passe-t-il si je résilie ?",
+        a: "L'abonnement s'arrête selon les modalités prévues au contrat. Nous ne pratiquons pas de rétention&nbsp;: les conditions vous sont communiquées clairement avant signature."
+      }
+    ]
   },
+
   {
-    keywords: ["avis google", "avis clients", "etoiles", "note google", "laisser un avis"],
-    answer: "Nous pouvons mettre en avant un lien vers votre fiche Google pour encourager les avis — et un site pro renforce déjà votre crédibilité."
-  },
-  {
-    keywords: ["statistique", "visites", "combien de gens", "frequentation", "analytics", "audience"],
-    answer: "Nous pouvons intégrer une mesure d'audience simple et respectueuse de la vie privée pour suivre les visites de votre site. À voir ensemble selon vos besoins."
-  },
-  {
-    keywords: ["rgpd", "donnees personnelles", "securite", "securise", "pirate", "https"],
-    answer: 'Le site est servi en HTTPS (connexion chiffrée) et ne collecte que le strict nécessaire, conformément au RGPD. Détails dans notre <a href="politique-confidentialite.html">politique de confidentialité</a>.'
-  },
-  {
-    keywords: ["references", "realisations", "portfolio", "vos clients", "exemples de sites", "deja fait"],
-    answer: 'Une démo interactive est visible sur cette page, section «&nbsp;La démo&nbsp;». Pour en voir plus, demandez-nous via la <a href="contact.html">page contact</a> — on vous montre tout.'
-  },
-  {
-    keywords: ["vente en ligne", "vendre en ligne", "vendre mes produits", "vendre sur le site", "commander en ligne", "prendre les commandes", "e commerce", "boutique en ligne", "panier", "click collect"],
-    answer: 'Le site vitrine n\'est pas une boutique en ligne, mais il peut pointer vers vos solutions de commande et de livraison existantes. Pour un besoin e-commerce complet, parlons-en via la <a href="contact.html">page contact</a>.'
-  },
-  {
-    keywords: ["quand repondez", "delai de reponse", "vous repondez en combien de temps", "repondez en combien de temps", "vous repondez sous combien", "joignable", "vous repondez quand", "temps de reponse", "vous rappelez quand"],
-    answer: 'Nous répondons généralement sous 24&nbsp;h ouvrées. Le plus rapide&nbsp;: la <a href="contact.html">page contact</a>.'
-  }
-  ,
-  {
-    keywords: ["on commence", "par ou commencer", "comment ca se passe", "comment ça se passe", "demarrer", "démarrer", "premiere etape", "les etapes", "deroulement", "déroulement", "how to start", "on fait comment"],
-    answer: 'Simple&nbsp;: vous nous décrivez votre établissement via la <a href="contact.html">page contact</a>, nous échangeons sur vos besoins, puis nous vous proposons la formule adaptée. Ensuite&nbsp;: récupération de vos contenus, conception, validation avec vous, mise en ligne.'
-  },
-  {
-    keywords: ["contrat", "signer", "signature", "cgv", "conditions generales", "conditions générales", "papiers", "engagement ecrit", "devis a signer"],
-    answer: "Oui, la prestation est encadrée par un contrat clair qui reprend le périmètre, le tarif et les conditions (dont la résiliation). Il vous est transmis avant tout démarrage — rien ne commence sans votre accord écrit."
-  },
-  {
-    keywords: ["a qui appartient", "proprietaire du site", "propriétaire", "je suis proprietaire", "si je pars", "recuperer mon site", "récupérer", "garder mon site", "mon nom de domaine"],
-    answer: 'Votre contenu et votre nom de domaine vous appartiennent. Les modalités précises de reprise en fin de contrat sont détaillées dans le contrat — parlons-en via la <a href="contact.html">page contact</a>.'
-  },
-  {
-    keywords: ["j ai pas de photo", "pas de photos", "pas de texte", "je n ai rien", "rien de pret", "pas de contenu", "aucun visuel", "pas de logo"],
-    answer: "Ce n'est pas bloquant&nbsp;: nous partons de ce que vous avez et vous guidons sur ce qui manque. Beaucoup d'établissements démarrent avec quelques photos prises au téléphone — on fait avec, et bien."
-  }
-  ,
-  {
-    keywords: ["periode d essai", "période d'essai", "essai gratuit", "tester avant", "essayer avant", "avant de m engager", "avant de signer", "sans engagement au depart", "satisfait ou rembourse"],
-    answer: 'Le premier échange et la proposition sont gratuits et sans engagement, et la démo de cette page vous montre concrètement le produit. Pour les conditions d\'essai propres à votre situation, parlons-en via la <a href="contact.html">page contact</a>.'
+    id: "pour-qui",
+    icon: "06",
+    title: "Est-ce fait pour moi ?",
+    teaser: "Types d'établissements, démo",
+    questions: [
+      {
+        q: "Quels types d'établissements accompagnez-vous ?",
+        a: "Restaurants, bars, cafés et salons de thé, boulangeries et pâtisseries, snacks et fast-foods, food trucks, traiteurs, caves à vin… Si vous avez une carte et des clients, la solution s'adapte."
+      },
+      {
+        q: "Puis-je voir une démonstration ?",
+        a: "Oui&nbsp;! La section «&nbsp;La démo&nbsp;» de cette page contient une démonstration animée de 8&nbsp;secondes, puis notre éditeur de carte réel, que vous pouvez manipuler en direct."
+      },
+      {
+        q: "Avez-vous des réalisations à montrer ?",
+        a: 'Une démonstration interactive est visible sur cette page. Pour en voir davantage, demandez-nous via la <a href="contact.html">page contact</a> — nous vous montrons volontiers nos travaux.'
+      },
+      {
+        q: "Et si je faisais le site moi-même ?",
+        a: "Excellente idée&nbsp;! La recette&nbsp;: apprenez le HTML, le CSS, le JavaScript, le DNS, l'hébergement, le référencement et le design. Comptez ~300&nbsp;heures — le temps que votre carte change 40&nbsp;fois. 😄<br><br>Ou alors&nbsp;: vous cuisinez, nous on code. 45&nbsp;€ HT/mois et c'est réglé."
+      },
+      {
+        q: "Une IA ne pourrait-elle pas le faire gratuitement ?",
+        a: "L'IA fera sûrement un très bon brouillon… qu'il faudra ensuite héberger, brancher au nom de domaine, sécuriser, maintenir et resynchroniser à chaque changement de carte. Devinez qui fait déjà tout ça pour vous&nbsp;? 😉"
+      },
+      {
+        q: "45 € par mois, n'est-ce pas cher ?",
+        a: "C'est le prix d'un plat du jour et demi. 😄 Pour un site professionnel, un menu toujours à jour, l'hébergement et le QR code inclus, votre carte ne montrera plus jamais un prix périmé. Nous trouvons ça honnête."
+      }
+    ]
   }
 ];
 
-const CHATBOT_SUGGESTIONS = [
-  "Quels sont vos tarifs ?",
-  "Puis-je modifier mon menu moi-même ?",
-  "Quelle est la durée d'engagement ?"
-];
-
-function chatbotNormalize(str) {
-  return str
-    .toLowerCase()
-    .normalize("NFD").replace(/[̀-ͯ]/g, "") // enlève les accents
-    .replace(/[^a-z0-9\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function chatbotFindAnswer(userText) {
-  const normalized = chatbotNormalize(userText);
-  let best = null;
-  let bestScore = 0;
-  CHATBOT_KB.forEach((entry) => {
-    let score = 0;
-    entry.keywords.forEach((kw) => {
-      if (normalized.includes(chatbotNormalize(kw))) score += kw.split(" ").length;
-    });
-    if (score > bestScore) {
-      bestScore = score;
-      best = entry;
-    }
-  });
-  if (best && bestScore > 0) return best.answer;
-  return (
-    "Je n'ai pas de réponse toute faite pour cette question. " +
-    `Le plus simple : <a href="contact.html">contactez-nous directement</a>, ` +
-    "nous vous répondrons rapidement."
-  );
-}
-
-function initChatbot() {
+function initHelpCenter() {
   const launcher = document.createElement("button");
   launcher.className = "vl-chat-launcher";
   launcher.type = "button";
   launcher.setAttribute("aria-expanded", "false");
-  launcher.setAttribute("aria-controls", "vl-chat-panel");
-  launcher.setAttribute("aria-label", "Ouvrir l'assistant VIKTO LABS");
+  launcher.setAttribute("aria-controls", "vl-help-panel");
+  launcher.setAttribute("aria-label", "Ouvrir le centre d'aide VIKTO LABS");
   launcher.innerHTML =
-    '<svg class="vl-chat-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>' +
+    '<svg class="vl-chat-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' +
     '<svg class="vl-chat-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
   const panel = document.createElement("div");
   panel.className = "vl-chat-panel";
-  panel.id = "vl-chat-panel";
+  panel.id = "vl-help-panel";
   panel.setAttribute("role", "dialog");
-  panel.setAttribute("aria-label", "Assistant VIKTO LABS");
-  panel.innerHTML = `
-    <div class="vl-chat-header">
-      <span class="vl-chat-avatar" aria-hidden="true">V</span>
-      <span class="vl-chat-header-text"><strong>Assistant VIKTO LABS</strong><span>Répond en quelques secondes</span></span>
-    </div>
-    <div class="vl-chat-messages" id="vl-chat-messages" role="log" aria-live="polite"></div>
-    <div class="vl-chat-suggestions" id="vl-chat-suggestions"></div>
-    <form class="vl-chat-form" id="vl-chat-form">
-      <label for="vl-chat-input" class="skip-link">Votre question</label>
-      <input type="text" id="vl-chat-input" placeholder="Posez votre question…" autocomplete="off">
-      <button type="submit" aria-label="Envoyer">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </button>
-    </form>
-  `;
+  panel.setAttribute("aria-label", "Centre d'aide VIKTO LABS");
+  panel.innerHTML =
+    '<div class="vl-chat-header">' +
+      '<button type="button" class="vl-help-back" aria-label="Retour">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>' +
+      '</button>' +
+      '<span class="vl-chat-header-text"><strong id="vl-help-title">Centre d\'aide</strong><span id="vl-help-sub">Choisissez un sujet</span></span>' +
+    '</div>' +
+    '<div class="vl-help-body" id="vl-help-body" tabindex="-1"></div>' +
+    '<div class="vl-help-footer">' +
+      '<span>Vous ne trouvez pas votre réponse&nbsp;?</span>' +
+      '<a href="contact.html" class="btn btn-primary btn-block">Nous écrire</a>' +
+    '</div>';
 
   document.body.appendChild(launcher);
   document.body.appendChild(panel);
 
-  const messagesBox = panel.querySelector("#vl-chat-messages");
-  const suggestionsBox = panel.querySelector("#vl-chat-suggestions");
-  const form = panel.querySelector("#vl-chat-form");
-  const input = panel.querySelector("#vl-chat-input");
-  let started = false;
+  const body = panel.querySelector("#vl-help-body");
+  const titleEl = panel.querySelector("#vl-help-title");
+  const subEl = panel.querySelector("#vl-help-sub");
+  const backBtn = panel.querySelector(".vl-help-back");
+  let view = { level: "home", cat: null };
 
-  function addMessage(text, who) {
-    const el = document.createElement("div");
-    el.className = "vl-msg " + (who === "user" ? "vl-msg-user" : "vl-msg-bot");
-    el.innerHTML = text;
-    messagesBox.appendChild(el);
-    messagesBox.scrollTop = messagesBox.scrollHeight;
+  function setHeader(title, sub, showBack) {
+    titleEl.textContent = title;
+    subEl.textContent = sub;
+    backBtn.style.display = showBack ? "flex" : "none";
   }
 
-  function renderSuggestions() {
-    suggestionsBox.innerHTML = "";
-    CHATBOT_SUGGESTIONS.forEach((s) => {
-      const chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "vl-chat-chip";
-      chip.textContent = s;
-      chip.addEventListener("click", () => {
-        addMessage(s, "user");
-        addMessage(chatbotFindAnswer(s), "bot");
-      });
-      suggestionsBox.appendChild(chip);
+  function renderHome() {
+    view = { level: "home", cat: null };
+    setHeader("Centre d'aide", "Choisissez un sujet", false);
+    body.innerHTML = "";
+    HELP_CENTER.forEach((cat) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "vl-help-cat";
+      item.innerHTML =
+        '<span class="vl-help-cat-icon" aria-hidden="true">' + cat.icon + "</span>" +
+        '<span class="vl-help-cat-text"><strong>' + cat.title + "</strong><span>" + cat.teaser + "</span></span>" +
+        '<span class="vl-help-chevron" aria-hidden="true">›</span>';
+      item.addEventListener("click", () => renderCategory(cat));
+      body.appendChild(item);
     });
+    body.scrollTop = 0;
   }
+
+  function renderCategory(cat) {
+    view = { level: "cat", cat: cat };
+    setHeader(cat.title, cat.questions.length + " questions", true);
+    body.innerHTML = "";
+    cat.questions.forEach((item) => {
+      const q = document.createElement("button");
+      q.type = "button";
+      q.className = "vl-help-q";
+      q.innerHTML = '<span>' + item.q + '</span><span class="vl-help-chevron" aria-hidden="true">›</span>';
+      q.addEventListener("click", () => renderAnswer(cat, item));
+      body.appendChild(q);
+    });
+    body.scrollTop = 0;
+  }
+
+  function renderAnswer(cat, item) {
+    view = { level: "answer", cat: cat };
+    setHeader(cat.title, "Réponse", true);
+    body.innerHTML =
+      '<p class="vl-help-answer-q">' + item.q + "</p>" +
+      '<div class="vl-help-answer">' + item.a + "</div>" +
+      '<p class="vl-help-more">Autres questions de cette rubrique&nbsp;:</p>';
+    cat.questions
+      .filter((other) => other.q !== item.q)
+      .forEach((other) => {
+        const q = document.createElement("button");
+        q.type = "button";
+        q.className = "vl-help-q vl-help-q-small";
+        q.innerHTML = '<span>' + other.q + '</span><span class="vl-help-chevron" aria-hidden="true">›</span>';
+        q.addEventListener("click", () => renderAnswer(cat, other));
+        body.appendChild(q);
+      });
+    body.scrollTop = 0;
+  }
+
+  backBtn.addEventListener("click", () => {
+    if (view.level === "answer") renderCategory(view.cat);
+    else renderHome();
+  });
 
   function openPanel() {
     panel.classList.add("is-open");
     launcher.setAttribute("aria-expanded", "true");
-    if (!started) {
-      started = true;
-      addMessage(
-        "Bonjour&nbsp;! Je suis l'assistant VIKTO LABS. Posez-moi une question sur nos offres, les tarifs ou le fonctionnement du menu numérique.",
-        "bot"
-      );
-      renderSuggestions();
-    }
-    input.focus();
+    body.focus();
   }
-
   function closePanel() {
     panel.classList.remove("is-open");
     launcher.setAttribute("aria-expanded", "false");
@@ -459,14 +455,7 @@ function initChatbot() {
     }
   });
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const text = input.value.trim();
-    if (!text) return;
-    addMessage(text.replace(/</g, "&lt;"), "user");
-    input.value = "";
-    setTimeout(() => addMessage(chatbotFindAnswer(text), "bot"), 300);
-  });
+  renderHome();
 }
 
 /* ---- Démo animée « vidéo » : timeline scriptée ----
