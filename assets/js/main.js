@@ -922,7 +922,7 @@ function initPremiumFX() {
       document.body.classList.remove("vl-locked");
       reveal();
       setTimeout(() => loader.remove(), 950);
-    }, 2150);
+    }, 2900);
   } else {
     reveal();
   }
