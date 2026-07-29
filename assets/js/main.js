@@ -894,8 +894,8 @@ function initPremiumFX() {
   }
 
   /* --- Intro rideau : accueil, 1× par session --- */
-  const wantsLoader = document.body.classList.contains("home") &&
-    !reduce && !sessionStorage.getItem("vl-intro");
+  const wantsLoader = document.body.classList.contains("home") && !reduce &&
+    (!sessionStorage.getItem("vl-intro") || location.search.includes("intro"));
   const reveal = () => {
     requestAnimationFrame(() => document.body.classList.add("vl-ready"));
   };
@@ -904,15 +904,25 @@ function initPremiumFX() {
     const loader = document.createElement("div");
     loader.className = "vl-loader";
     loader.setAttribute("aria-hidden", "true");
-    loader.innerHTML = '<img src="assets/images/vikto-labs-dark.svg" alt="">';
+    // Séquence : DESIGN. → BUILD. → LAUNCH. → wordmark VIK TO + barre rouge
+    loader.innerHTML =
+      '<div class="vl-intro">' +
+        '<span class="vl-intro-word w1">DESIGN.</span>' +
+        '<span class="vl-intro-word w2">BUILD.</span>' +
+        '<span class="vl-intro-word w3">LAUNCH.</span>' +
+        '<div class="vl-intro-logo">' +
+          '<span class="vik">VIK</span><span class="to">TO</span>' +
+          '<span class="bar"></span>' +
+        '</div>' +
+      '</div>';
     document.body.appendChild(loader);
     document.body.classList.add("vl-locked");
     setTimeout(() => {
       loader.classList.add("is-done");
       document.body.classList.remove("vl-locked");
       reveal();
-      setTimeout(() => loader.remove(), 900);
-    }, 950);
+      setTimeout(() => loader.remove(), 950);
+    }, 2150);
   } else {
     reveal();
   }

@@ -2011,13 +2011,72 @@ textarea:focus-visible {
   justify-content: center;
   transition: transform 0.75s cubic-bezier(0.77, 0, 0.18, 1);
 }
-.vl-loader img {
-  height: 84px;
-  animation: vl-loader-in 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+/* Liseré rouge au bord bas du rideau : il balaie l'écran quand il se lève */
+.vl-loader::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 4px;
+  background: var(--color-red);
 }
-@keyframes vl-loader-in {
-  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+
+/* ---- Séquence d'intro : DESIGN. BUILD. LAUNCH. → VIK TO ---- */
+.vl-intro {
+  position: relative;
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vl-intro-word {
+  position: absolute;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 5vw, 3.2rem);
+  letter-spacing: 0.14em;
+  color: var(--color-white);
+  opacity: 0;
+  animation: vl-word 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.vl-intro-word.w2 { animation-delay: 0.38s; }
+.vl-intro-word.w3 { animation-delay: 0.76s; color: var(--color-red); }
+@keyframes vl-word {
+  0%   { opacity: 0; transform: translateY(16px); }
+  30%  { opacity: 1; transform: none; }
+  78%  { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-12px); }
+}
+
+.vl-intro-logo {
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 9vw, 5.5rem);
+  letter-spacing: -0.01em;
+  opacity: 0;
+  transform: scale(0.94);
+  animation: vl-logo-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.14s forwards;
+}
+.vl-intro-logo .vik { color: var(--color-white); }
+.vl-intro-logo .to { color: var(--color-red); }
+.vl-intro-logo .bar {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -0.16em;
+  height: 0.07em;
+  background: var(--color-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: vl-bar 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.42s forwards;
+}
+@keyframes vl-logo-in {
   to { opacity: 1; transform: none; }
+}
+@keyframes vl-bar {
+  to { transform: scaleX(1); }
 }
 .vl-loader.is-done { transform: translateY(-100%); }
 body.vl-locked { overflow: hidden; }
