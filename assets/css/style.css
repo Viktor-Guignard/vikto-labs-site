@@ -2048,35 +2048,25 @@ textarea:focus-visible {
   100% { opacity: 0; transform: translateY(-12px); }
 }
 
+/* Le VRAI logo officiel (SVG) — jamais de reconstruction typographique */
 .vl-intro-logo {
   position: absolute;
-  display: flex;
-  align-items: baseline;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: clamp(2.6rem, 9vw, 5.5rem);
-  letter-spacing: -0.01em;
   opacity: 0;
-  transform: scale(0.94);
-  animation: vl-logo-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.14s forwards;
+  transform: scale(0.96);
+  animation: vl-logo-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.14s forwards;
 }
-.vl-intro-logo .vik { color: var(--color-black); }
-.vl-intro-logo .to { color: var(--color-red); }
-.vl-intro-logo .bar {
-  position: absolute;
-  left: 0; right: 0;
-  bottom: -0.16em;
-  height: 0.07em;
-  background: var(--color-red);
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: vl-bar 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.42s forwards;
+/* Le logo se dévoile par un balayage vertical, comme s'il se dessinait */
+.vl-intro-logo img {
+  height: clamp(96px, 21vh, 176px);
+  width: auto;
+  clip-path: inset(0 0 100% 0);
+  animation: vl-logo-wipe 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.2s forwards;
+}
+@keyframes vl-logo-wipe {
+  to { clip-path: inset(0 0 0 0); }
 }
 @keyframes vl-logo-in {
   to { opacity: 1; transform: none; }
-}
-@keyframes vl-bar {
-  to { transform: scaleX(1); }
 }
 .vl-loader.is-done { transform: translateY(-100%); }
 body.vl-locked { overflow: hidden; }
