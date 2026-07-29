@@ -911,8 +911,7 @@ function initPremiumFX() {
         '<span class="vl-intro-word w2">BUILD.</span>' +
         '<span class="vl-intro-word w3">LAUNCH.</span>' +
         '<div class="vl-intro-logo">' +
-          '<span class="vik">VIK</span><span class="to">TO</span>' +
-          '<span class="bar"></span>' +
+          '<img src="assets/images/vikto-labs.svg" alt="">' +
         '</div>' +
       '</div>';
     document.body.appendChild(loader);
