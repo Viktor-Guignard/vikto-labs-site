@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
   injectContactEmail();
   injectStripeLinks();
   initHelpCenter();
+  initPremiumFX();
 });
 
 /* ==========================================================================
@@ -831,5 +832,165 @@ function initContactForm() {
     statusBox.setAttribute("data-state", state);
     statusBox.setAttribute("role", state === "error" ? "alert" : "status");
     statusBox.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+/* ==========================================================================
+   FINITION « GRANDE AGENCE » — intro, chorégraphie hero, curseur, boutons
+   magnétiques, parallax, compteurs de prix, barre de progression.
+   Chaque effet vérifie ses prérequis (reduced motion, pointer fine).
+   ========================================================================== */
+function initPremiumFX() {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+  /* --- Barre de progression de lecture --- */
+  const bar = document.createElement("div");
+  bar.className = "vl-progress";
+  bar.setAttribute("aria-hidden", "true");
+  document.body.appendChild(bar);
+  const updateBar = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = "scaleX(" + (max > 0 ? window.scrollY / max : 0) + ")";
+  };
+  window.addEventListener("scroll", updateBar, { passive: true });
+  updateBar();
+
+  /* --- Chorégraphie du hero (accueil uniquement) --- */
+  const heroH1 = document.querySelector(".hero h1");
+  if (heroH1 && !reduce) {
+    document.body.classList.add("vl-choreo");
+    // Découpe le H1 en mots masqués, en préservant le <em> rouge.
+    const splitWords = (node) => {
+      const frag = document.createDocumentFragment();
+      node.childNodes.forEach((child) => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          child.textContent.split(/(\s+)/).forEach((part) => {
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); }
+            else if (part) {
+              const w = document.createElement("span");
+              w.className = "w";
+              const inner = document.createElement("span");
+              inner.textContent = part;
+              w.appendChild(inner);
+              frag.appendChild(w);
+            }
+          });
+        } else if (child.nodeType === Node.ELEMENT_NODE) {
+          const clone = child.cloneNode(false);
+          clone.appendChild(splitWords(child));
+          frag.appendChild(clone);
+        }
+      });
+      return frag;
+    };
+    const words = splitWords(heroH1);   // construit la copie découpée
+    heroH1.replaceChildren(words);       // puis remplace le contenu d'origine
+    // décalage progressif des mots
+    heroH1.querySelectorAll(".w > span").forEach((sp, i) => {
+      sp.style.transitionDelay = (0.05 + i * 0.055) + "s";
+    });
+  }
+
+  /* --- Intro rideau : accueil, 1× par session --- */
+  const wantsLoader = document.body.classList.contains("home") &&
+    !reduce && !sessionStorage.getItem("vl-intro");
+  const reveal = () => {
+    requestAnimationFrame(() => document.body.classList.add("vl-ready"));
+  };
+  if (wantsLoader) {
+    sessionStorage.setItem("vl-intro", "1");
+    const loader = document.createElement("div");
+    loader.className = "vl-loader";
+    loader.setAttribute("aria-hidden", "true");
+    loader.innerHTML = '<img src="assets/images/vikto-labs-dark.svg" alt="">';
+    document.body.appendChild(loader);
+    document.body.classList.add("vl-locked");
+    setTimeout(() => {
+      loader.classList.add("is-done");
+      document.body.classList.remove("vl-locked");
+      reveal();
+      setTimeout(() => loader.remove(), 900);
+    }, 950);
+  } else {
+    reveal();
+  }
+
+  /* --- Curseur custom avec inertie (desktop) --- */
+  if (finePointer && !reduce) {
+    const cur = document.createElement("div");
+    cur.className = "vl-cursor";
+    cur.setAttribute("aria-hidden", "true");
+    document.body.appendChild(cur);
+    let mx = -100, my = -100, cx = -100, cy = -100, shown = false;
+    document.addEventListener("mousemove", (e) => {
+      mx = e.clientX; my = e.clientY;
+      if (!shown) { shown = true; cur.classList.add("is-visible"); }
+    });
+    document.addEventListener("mouseleave", () => {
+      shown = false; cur.classList.remove("is-visible");
+    });
+    const INTERACTIVE = "a, button, [role='button'], input, select, textarea, .faq-question";
+    document.addEventListener("mouseover", (e) => {
+      if (e.target.closest(INTERACTIVE)) cur.classList.add("is-active");
+    });
+    document.addEventListener("mouseout", (e) => {
+      if (e.target.closest(INTERACTIVE)) cur.classList.remove("is-active");
+    });
+    (function loop() {
+      cx += (mx - cx) * 0.18;
+      cy += (my - cy) * 0.18;
+      cur.style.left = cx + "px";
+      cur.style.top = cy + "px";
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* --- Boutons magnétiques (desktop) --- */
+  if (finePointer && !reduce) {
+    document.querySelectorAll(".btn-primary, .btn-dark").forEach((btn) => {
+      btn.addEventListener("mousemove", (e) => {
+        const r = btn.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+        const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+        btn.style.transform = "translate(" + (dx * 5) + "px," + (dy * 4 - 2) + "px)";
+      });
+      btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
+    });
+  }
+
+  /* --- Parallax léger sur le visuel du hero --- */
+  const stage = document.querySelector(".hero .demo-stage");
+  if (stage && !reduce) {
+    window.addEventListener("scroll", () => {
+      const y = Math.min(window.scrollY, 900);
+      stage.style.transform = "translateY(" + (y * -0.07) + "px)";
+    }, { passive: true });
+  }
+
+  /* --- Compteurs de prix (0 → 500 / 0 → 45 au premier affichage) --- */
+  if (!reduce && "IntersectionObserver" in window) {
+    document.querySelectorAll(".price-value").forEach((el) => {
+      const textNode = el.firstChild;
+      if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+      const m = textNode.textContent.match(/^(\d+)([\s\S]*)$/);
+      if (!m) return;
+      const target = parseInt(m[1], 10);
+      const suffix = m[2];
+      const io = new IntersectionObserver((entries) => {
+        if (!entries.some((en) => en.isIntersecting)) return;
+        io.disconnect();
+        const t0 = performance.now();
+        const DUR = 900;
+        const tick = (t) => {
+          const p = Math.min((t - t0) / DUR, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          textNode.textContent = Math.round(target * eased) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }, { threshold: 0.6 });
+      io.observe(el);
+    });
   }
 }
