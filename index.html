@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/css/style.css?v=20260718t">
+<link rel="stylesheet" href="assets/css/style.css?v=20260718u">
 
 <script type="application/ld+json">
 {
@@ -125,6 +125,70 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ SCÈNE CINÉMATIQUE (le scroll contrôle le temps) ============
+       Sticky plein écran : le restaurateur change un prix sur son téléphone,
+       publie, et l'ardoise du restaurant + le téléphone du client se mettent
+       à jour (volet type panneau de gare). Réversible au scroll. ============ -->
+  <section class="story" id="story" aria-label="Démonstration : un prix modifié sur le téléphone se met à jour sur l'ardoise et le menu QR">
+    <div class="story-stage" data-reveal-none>
+      <div class="story-caption" aria-hidden="true">
+        <span class="cap cap-1">Vous changez un prix.</span>
+        <span class="cap cap-2">Un geste.</span>
+        <span class="cap cap-3">À jour <em>partout.</em></span>
+      </div>
+
+      <div class="story-scene">
+        <!-- L'ardoise du restaurant -->
+        <div class="board" aria-hidden="true">
+          <div class="board-head">LE PETIT BISTROT<span>· la carte ·</span></div>
+          <ul class="board-list">
+            <li><span>Burrata di Puglia</span><i></i><b>14&nbsp;€</b></li>
+            <li class="board-live"><span>Risotto aux champignons</span><i></i>
+              <b class="board-price"><span class="flap"><span class="flap-inner"><span class="flap-face flap-front">12</span><span class="flap-face flap-back">13</span></span></span>&nbsp;€</b>
+            </li>
+            <li><span>Tarte au citron</span><i></i><b>7&nbsp;€</b></li>
+            <li><span>Café gourmand</span><i></i><b>9&nbsp;€</b></li>
+          </ul>
+          <div class="board-note">— fait maison —</div>
+        </div>
+
+        <!-- Téléphones -->
+        <div class="story-devices" aria-hidden="true">
+          <div class="story-phone">
+            <div class="sp-notch"></div>
+            <div class="sp-screen">
+              <p class="sp-title">Espace de gestion</p>
+              <div class="sp-field">
+                <span>Risotto aux champignons</span>
+                <strong class="sp-price"><span class="sp-old">12</span><span class="sp-new">13</span><span class="sp-caret"></span>&nbsp;€</strong>
+              </div>
+              <div class="sp-actions">
+                <span class="sp-publish">Publier</span>
+                <span class="sp-sent">✓ Publié</span>
+              </div>
+            </div>
+            <span class="sp-wave"></span>
+            <span class="sp-wave sp-wave-2"></span>
+            <span class="sp-finger"></span>
+          </div>
+
+          <div class="story-client">
+            <div class="sp-notch"></div>
+            <div class="sc-screen">
+              <p class="sc-head">MENU <span>· QR ·</span></p>
+              <div class="sc-row sc-live"><span>Risotto champ.</span><b class="sc-swap"><span class="a">12&nbsp;€</span><span class="b">13&nbsp;€</span></b></div>
+              <div class="sc-row"><span>Tarte citron</span><b>7&nbsp;€</b></div>
+              <div class="sc-row"><span>Café gourmand</span><b>9&nbsp;€</b></div>
+              <div class="sc-toast">↻ Menu à jour</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-progressbar" aria-hidden="true"><span></span></div>
     </div>
   </section>
 
@@ -236,7 +300,7 @@
               <span class="browser-url">vikto-labs · éditeur de carte</span>
             </div>
             <div class="live-viewport" data-live>
-              <iframe src="https://viktor-guignard.github.io/vikto-labs-cafe/?v=20260718t" title="Éditeur de carte VIKTO LABS — démo" loading="lazy"></iframe>
+              <iframe src="https://viktor-guignard.github.io/vikto-labs-cafe/?v=20260718u" title="Éditeur de carte VIKTO LABS — démo" loading="lazy"></iframe>
               <button type="button" class="live-overlay" aria-label="Activer l'interaction avec la démo">
                 <span class="live-overlay-btn">▶ Cliquer pour tester</span>
               </button>
@@ -656,6 +720,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20260718t"></script>
+<script src="assets/js/main.js?v=20260718u"></script>
 </body>
 </html>
