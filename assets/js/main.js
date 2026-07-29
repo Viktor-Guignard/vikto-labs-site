@@ -894,13 +894,16 @@ function initPremiumFX() {
   }
 
   /* --- Intro rideau : accueil, 1× par session --- */
-  const wantsLoader = document.body.classList.contains("home") && !reduce &&
-    (!sessionStorage.getItem("vl-intro") || location.search.includes("intro"));
+  // L'intro rejoue à CHAQUE chargement de l'accueil (choix de Viktor).
+  const wantsLoader = document.body.classList.contains("home") && !reduce;
+  // Révèle le hero. On passe par rAF pour que les transitions démarrent
+  // proprement, MAIS avec un filet en setTimeout : dans un onglet en
+  // arrière-plan, rAF est gelé et la page resterait vide sans ce garde-fou.
   const reveal = () => {
     requestAnimationFrame(() => document.body.classList.add("vl-ready"));
+    setTimeout(() => document.body.classList.add("vl-ready"), 80);
   };
   if (wantsLoader) {
-    sessionStorage.setItem("vl-intro", "1");
     const loader = document.createElement("div");
     loader.className = "vl-loader";
     loader.setAttribute("aria-hidden", "true");
@@ -916,12 +919,24 @@ function initPremiumFX() {
       '</div>';
     document.body.appendChild(loader);
     document.body.classList.add("vl-locked");
-    setTimeout(() => {
+
+    // Fin de l'intro : automatique après la séquence, ou immédiate si le
+    // visiteur agit (clic, touche, molette, toucher). Idempotent.
+    let closed = false;
+    const finish = () => {
+      if (closed) return;
+      closed = true;
+      clearTimeout(timer);
       loader.classList.add("is-done");
       document.body.classList.remove("vl-locked");
       reveal();
       setTimeout(() => loader.remove(), 950);
-    }, 2900);
+    };
+    const timer = setTimeout(finish, 2900);
+    loader.addEventListener("click", finish);
+    document.addEventListener("keydown", finish, { once: true });
+    window.addEventListener("wheel", finish, { once: true, passive: true });
+    window.addEventListener("touchstart", finish, { once: true, passive: true });
   } else {
     reveal();
   }
