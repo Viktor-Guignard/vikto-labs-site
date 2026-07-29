@@ -2004,7 +2004,7 @@ textarea:focus-visible {
 .vl-loader {
   position: fixed;
   inset: 0;
-  background: var(--color-black);
+  background: var(--color-ivory);
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -2035,7 +2035,7 @@ textarea:focus-visible {
   font-weight: 700;
   font-size: clamp(1.6rem, 5vw, 3.2rem);
   letter-spacing: 0.14em;
-  color: var(--color-white);
+  color: var(--color-black);
   opacity: 0;
   animation: vl-word 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
@@ -2060,7 +2060,7 @@ textarea:focus-visible {
   transform: scale(0.94);
   animation: vl-logo-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.14s forwards;
 }
-.vl-intro-logo .vik { color: var(--color-white); }
+.vl-intro-logo .vik { color: var(--color-black); }
 .vl-intro-logo .to { color: var(--color-red); }
 .vl-intro-logo .bar {
   position: absolute;
