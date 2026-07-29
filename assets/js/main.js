@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
   injectStripeLinks();
   initHelpCenter();
   initPremiumFX();
+  initStoryScene();
 });
 
 /* ==========================================================================
@@ -993,4 +994,37 @@ function initPremiumFX() {
       io.observe(el);
     });
   }
+}
+
+/* ==========================================================================
+   SCÈNE CINÉMATIQUE — le scroll pilote le temps.
+   La progression dans la section .story (340vh) est convertie en phases
+   cumulatives p1→p4 ; les transitions CSS rendent le tout réversible
+   quand on remonte. Reduced motion : état final statique (géré en CSS).
+   ========================================================================== */
+function initStoryScene() {
+  const story = document.getElementById("story");
+  if (!story) return;
+  const stage = story.querySelector(".story-stage");
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const rect = story.getBoundingClientRect();
+    const total = story.offsetHeight - window.innerHeight;
+    const p = Math.min(Math.max(total > 0 ? -rect.top / total : 0, 0), 1);
+    stage.style.setProperty("--p", p.toFixed(4));
+    stage.classList.toggle("p1", p > 0.16);
+    stage.classList.toggle("p2", p > 0.44);
+    stage.classList.toggle("p3", p > 0.60);
+    stage.classList.toggle("p4", p > 0.82);
+  };
+  const onScroll = () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
+  window.__storyUpdate = update; // exposé pour le débogage / les tests
 }
