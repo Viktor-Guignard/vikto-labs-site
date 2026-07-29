@@ -1979,3 +1979,132 @@ textarea:focus-visible {
   .vl-chat-panel { right: 12px; bottom: 84px; width: calc(100vw - 24px); }
   .vl-chat-launcher { right: 14px; bottom: 14px; }
 }
+
+/* ==========================================================================
+   FINITION « GRANDE AGENCE » — intro, curseur, magnétisme, parallax,
+   compteurs, barre de progression, wordmark géant.
+   Tous les effets sont désactivés avec prefers-reduced-motion et le
+   curseur/magnétisme n'existent que sur desktop (pointer: fine).
+   ========================================================================== */
+
+/* ---- Barre de progression de lecture ---- */
+.vl-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--color-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 1200;
+  pointer-events: none;
+}
+
+/* ---- Intro rideau (créée en JS, 1× par session) ---- */
+.vl-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--color-black);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.75s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.vl-loader img {
+  height: 84px;
+  animation: vl-loader-in 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes vl-loader-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+.vl-loader.is-done { transform: translateY(-100%); }
+body.vl-locked { overflow: hidden; }
+
+/* ---- Chorégraphie d'entrée du hero (classes posées en JS) ---- */
+.hero h1 .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.12em;   /* évite de rogner les descendantes (j, à jour.) */
+  margin-bottom: -0.12em;
+}
+.hero h1 .w > span {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+body.vl-ready .hero h1 .w > span { transform: none; }
+
+body.vl-choreo .hero .lead,
+body.vl-choreo .hero .hero-support,
+body.vl-choreo .hero .hero-actions,
+body.vl-choreo .hero .hero-visual {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+body.vl-choreo.vl-ready .hero .lead,
+body.vl-choreo.vl-ready .hero .hero-support,
+body.vl-choreo.vl-ready .hero .hero-actions,
+body.vl-choreo.vl-ready .hero .hero-visual {
+  opacity: 1;
+  transform: none;
+}
+body.vl-choreo.vl-ready .hero .lead { transition-delay: 0.45s; }
+body.vl-choreo.vl-ready .hero .hero-support { transition-delay: 0.58s; }
+body.vl-choreo.vl-ready .hero .hero-actions { transition-delay: 0.7s; }
+body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
+
+/* ---- Curseur custom (desktop uniquement, natif conservé) ---- */
+.vl-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--color-red);
+  pointer-events: none;
+  z-index: 3000;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, background 0.25s ease,
+              border-color 0.25s ease, opacity 0.3s ease;
+  opacity: 0;
+  border: 1.5px solid transparent;
+}
+.vl-cursor.is-visible { opacity: 0.9; }
+.vl-cursor.is-active {
+  width: 42px; height: 42px;
+  background: transparent;
+  border-color: var(--color-red);
+}
+
+/* ---- Wordmark géant du footer ---- */
+.footer-wordmark {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 11.5vw, 9.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px #46403f;
+  user-select: none;
+  margin-top: var(--space-lg);
+  transition: color 0.5s ease;
+}
+.footer-wordmark:hover { color: rgba(255, 255, 255, 0.05); }
+.footer-wordmark em {
+  font-style: normal;
+  -webkit-text-stroke-color: var(--color-red);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vl-loader { display: none; }
+  .hero h1 .w > span { transform: none; }
+  body.vl-choreo .hero .lead,
+  body.vl-choreo .hero .hero-support,
+  body.vl-choreo .hero .hero-actions,
+  body.vl-choreo .hero .hero-visual { opacity: 1; transform: none; }
+  .vl-cursor { display: none; }
+}
