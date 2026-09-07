@@ -1021,34 +1021,67 @@ function initPremiumFX() {
 }
 
 /* ==========================================================================
-   SCÈNE CINÉMATIQUE — le scroll pilote le temps.
-   La progression dans la section .story (340vh) est convertie en phases
-   cumulatives p1→p4 ; les transitions CSS rendent le tout réversible
-   quand on remonte. Reduced motion : état final statique (géré en CSS).
+   SCÈNE CINÉMATIQUE — la séquence se joue d'elle-même.
+   Elle était auparavant pilotée par le scroll sur 340vh : il fallait
+   dérouler trois écrans et demi pour la voir en entier. Elle démarre
+   désormais seule dès que la section entre dans l'écran, sur une durée
+   fixe, et se rejoue si l'on revient dessus. Les seuils de phases p1→p4
+   sont inchangés, donc le CSS n'a pas bougé.
+   Reduced motion : état final statique (géré en CSS).
    ========================================================================== */
+const STORY_DUREE = 7000; // ms pour dérouler la séquence entière
+
 function initStoryScene() {
   const story = document.getElementById("story");
   if (!story) return;
   const stage = story.querySelector(".story-stage");
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  let ticking = false;
-  const update = () => {
-    ticking = false;
-    const rect = story.getBoundingClientRect();
-    const total = story.offsetHeight - window.innerHeight;
-    const p = Math.min(Math.max(total > 0 ? -rect.top / total : 0, 0), 1);
+  let debut = null;
+  let image = null;
+
+  const poser = (p) => {
     stage.style.setProperty("--p", p.toFixed(4));
     stage.classList.toggle("p1", p > 0.16);
     stage.classList.toggle("p2", p > 0.44);
     stage.classList.toggle("p3", p > 0.60);
     stage.classList.toggle("p4", p > 0.82);
   };
-  const onScroll = () => {
-    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+
+  const jouer = (horodatage) => {
+    if (debut === null) debut = horodatage;
+    const p = Math.min((horodatage - debut) / STORY_DUREE, 1);
+    poser(p);
+    image = p < 1 ? requestAnimationFrame(jouer) : null;
   };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  update();
-  window.__storyUpdate = update; // exposé pour le débogage / les tests
+
+  const demarrer = () => {
+    if (image !== null || debut !== null) return;
+    image = requestAnimationFrame(jouer);
+  };
+
+  const reinitialiser = () => {
+    if (image !== null) cancelAnimationFrame(image);
+    image = null;
+    debut = null;
+    poser(0);
+  };
+
+  poser(0);
+
+  const observateur = new IntersectionObserver(
+    (entrees) => {
+      for (const e of entrees) {
+        if (e.isIntersecting) demarrer();
+        else reinitialiser();   // on rejoue la scène si l'on y revient
+      }
+    },
+    { threshold: 0.5 }
+  );
+  observateur.observe(story);
+
+  // exposé pour le débogage / les tests
+  window.__storyPlay = demarrer;
+  window.__storyReset = reinitialiser;
+  window.__storySeek = poser;
 }

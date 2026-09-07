@@ -2164,7 +2164,8 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
    .p4 toast + légende finale). Réversible en remontant.
    ========================================================================== */
 .story {
-  height: 340vh;                 /* la durée du film = la hauteur à défiler */
+  height: 100vh;                 /* la scène tient sur un écran : elle se joue seule */
+  height: 100svh;
   background: var(--color-black);
   position: relative;
 }
@@ -2508,7 +2509,6 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
 
 /* ---- Mobile ---- */
 @media (max-width: 760px) {
-  .story { height: 300vh; }
   .story-scene { grid-template-columns: 1fr; gap: 1.2rem; justify-items: center; }
   .board { width: min(420px, 100%); }
   .story-client { display: none; }        /* on garde l'essentiel : téléphone → ardoise */
