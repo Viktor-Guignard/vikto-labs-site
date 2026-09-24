@@ -2609,8 +2609,32 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
   color: var(--color-red); text-decoration: none; white-space: nowrap;
 }
 .ctx-video.is-ended .ctx-cta { display: inline-block; }
+/* le son part coupé (exigence des navigateurs) : le bouton, posé sur l'image, invite à l'activer */
+.ctx-sound {
+  position: absolute; top: 14px; right: 14px; z-index: 1;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px 9px 12px;
+  border: 0; border-radius: 999px;
+  background: rgba(31,27,28,0.82); color: #fff;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -8px rgba(0,0,0,0.5);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.ctx-sound:hover { background: var(--color-red); transform: scale(1.04); }
+.ctx-sound:focus-visible { outline: 2px solid var(--color-red); outline-offset: 3px; }
+.ctx-sound svg { width: 18px; height: 18px; flex: none; }
+.ctx-sound .ctx-sound-on { display: none; }
+.ctx-sound.is-on { padding: 9px; }
+.ctx-sound.is-on span,
+.ctx-sound.is-on .ctx-sound-off { display: none; }
+.ctx-sound.is-on .ctx-sound-on { display: block; }
 @media (max-width: 560px) {
   .ctx-frame { border-radius: var(--radius-md); }
   .ctx-time { display: none; }
+  /* sur téléphone, l'icône seule suffit : le haut-parleur barré se lit partout */
+  .ctx-sound { top: 8px; right: 8px; padding: 8px; }
+  .ctx-sound span { display: none; }
+  .ctx-sound svg { width: 16px; height: 16px; }
 }
 

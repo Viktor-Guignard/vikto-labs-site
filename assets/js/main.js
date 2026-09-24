@@ -1088,6 +1088,347 @@ function initStoryScene() {
 }
 
 /* ==========================================================================
+   EN SITUATION — bande-son.
+   Tout est synthétisé à la volée (Web Audio) : aucun fichier à charger.
+   Musique façon dessin animé (basse pincée, accords « oom-pah », carillon)
+   et bruitages calés sur les temps forts du film. Chaque son est rangé à
+   son instant du film ; le lecteur appelle planifier(t) à chaque image et
+   seuls les sons des 0,3 s à venir sont programmés. Un saut, une pause :
+   recaler() coupe en fondu ce qui était programmé et on repart de t.
+   ========================================================================== */
+function creerBandeSon() {
+  const Contexte = window.AudioContext || window.webkitAudioContext;
+  if (!Contexte) return null;
+
+  const AVANCE = 0.3;
+  let ctx = null;
+  let sortie = null;
+  let bus = null;
+  let reverbe = null;
+  let bruit = null;
+  let actif = false;
+  let evenements = [];
+  let indice = 0;
+  let dernierT = null;
+
+  const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+
+  // ---- briques de synthèse -------------------------------------------------
+  const enveloppe = (quand, attaque, duree, volume) => {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, quand);
+    g.gain.exponentialRampToValueAtTime(volume, quand + attaque);
+    g.gain.exponentialRampToValueAtTime(0.0001, quand + duree);
+    g.connect(bus);
+    return g;
+  };
+  const filtre = (type, frequence, q, vers) => {
+    const f = ctx.createBiquadFilter();
+    f.type = type; f.frequency.value = frequence; f.Q.value = q;
+    f.connect(vers);
+    return f;
+  };
+  const oscillo = (quand, duree, type, f0, f1, volume, attaque = 0.005, vers = null) => {
+    const o = ctx.createOscillator();
+    o.type = type;
+    o.frequency.setValueAtTime(f0, quand);
+    if (f1 && f1 !== f0) o.frequency.exponentialRampToValueAtTime(f1, quand + duree * 0.8);
+    o.connect(vers || enveloppe(quand, attaque, duree, volume));
+    o.start(quand);
+    o.stop(quand + duree + 0.05);
+    return o;
+  };
+  const souffle = (quand, duree, volume, type, f0, f1, q = 1, attaque = 0.01) => {
+    const s = ctx.createBufferSource();
+    s.buffer = bruit; s.loop = true;
+    const f = ctx.createBiquadFilter();
+    f.type = type; f.Q.value = q;
+    f.frequency.setValueAtTime(f0, quand);
+    if (f1 !== f0) f.frequency.exponentialRampToValueAtTime(f1, quand + duree);
+    s.connect(f);
+    f.connect(enveloppe(quand, attaque, duree, volume));
+    s.start(quand, Math.random() * 0.8);
+    s.stop(quand + duree + 0.05);
+  };
+
+  // ---- instruments -----------------------------------------------------------
+  const pince = (q, m, v) => oscillo(q, 0.34, "triangle", hz(m), 0, v);
+  const maillet = (q, m, v, d = 0.45) => {
+    oscillo(q, d, "sine", hz(m), 0, v, 0.003);
+    oscillo(q, d * 0.3, "sine", hz(m) * 4, 0, v * 0.22, 0.002);
+  };
+  const accord = (q, notes, v, d = 0.16) => {
+    const f = filtre("lowpass", 1500, 0.7, enveloppe(q, 0.004, d, v));
+    notes.forEach((m) => oscillo(q, d, "square", hz(m), 0, 0, 0, f));
+  };
+  const cuivres = (q, notes, v, d) => {
+    const f = ctx.createBiquadFilter();
+    f.type = "lowpass"; f.Q.value = 2;
+    f.frequency.setValueAtTime(500, q);
+    f.frequency.exponentialRampToValueAtTime(2600, q + 0.06);
+    f.frequency.exponentialRampToValueAtTime(700, q + d);
+    f.connect(enveloppe(q, 0.02, d, v));
+    notes.forEach((m) => [-7, 7].forEach((c) => {
+      const o = oscillo(q, d, "sawtooth", hz(m), 0, 0, 0, f);
+      o.detune.value = c;
+    }));
+  };
+  const charleston = (q, v) => souffle(q, 0.03, v, "highpass", 7000, 7000, 0.7, 0.001);
+  const pas = (q, v) => souffle(q, 0.07, v, "lowpass", 520, 240, 0.8, 0.003);
+  const clic = (q) => {
+    souffle(q, 0.02, 0.3, "highpass", 2600, 2600, 0.7, 0.001);
+    souffle(q + 0.075, 0.016, 0.14, "highpass", 3400, 3400, 0.7, 0.001);
+  };
+  const pop = (q, v = 0.2, f = 1) => oscillo(q, 0.09, "sine", 380 * f, 1100 * f, v, 0.003);
+  const plouf = (q, v) => oscillo(q, 0.18, "sine", 820, 320, v, 0.004);
+  const bloc = (q, v) => {
+    oscillo(q, 0.08, "sine", 1150, 900, v, 0.001);
+    souffle(q, 0.02, v * 0.4, "bandpass", 2500, 2500, 2, 0.001);
+  };
+  const sourd = (q, v) => oscillo(q, 0.2, "sine", 115, 52, v, 0.004);
+  const bulle = (q, v) => oscillo(q, 0.05, "sine", 210, 540, v, 0.004);
+  const cliquetis = (q, v) => souffle(q, 0.025, v, "bandpass", 3200, 3200, 3, 0.001);
+  const vent = (q, v = 0.16) => souffle(q, 0.45, v, "bandpass", 320, 2600, 1.1, 0.22);
+  const bip = (q, v) => oscillo(q, 0.07, "square", 1760, 1760, v, 0.002);
+  const vibre = (q, d, f, v, vitesse, profondeur) => {
+    const o = ctx.createOscillator();
+    o.frequency.setValueAtTime(f, q);
+    const lfo = ctx.createOscillator();
+    lfo.frequency.value = vitesse;
+    const p = ctx.createGain();
+    p.gain.value = profondeur;
+    lfo.connect(p); p.connect(o.frequency);
+    o.connect(enveloppe(q, 0.04, d, v));
+    o.start(q); lfo.start(q); o.stop(q + d + 0.05); lfo.stop(q + d + 0.05);
+    return o;
+  };
+  const boing = (q, v) => {
+    const o = vibre(q, 0.55, 140, v, 14, 35);
+    o.frequency.exponentialRampToValueAtTime(520, q + 0.16);
+    o.frequency.exponentialRampToValueAtTime(300, q + 0.5);
+  };
+  const gloups = (q, v) => { oscillo(q, 0.12, "sine", 420, 150, v); oscillo(q + 0.13, 0.1, "sine", 300, 120, v * 0.7); };
+  const bourdon = (q, d, v) => {
+    const g = ctx.createGain();
+    [[0, v], [0.12, v * 0.3], [0.22, v], [0.34, v * 0.5], [0.45, v]].forEach(([dt, n]) => g.gain.setValueAtTime(n, q + dt));
+    g.gain.setValueAtTime(v, q + d - 0.2);
+    g.gain.exponentialRampToValueAtTime(0.0001, q + d);
+    g.connect(bus);
+    oscillo(q, d, "sawtooth", 118, 0, 0, 0, filtre("lowpass", 520, 0.7, g));
+  };
+  const voix = (q, syllabes, base, v, fin = 1) => {
+    for (let i = 0; i < syllabes; i++) {
+      const t = q + i * 0.11;
+      const f = base * (1 + 0.22 * Math.sin(i * 2.3)) * (i === syllabes - 1 ? fin : 1);
+      const bp = ctx.createBiquadFilter();
+      bp.type = "bandpass"; bp.Q.value = 3;
+      bp.frequency.setValueAtTime(650 + 450 * (i % 3), t);
+      bp.frequency.linearRampToValueAtTime(1150 + 300 * (i % 2), t + 0.08);
+      bp.connect(enveloppe(t, 0.012, 0.095, v));
+      oscillo(t, 0.09, "sawtooth", f, f * 1.15, 0, 0, bp);
+    }
+  };
+  const klaxon = (q, v) => {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, q);
+    g.gain.exponentialRampToValueAtTime(v, q + 0.03);
+    g.gain.setValueAtTime(v, q + 0.6);
+    g.gain.exponentialRampToValueAtTime(0.0001, q + 0.75);
+    g.connect(bus);
+    const f = filtre("bandpass", 900, 1.4, g);
+    [0, 9].forEach((c) => {
+      const o = oscillo(q, 0.75, "sawtooth", 170, 0, 0, 0, f);
+      o.detune.value = c;
+      o.frequency.exponentialRampToValueAtTime(330, q + 0.28);
+      o.frequency.setValueAtTime(330, q + 0.4);
+      o.frequency.exponentialRampToValueAtTime(200, q + 0.7);
+    });
+  };
+  const tension = (q, d, notes, v) => {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, q);
+    g.gain.exponentialRampToValueAtTime(v, q + 0.6);
+    g.gain.setValueAtTime(v, q + d - 0.7);
+    g.gain.exponentialRampToValueAtTime(0.0001, q + d);
+    g.connect(bus);
+    const trem = ctx.createGain();
+    trem.gain.value = 0.5;
+    trem.connect(g);
+    const lfo = ctx.createOscillator();
+    lfo.frequency.value = 7;
+    const p = ctx.createGain();
+    p.gain.value = 0.5;
+    lfo.connect(p); p.connect(trem.gain);
+    lfo.start(q); lfo.stop(q + d + 0.05);
+    const f = filtre("lowpass", 650, 0.8, trem);
+    notes.forEach((m) => oscillo(q, d, "sawtooth", hz(m), 0, 0, 0, f));
+  };
+
+  // ---- la partition, en temps du film ---------------------------------------
+  const composer = () => {
+    const ev = [];
+    const a = (t, jouer) => ev.push({ t, jouer });
+    let graine = 20260924;
+    const hasard = () => ((graine = (graine * 1103515245 + 12345) % 2147483648) / 2147483648);
+
+    const BATTUE = 0.5;   // 120 à la noire
+    const GRILLE = ["C", "Am", "F", "G"];
+    const ACCORDS = { C: [60, 64, 67], Am: [57, 60, 64], F: [53, 57, 60], G: [55, 59, 62] };
+    const BASSES = { C: [36, 43], Am: [45, 40], F: [41, 36], G: [43, 38] };
+    const MELODIE = [
+      [76, 79, 84, 79, 76, 0, 79, 0], [81, 84, 88, 84, 81, 0, 76, 0],
+      [77, 81, 84, 81, 77, 0, 81, 84], [86, 83, 79, 83, 86, 0, 0, 0],
+    ];
+    const musique = (debut, fin, { melodie = false, groove = false, volume = 1 }) => {
+      for (let k = Math.ceil(debut / BATTUE - 1e-6); k * BATTUE < fin - 1e-6; k++) {
+        const t = k * BATTUE;
+        const mesure = Math.floor(k / 4);
+        const temps = k % 4;
+        const nom = GRILLE[mesure % 4];
+        if (temps % 2 === 0) a(t, (q) => pince(q, BASSES[nom][temps / 2], 0.22 * volume));
+        else a(t, (q) => accord(q, ACCORDS[nom], 0.07 * volume));
+        if (groove) { a(t, (q) => charleston(q, 0.03)); a(t + BATTUE / 2, (q) => charleston(q, 0.018)); }
+        if (melodie) [0, 1].forEach((demi) => {
+          const m = MELODIE[mesure % 4][temps * 2 + demi];
+          const tm = t + demi * BATTUE / 2;
+          if (m && tm < fin) a(tm, (q) => maillet(q, m, 0.06 * volume, 0.35));
+        });
+      }
+    };
+
+    // 1 · la salle
+    musique(0, 4.8, { melodie: true });
+    a(0.4, (q) => { pop(q, 0.18); maillet(q + 0.05, 84, 0.06, 0.3); });
+    for (let t = 0.9; t < 4.6; t += 0.5) a(t, (q) => pas(q, 0.09));
+    a(2.75, (q) => bloc(q, 0.22));
+    // 2 · la cuisine
+    a(4.8, (q) => vent(q));
+    musique(4.8, 7.1, { volume: 0.8 });
+    for (let t = 5; t < 10.3; t += 0.12 + hasard() * 0.18) a(t, (q) => bulle(q, 0.03));
+    for (let t = 5; t < 10.3; t += 0.2) a(t, (q) => cliquetis(q, 0.018));
+    a(6.2, (q) => { sourd(q, 0.22); souffle(q + 0.05, 0.5, 0.08, "lowpass", 900, 300, 0.7, 0.08); });
+    a(6.35, (q) => bourdon(q, 0.8, 0.05));
+    a(7.2, (q) => boing(q, 0.24));
+    a(7.3, (q) => klaxon(q, 0.09));
+    a(7.32, (q) => souffle(q, 0.45, 0.28, "lowpass", 160, 90, 0.8, 0.01));
+    a(7.35, (q) => pop(q, 0.14, 1.3));
+    a(7.6, (q) => gloups(q, 0.16));
+    a(7.8, (q) => tension(q, 2.5, [33, 39], 0.04));
+    a(8.4, (q) => voix(q, 6, 190, 0.34, 1.3));          // « Plus de burrata ! »
+    // 3 · le Mac du chef
+    a(10.4, (q) => vent(q));
+    musique(10.5, 17.8, { groove: true, volume: 0.8 });
+    a(10.95, (q) => voix(q, 5, 330, 0.28, 1.2));        // « Je m'en occupe ! »
+    a(13.45, (q) => oscillo(q, 0.07, "sine", 700, 1050, 0.12, 0.003));
+    a(15, (q) => clic(q));
+    a(15.05, (q) => { plouf(q, 0.16); souffle(q, 0.3, 0.05, "highpass", 2000, 5000, 0.7, 0.02); });
+    a(16.9, (q) => clic(q));
+    a(17.15, (q) => { maillet(q, 88, 0.12, 0.6); maillet(q + 0.11, 91, 0.12, 0.8); });
+    a(17.8, (q) => { pop(q, 0.18); [72, 76, 79, 84].forEach((m, i) => maillet(q + i * 0.06, m, 0.06, 0.3)); });
+    a(18.05, (q) => pop(q, 0.18, 1.2));
+    musique(18, 20, { melodie: true, groove: true, volume: 0.9 });
+    // 4 · à table
+    a(20, (q) => vent(q));
+    musique(20, 31, { melodie: true });
+    a(20.7, (q) => souffle(q, 0.35, 0.12, "bandpass", 500, 3000, 1.4, 0.12));
+    a(21.75, (q) => vibre(q, 1.1, 950, 0.035, 9, 60));
+    a(22.9, (q) => { bip(q, 0.05); bip(q + 0.1, 0.05); });
+    [96, 91, 100, 93, 98].forEach((m, i) => a(22.95 + i * 0.08, (q) => maillet(q, m, 0.04, 0.4)));
+    // 5 · le site, au bureau
+    a(25.6, (q) => vent(q));
+    a(27.3, (q) => clic(q));
+    for (let t = 27.45; t < 28.4; t += 0.06) a(t, (q) => cliquetis(q, 0.02));
+    a(28.6, (q) => { pop(q, 0.18); maillet(q + 0.05, 84, 0.1, 0.5); maillet(q + 0.15, 88, 0.1, 0.7); });
+    // 6 · en bref
+    a(31, (q) => oscillo(q, 0.5, "sine", 1100, 160, 0.16, 0.02));    // l'iris se ferme…
+    a(31.6, (q) => oscillo(q, 0.35, "sine", 200, 900, 0.14, 0.02));  // …et se rouvre
+    a(31.72, (q) => cuivres(q, [55, 59, 62, 67], 0.05, 0.14));
+    a(31.9, (q) => {
+      cuivres(q, [60, 64, 67, 72], 0.055, 1.9);
+      pince(q, 36, 0.25);
+      [72, 76, 79, 84, 88].forEach((m, i) => maillet(q + 0.05 + i * 0.05, m, 0.05, 0.6));
+    });
+    a(32.2, (q) => pop(q, 0.14));
+    a(32.85, (q) => pop(q, 0.14, 0.9));
+    a(32.95, (q) => pop(q, 0.14, 1.15));
+    a(33.5, (q) => { maillet(q, 84, 0.07, 1.4); maillet(q, 91, 0.05, 1.4); });
+
+    return ev.sort((x, y) => x.t - y.t);
+  };
+
+  // ---- pilotage -------------------------------------------------------------
+  const nouveauBus = () => {
+    const g = ctx.createGain();
+    g.connect(sortie);
+    g.connect(reverbe);   // un peu de salle, pour que la musique ne sonne pas sèche
+    return g;
+  };
+  const demarrer = (contexteImpose) => {
+    ctx = contexteImpose || new Contexte();
+    const compresseur = ctx.createDynamicsCompressor();
+    compresseur.threshold.value = -12;
+    compresseur.knee.value = 10;
+    compresseur.ratio.value = 4;
+    compresseur.connect(ctx.destination);
+    sortie = ctx.createGain();
+    sortie.gain.value = 1.1;
+    sortie.connect(compresseur);
+    const salle = ctx.createBuffer(2, ctx.sampleRate * 1.4, ctx.sampleRate);
+    for (let c = 0; c < 2; c++) {
+      const d = salle.getChannelData(c);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+    }
+    reverbe = ctx.createConvolver();
+    reverbe.buffer = salle;
+    const retour = ctx.createGain();
+    retour.gain.value = 0.22;
+    reverbe.connect(retour);
+    retour.connect(sortie);
+    bus = nouveauBus();
+    bruit = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+    const d = bruit.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    evenements = composer();
+  };
+
+  const recaler = () => {
+    dernierT = null;
+    if (!ctx) return;
+    const ancien = bus;
+    ancien.gain.setTargetAtTime(0, ctx.currentTime, 0.02);
+    setTimeout(() => ancien.disconnect(), 400);
+    bus = nouveauBus();
+  };
+
+  const planifier = (t, avance = AVANCE) => {
+    if (!actif) return;
+    if (dernierT === null || t < dernierT - 0.05 || t > dernierT + 0.5) {
+      indice = evenements.findIndex((e) => e.t >= t - 0.02);
+      if (indice === -1) indice = evenements.length;
+    }
+    dernierT = t;
+    while (indice < evenements.length && evenements[indice].t < t + avance) {
+      const e = evenements[indice++];
+      e.jouer(ctx.currentTime + Math.max(0, e.t - t));
+    }
+  };
+
+  return {
+    actif: () => actif,
+    // à appeler dans un geste du visiteur (clic) : c'est la condition des navigateurs
+    activer: (contexteImpose) => {
+      if (!ctx) demarrer(contexteImpose);
+      if (ctx.state === "suspended" && !contexteImpose) ctx.resume();
+      actif = true;
+      dernierT = null;
+    },
+    couper: () => { recaler(); actif = false; },
+    recaler,
+    planifier,
+  };
+}
+
+/* ==========================================================================
    EN SITUATION — petit film vectoriel.
    Une frise de temps pose des classes cumulatives sur le SVG : s1…s6 pour
    les plans, c1a… pour les temps forts. Tout le mouvement est décrit en CSS
@@ -1106,12 +1447,15 @@ function initContextVideo() {
   const affichageTemps = fig.querySelector(".ctx-time");
   const barres = [...fig.querySelectorAll(".ctx-chap")];
   const reduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const boutonSon = fig.querySelector(".ctx-sound");
+  const son = boutonSon ? creerBandeSon() : null;
+  if (boutonSon && !son) boutonSon.hidden = true;
 
   const DUREE = 35;
   const TEMPS = [
     ["s1", 0], ["c1a", 0.4], ["c1b", 2.6],
-    ["s2", 4.8], ["c2a", 5.9], ["c2b", 7.2],
-    ["s3", 10.4], ["c3a", 11.2], ["c3b", 12.1], ["c3c", 12.5], ["c3d", 13.45], ["c3e", 14],
+    ["s2", 4.8], ["c2a", 5.9], ["c2b", 7.2], ["c2c", 8.3],
+    ["s3", 10.4], ["c3r", 10.9], ["c3a", 11.2], ["c3b", 12.1], ["c3c", 12.5], ["c3d", 13.45], ["c3e", 14],
     ["c3f", 15], ["c3g", 15.9], ["c3h", 16.1], ["c3i", 16.9], ["c3j", 17.8],
     ["s4", 20], ["c4a", 20.7], ["c4b", 21.7], ["c4c", 22.9],
     ["s5", 25.6], ["c5a", 26.3], ["c5b", 27.3], ["c5c", 28.6],
@@ -1119,8 +1463,8 @@ function initContextVideo() {
   ];
   const CHAPITRES = [
     { debut: 0,    fin: 4.8,  texte: "11 h 45 au Petit Bistrot. Le service commence dans un quart d'heure." },
-    { debut: 4.8,  fin: 10.4, texte: "En cuisine, plus une seule burrata. Il faut la retirer de la carte, tout de suite." },
-    { debut: 10.4, fin: 20,   texte: "Sur son Mac, le chef la masque d'un clic, puis enregistre." },
+    { debut: 4.8,  fin: 10.4, texte: "En cuisine, plus une seule burrata. Le chef donne l'alerte !" },
+    { debut: 10.4, fin: 20,   texte: "Au comptoir, la gérante la masque d'un clic sur son Mac, puis enregistre." },
     { debut: 20,   fin: 25.6, texte: "À table, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
     { debut: 25.6, fin: 31,   texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
     { debut: 31,   fin: DUREE, texte: "Une modification. Partout à jour." },
@@ -1176,13 +1520,14 @@ function initContextVideo() {
     if (precedent !== null) t = Math.min(t + (horodatage - precedent) / 1000, DUREE);
     precedent = horodatage;
     poser();
+    if (son) son.planifier(t);
     if (terminerSiBesoin()) return;
     image = requestAnimationFrame(avancer);
   };
 
   const lire = () => {
     if (lecture) return;
-    if (fini) { t = 0; fini = false; poser(); }
+    if (fini) { t = 0; fini = false; poser(); if (son) son.recaler(); }
     lecture = true;
     precedent = null;
     majBouton();
@@ -1191,6 +1536,7 @@ function initContextVideo() {
 
   const suspendre = () => {
     lecture = false;
+    if (son) son.recaler();
     if (image !== null) cancelAnimationFrame(image);
     image = null;
     majBouton();
@@ -1206,10 +1552,28 @@ function initContextVideo() {
       t = CHAPITRES[k].debut + 0.01;
       fini = false;
       poser();
+      if (son) son.recaler();
       pauseVoulue = false;
       if (!lecture) lire(); else majBouton();
     });
   });
+
+  // Le son part muet (les navigateurs l'exigent) : le visiteur l'active d'un clic.
+  if (son) {
+    const majSon = () => {
+      boutonSon.classList.toggle("is-on", son.actif());
+      boutonSon.setAttribute("aria-label", son.actif() ? "Couper le son" : "Activer le son");
+    };
+    boutonSon.addEventListener("click", () => {
+      if (son.actif()) son.couper();
+      else {
+        son.activer();
+        if (!lecture) { pauseVoulue = false; lire(); }
+      }
+      majSon();
+    });
+    majSon();
+  }
 
   poser();
   majBouton();
@@ -1224,7 +1588,7 @@ function initContextVideo() {
   }
 
   // exposé pour le débogage / les tests
-  window.__ctxAller = (s) => { t = Math.min(Math.max(s, 0), DUREE); poser(); terminerSiBesoin(); };
+  window.__ctxAller = (s) => { t = Math.min(Math.max(s, 0), DUREE); poser(); if (son) son.recaler(); terminerSiBesoin(); };
   window.__ctxEtat = () => ({ t, lecture, fini, pauseVoulue });
 }
 
