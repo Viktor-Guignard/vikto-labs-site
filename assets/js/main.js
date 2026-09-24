@@ -93,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initHelpCenter();
   initPremiumFX();
   initStoryScene();
+  initContextVideo();
 });
 
 /* ==========================================================================
@@ -1085,3 +1086,144 @@ function initStoryScene() {
   window.__storyReset = reinitialiser;
   window.__storySeek = poser;
 }
+
+/* ==========================================================================
+   EN SITUATION — petit film vectoriel.
+   Une frise de temps pose des classes cumulatives sur le SVG : s1…s6 pour
+   les plans, c1a… pour les temps forts. Tout le mouvement est décrit en CSS
+   dans le <style> du SVG ; ici on ne fait qu'avancer l'horloge. Lecture
+   automatique quand le film entre dans l'écran, pause quand il en sort.
+   Reduced motion : pas de lecture automatique, et le CSS supprime fondus et
+   déplacements — les plans s'enchaînent alors sèchement.
+   ========================================================================== */
+function initContextVideo() {
+  const fig = document.querySelector(".ctx-video");
+  if (!fig) return;
+  const svg = fig.querySelector(".ctx-svg");
+  const legende = fig.querySelector(".ctx-caption");
+  const bouton = fig.querySelector(".ctx-toggle");
+  const icone = bouton.querySelector("span");
+  const affichageTemps = fig.querySelector(".ctx-time");
+  const barres = [...fig.querySelectorAll(".ctx-chap")];
+  const reduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const DUREE = 30;
+  const TEMPS = [
+    ["s1", 0], ["c1a", 1.2],
+    ["s2", 4.2], ["c2a", 5.2], ["c2b", 6.4],
+    ["s3", 9.4], ["c3a", 10.8], ["c3b", 11.6], ["c3c", 12.8], ["c3d", 13.8],
+    ["s4", 16.2], ["c4a", 17.2], ["c4b", 18.6],
+    ["s5", 21.6], ["c5a", 22.8],
+    ["s6", 26.2], ["c6a", 27],
+  ];
+  const CHAPITRES = [
+    { debut: 0,    fin: 4.2,  texte: "11 h 45 au Petit Bistrot. Le service commence dans un quart d'heure." },
+    { debut: 4.2,  fin: 9.4,  texte: "En cuisine, plus une seule burrata. Il faut la retirer de la carte, tout de suite." },
+    { debut: 9.4,  fin: 16.2, texte: "Depuis son téléphone, le chef la masque en un geste." },
+    { debut: 16.2, fin: 21.6, texte: "À table, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
+    { debut: 21.6, fin: 26.2, texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
+    { debut: 26.2, fin: DUREE, texte: "Une modification. Partout à jour." },
+  ];
+
+  let t = 0;
+  let lecture = false;
+  let fini = false;
+  let pauseVoulue = false;   // une pause demandée n'est pas levée par le défilement
+  let image = null;
+  let precedent = null;
+
+  const minutes = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+
+  const poser = () => {
+    for (const [classe, debut] of TEMPS) svg.classList.toggle(classe, t >= debut);
+    let courant = CHAPITRES.findIndex((ch) => t < ch.fin);
+    if (courant === -1) courant = CHAPITRES.length - 1;
+    if (legende.dataset.chapitre !== String(courant)) {
+      legende.textContent = CHAPITRES[courant].texte;
+      legende.dataset.chapitre = courant;
+    }
+    barres.forEach((barre, k) => {
+      const ch = CHAPITRES[k];
+      const p = Math.min(Math.max((t - ch.debut) / (ch.fin - ch.debut), 0), 1);
+      barre.style.setProperty("--p", p.toFixed(3));
+      if (k === courant) barre.setAttribute("aria-current", "step");
+      else barre.removeAttribute("aria-current");
+    });
+    affichageTemps.textContent = `${minutes(t)} / ${minutes(DUREE)}`;
+  };
+
+  const majBouton = () => {
+    icone.textContent = lecture ? "❚❚" : fini ? "↻" : "▶";
+    bouton.setAttribute("aria-label", lecture ? "Mettre en pause" : fini ? "Revoir la vidéo" : "Lire la vidéo");
+    fig.classList.toggle("is-ended", fini);
+    svg.classList.toggle("is-paused", !lecture);
+  };
+
+  // Une seule logique de fin, que le temps y arrive en lecture ou par un saut.
+  const terminerSiBesoin = () => {
+    if (t < DUREE) return false;
+    lecture = false;
+    fini = true;
+    if (image !== null) cancelAnimationFrame(image);
+    image = null;
+    majBouton();
+    return true;
+  };
+
+  const avancer = (horodatage) => {
+    if (!lecture) return;
+    if (precedent !== null) t = Math.min(t + (horodatage - precedent) / 1000, DUREE);
+    precedent = horodatage;
+    poser();
+    if (terminerSiBesoin()) return;
+    image = requestAnimationFrame(avancer);
+  };
+
+  const lire = () => {
+    if (lecture) return;
+    if (fini) { t = 0; fini = false; poser(); }
+    lecture = true;
+    precedent = null;
+    majBouton();
+    image = requestAnimationFrame(avancer);
+  };
+
+  const suspendre = () => {
+    lecture = false;
+    if (image !== null) cancelAnimationFrame(image);
+    image = null;
+    majBouton();
+  };
+
+  bouton.addEventListener("click", () => {
+    if (lecture) { pauseVoulue = true; suspendre(); }
+    else { pauseVoulue = false; lire(); }
+  });
+
+  barres.forEach((barre, k) => {
+    barre.addEventListener("click", () => {
+      t = CHAPITRES[k].debut + 0.01;
+      fini = false;
+      poser();
+      pauseVoulue = false;
+      if (!lecture) lire(); else majBouton();
+    });
+  });
+
+  poser();
+  majBouton();
+
+  if (!reduit && "IntersectionObserver" in window) {
+    new IntersectionObserver((entrees) => {
+      for (const e of entrees) {
+        if (e.isIntersecting) { if (!pauseVoulue && !fini) lire(); }
+        else if (lecture) suspendre();
+      }
+    }, { threshold: 0.5 }).observe(fig);
+  }
+
+  // exposé pour le débogage / les tests
+  window.__ctxAller = (s) => { t = Math.min(Math.max(s, 0), DUREE); poser(); terminerSiBesoin(); };
+  window.__ctxEtat = () => ({ t, lecture, fini, pauseVoulue });
+}
+

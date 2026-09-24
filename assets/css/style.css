@@ -2530,3 +2530,87 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
   .story-stage .sc-toast { opacity: 1; transform: translate(-50%, 0); }
   .story-progressbar { display: none; }
 }
+
+/* =========================================================
+   EN SITUATION — petit film vectoriel (#en-situation)
+   Le dessin et ses mouvements vivent dans le <style> du SVG ;
+   ici, seulement le cadre et le lecteur.
+   ========================================================= */
+.ctx-video { margin: 0; }
+.ctx-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-black);
+  box-shadow: 0 40px 80px -30px rgba(0,0,0,0.45);
+}
+.ctx-svg { display: block; width: 100%; height: 100%; }
+.ctx-caption {
+  margin: var(--space-md) auto 0;
+  max-width: 46ch;
+  min-height: 2.8em;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(0.98rem, 1.7vw, 1.2rem);
+  line-height: 1.4;
+  color: var(--color-black);
+}
+.ctx-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-xs);
+}
+.ctx-toggle {
+  flex: none;
+  width: 42px; height: 42px;
+  border: 0; border-radius: 50%;
+  background: var(--color-red); color: #fff;
+  display: grid; place-items: center;
+  font-size: 0.8rem; line-height: 1; cursor: pointer;
+  box-shadow: 0 10px 20px -10px rgba(229,40,36,0.7);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.ctx-toggle:hover { background: var(--color-red-dark); transform: scale(1.05); }
+.ctx-chapters { flex: 1; display: flex; gap: 5px; }
+.ctx-chap {
+  flex: var(--d) 1 0;
+  min-width: 0;
+  padding: 12px 0;              /* zone de clic confortable autour d'une barre fine */
+  border: 0; background: none; cursor: pointer;
+}
+.ctx-chap span {
+  position: relative; display: block;
+  height: 4px; border-radius: 3px; overflow: hidden;
+  background: var(--color-gray-200);
+  transition: height var(--transition-fast);
+}
+.ctx-chap:hover span { height: 6px; }
+.ctx-chap span::after {
+  content: ""; position: absolute; inset: 0;
+  background: var(--color-red);
+  transform-origin: left center;
+  transform: scaleX(var(--p, 0));
+}
+.ctx-toggle:focus-visible,
+.ctx-chap:focus-visible,
+.ctx-cta:focus-visible { outline: 2px solid var(--color-red); outline-offset: 3px; }
+.ctx-time {
+  flex: none; min-width: 6.5ch; text-align: right;
+  font-size: 0.8rem; font-variant-numeric: tabular-nums;
+  color: var(--color-gray-600);
+}
+/* le lien vers l'offre ne se montre qu'une fois le film terminé */
+.ctx-cta {
+  flex: none; display: none;
+  font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem;
+  color: var(--color-red); text-decoration: none; white-space: nowrap;
+}
+.ctx-video.is-ended .ctx-cta { display: inline-block; }
+@media (max-width: 560px) {
+  .ctx-frame { border-radius: var(--radius-md); }
+  .ctx-time { display: none; }
+}
+
