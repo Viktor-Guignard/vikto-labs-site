@@ -1107,22 +1107,23 @@ function initContextVideo() {
   const barres = [...fig.querySelectorAll(".ctx-chap")];
   const reduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const DUREE = 30;
+  const DUREE = 35;
   const TEMPS = [
-    ["s1", 0], ["c1a", 1.2],
-    ["s2", 4.2], ["c2a", 5.2], ["c2b", 6.4],
-    ["s3", 9.4], ["c3a", 10.8], ["c3b", 11.6], ["c3c", 12.8], ["c3d", 13.8],
-    ["s4", 16.2], ["c4a", 17.2], ["c4b", 18.6],
-    ["s5", 21.6], ["c5a", 22.8],
-    ["s6", 26.2], ["c6a", 27],
+    ["s1", 0], ["c1a", 0.4], ["c1b", 2.6],
+    ["s2", 4.8], ["c2a", 5.9], ["c2b", 7.2],
+    ["s3", 10.4], ["c3a", 11.2], ["c3b", 12.1], ["c3c", 12.5], ["c3d", 13.45], ["c3e", 14],
+    ["c3f", 15], ["c3g", 15.9], ["c3h", 16.1], ["c3i", 16.9], ["c3j", 17.8],
+    ["s4", 20], ["c4a", 20.7], ["c4b", 21.7], ["c4c", 22.9],
+    ["s5", 25.6], ["c5a", 26.3], ["c5b", 27.3], ["c5c", 28.6],
+    ["s6", 31], ["c6a", 31.9],
   ];
   const CHAPITRES = [
-    { debut: 0,    fin: 4.2,  texte: "11 h 45 au Petit Bistrot. Le service commence dans un quart d'heure." },
-    { debut: 4.2,  fin: 9.4,  texte: "En cuisine, plus une seule burrata. Il faut la retirer de la carte, tout de suite." },
-    { debut: 9.4,  fin: 16.2, texte: "Depuis son téléphone, le chef la masque en un geste." },
-    { debut: 16.2, fin: 21.6, texte: "À table, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
-    { debut: 21.6, fin: 26.2, texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
-    { debut: 26.2, fin: DUREE, texte: "Une modification. Partout à jour." },
+    { debut: 0,    fin: 4.8,  texte: "11 h 45 au Petit Bistrot. Le service commence dans un quart d'heure." },
+    { debut: 4.8,  fin: 10.4, texte: "En cuisine, plus une seule burrata. Il faut la retirer de la carte, tout de suite." },
+    { debut: 10.4, fin: 20,   texte: "Sur son Mac, le chef la masque d'un clic, puis enregistre." },
+    { debut: 20,   fin: 25.6, texte: "À table, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
+    { debut: 25.6, fin: 31,   texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
+    { debut: 31,   fin: DUREE, texte: "Une modification. Partout à jour." },
   ];
 
   let t = 0;
