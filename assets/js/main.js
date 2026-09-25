@@ -1376,17 +1376,27 @@ function creerBandeSon() {
     musique(12.5, 20, { groove: true, volume: 0.8 });
     a(12.65, (q) => voix(q, 5, 330, 0.28, 1.2));         // « Je m'en occupe ! »
     a(12.9, (q) => { pop(q, 0.1, 1.4); maillet(q + 0.03, 91, 0.07, 0.4); });   // pouce levé
-    a(13.8, (q) => vent(q, 0.07));                       // la caméra s'approche
+    a(13.8, (q) => vent(q, 0.07));                       // la caméra s'approche…
+    a(13.9, (q) => souffle(q, 0.55, 0.06, "highpass", 900, 4200, 0.8, 0.06));   // …et l'écran se partage
+    // à droite, l'iPhone : on touche le champ, on tape « burr », la liste se filtre
+    const tic = (q, v = 0.07) => oscillo(q, 0.045, "sine", 1900, 1300, v, 0.002);
+    const touche = (q) => { oscillo(q, 0.03, "triangle", 2600, 2100, 0.035, 0.001); cliquetis(q, 0.02); };
+    a(14.72, (q) => tic(q));
+    [15.5, 15.91, 16.16, 16.33].forEach((t) => a(t, (q) => touche(q)));
+    a(15.62, (q) => souffle(q, 0.2, 0.04, "bandpass", 1800, 3600, 1.2, 0.02));   // la liste se resserre
+    a(15.98, (q) => maillet(q, 91, 0.04, 0.3));                                    // « 1 résultat »
     a(15.7, (q) => oscillo(q, 0.07, "sine", 700, 1050, 0.12, 0.003));
     a(16.9, (q) => { clic(q); vent(q, 0.06); });                                       // le clic, et la caméra s'approche
     a(16.95, (q) => { plouf(q, 0.16); souffle(q, 0.3, 0.05, "highpass", 2000, 5000, 0.7, 0.02); });
     a(17.05, (q) => { pop(q, 0.16, 1.2); [84, 88, 91, 96].forEach((m, i) => maillet(q + 0.04 + i * 0.05, m, 0.07, 0.4)); });   // « 1 clic ! »
+    a(17.6, (q) => { tic(q, 0.09); pop(q + 0.02, 0.14, 1.35); [88, 91, 96, 100].forEach((m, i) => maillet(q + 0.06 + i * 0.05, m, 0.06, 0.4)); });   // « Trouvée, masquée ! »
     a(18.4, (q) => vent(q, 0.06));
     a(19.2, (q) => clic(q));
     a(19.45, (q) => { maillet(q, 88, 0.12, 0.6); maillet(q + 0.11, 91, 0.12, 0.8); });
-    a(20, (q) => { vent(q, 0.06); pop(q, 0.18); [72, 76, 79, 84].forEach((m, i) => maillet(q + i * 0.06, m, 0.06, 0.3)); });
-    a(20.25, (q) => pop(q, 0.18, 1.2));
-    a(20.4, (q) => { maillet(q, 100, 0.05, 0.3); maillet(q + 0.06, 103, 0.04, 0.4); });   // clin d'œil
+    a(19.55, (q) => { tic(q); maillet(q + 0.22, 93, 0.08, 0.5); maillet(q + 0.33, 96, 0.08, 0.7); });   // l'iPhone enregistre aussi
+    a(20.2, (q) => { vent(q, 0.06); pop(q, 0.18); [72, 76, 79, 84].forEach((m, i) => maillet(q + i * 0.06, m, 0.06, 0.3)); });
+    a(20.45, (q) => pop(q, 0.18, 1.2));
+    a(20.6, (q) => { maillet(q, 100, 0.05, 0.3); maillet(q + 0.06, 103, 0.04, 0.4); });   // clin d'œil
     musique(20, 21.6, { melodie: true, groove: true, volume: 0.9 });
     // 4 · 12 h 30, à table
     a(21.6, (q) => vent(q));
@@ -1561,7 +1571,10 @@ function lancerFilm(fig, son, lectureDemandee) {
     ["s1", 0], ["c1a", 0.2], ["c1b", 0.5], ["c1c", 1.9], ["c1d", 3], ["c1e", 4.2], ["c1f", 5], ["c1g", 6.1],
     ["s2", 7.5], ["c2a", 8.3], ["c2b", 9.4], ["c2c", 10.4],
     ["s3", 12.3], ["c3r", 12.6], ["c3a", 13.8], ["c3b", 14.6], ["c3c", 14.9], ["c3d", 15.7], ["c3e", 16.1],
-    ["c3f", 16.9], ["c3g", 18.4], ["c3h", 18.6], ["c3i", 19.2], ["c3j", 20],
+    ["c3f", 16.9], ["c3g", 18.4], ["c3h", 18.6], ["c3i", 19.2], ["c3j", 20.2],
+    // l'écran partagé : à droite, l'iPhone (champ, b-u-r-r, filtre, œil, enregistrer)
+    ["p3a", 14.3], ["p3b", 15.2], ["p3c", 15.75], ["p3d", 16], ["p3e", 16.3],
+    ["p3f", 16.6], ["p3g", 17.6], ["p3h", 18.8], ["p3i", 19.55],
     ["s4", 21.6], ["c4a", 22.1], ["c4b", 22.9], ["c4c", 23.9], ["c4d", 24.9],
     ["s5", 26.6], ["c5a", 27.1], ["c5b", 28], ["c5c", 29.1], ["c5d", 29.6],
     ["s6", 31], ["c6a", 31.9],
@@ -1569,7 +1582,7 @@ function lancerFilm(fig, son, lectureDemandee) {
   const CHAPITRES = [
     { debut: 0,    fin: 6.1,  texte: "12 h 30, sans VIKTO LABS : la burrata est finie… mais toujours sur la carte." },
     { debut: 6.1,  fin: 12.3, texte: "11 h 45, un peu plus tôt. En cuisine, plus de burrata : le chef donne l'alerte !" },
-    { debut: 12.3, fin: 21.6, texte: "Au comptoir, la gérante la masque en un clic sur son iPad, puis enregistre." },
+    { debut: 12.3, fin: 21.6, texte: "Au comptoir, la gérante la masque : en un clic sur l'iPad, ou en la cherchant sur son iPhone." },
     { debut: 21.6, fin: 26.6, texte: "12 h 30, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
     { debut: 26.6, fin: 31,   texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
     { debut: 31,   fin: DUREE, texte: "Une modification. Partout à jour." },
