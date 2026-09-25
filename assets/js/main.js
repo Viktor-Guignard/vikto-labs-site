@@ -1375,52 +1375,54 @@ function creerBandeSon() {
     a(10.5, (q) => voix(q, 6, 190, 0.34, 1.3));          // « Plus de burrata ! »
     // 3 · au comptoir
     a(12.3, (q) => vent(q));
-    musique(12.5, 19.3, { groove: true, volume: 0.8 });
+    musique(12.5, 20, { groove: true, volume: 0.8 });
     a(12.65, (q) => voix(q, 5, 330, 0.28, 1.2));         // « Je m'en occupe ! »
     a(12.9, (q) => { pop(q, 0.1, 1.4); maillet(q + 0.03, 91, 0.07, 0.4); });   // pouce levé
     a(13.8, (q) => vent(q, 0.07));                       // la caméra s'approche
     a(15.7, (q) => oscillo(q, 0.07, "sine", 700, 1050, 0.12, 0.003));
-    a(16.9, (q) => clic(q));
+    a(16.9, (q) => { clic(q); vent(q, 0.06); });                                       // le clic, et la caméra s'approche
     a(16.95, (q) => { plouf(q, 0.16); souffle(q, 0.3, 0.05, "highpass", 2000, 5000, 0.7, 0.02); });
-    a(17.7, (q) => vent(q, 0.06));
-    a(18.5, (q) => clic(q));
-    a(18.75, (q) => { maillet(q, 88, 0.12, 0.6); maillet(q + 0.11, 91, 0.12, 0.8); });
-    a(19.3, (q) => { vent(q, 0.06); pop(q, 0.18); [72, 76, 79, 84].forEach((m, i) => maillet(q + i * 0.06, m, 0.06, 0.3)); });
-    a(19.55, (q) => pop(q, 0.18, 1.2));
-    a(19.7, (q) => { maillet(q, 100, 0.05, 0.3); maillet(q + 0.06, 103, 0.04, 0.4); });   // clin d'œil
-    musique(19.5, 20.9, { melodie: true, groove: true, volume: 0.9 });
+    a(17.05, (q) => { pop(q, 0.16, 1.2); [84, 88, 91, 96].forEach((m, i) => maillet(q + 0.04 + i * 0.05, m, 0.07, 0.4)); });   // « 1 clic ! »
+    a(18.4, (q) => vent(q, 0.06));
+    a(19.2, (q) => clic(q));
+    a(19.45, (q) => { maillet(q, 88, 0.12, 0.6); maillet(q + 0.11, 91, 0.12, 0.8); });
+    a(20, (q) => { vent(q, 0.06); pop(q, 0.18); [72, 76, 79, 84].forEach((m, i) => maillet(q + i * 0.06, m, 0.06, 0.3)); });
+    a(20.25, (q) => pop(q, 0.18, 1.2));
+    a(20.4, (q) => { maillet(q, 100, 0.05, 0.3); maillet(q + 0.06, 103, 0.04, 0.4); });   // clin d'œil
+    musique(20, 21.6, { melodie: true, groove: true, volume: 0.9 });
     // 4 · 12 h 30, à table
-    a(20.9, (q) => vent(q));
-    musique(21, 30.3, { melodie: true });
-    a(21.4, (q) => souffle(q, 0.35, 0.12, "bandpass", 500, 3000, 1.4, 0.12));
-    a(22.25, (q) => vibre(q, 1, 950, 0.035, 9, 60));
-    a(23.2, (q) => { bip(q, 0.05); bip(q + 0.1, 0.05); });
-    [96, 91, 100, 93, 98].forEach((m, i) => a(23.25 + i * 0.08, (q) => maillet(q, m, 0.04, 0.4)));
-    a(24.2, (q) => voix(q, 6, 320, 0.26, 1.3));          // « Alors… un risotto ! »
-    a(24.75, (q) => { maillet(q, 96, 0.04, 0.4); maillet(q + 0.09, 100, 0.035, 0.5); });
+    a(21.6, (q) => vent(q));
+    musique(22, 31, { melodie: true });
+    a(22.1, (q) => souffle(q, 0.35, 0.12, "bandpass", 500, 3000, 1.4, 0.12));
+    a(22.95, (q) => vibre(q, 1, 950, 0.035, 9, 60));
+    a(23.9, (q) => { bip(q, 0.05); bip(q + 0.1, 0.05); });
+    [96, 91, 100, 93, 98].forEach((m, i) => a(23.95 + i * 0.08, (q) => maillet(q, m, 0.04, 0.4)));
+    a(24.9, (q) => voix(q, 6, 320, 0.26, 1.3));          // « Alors… un risotto ! »
+    a(25.45, (q) => { maillet(q, 96, 0.04, 0.4); maillet(q + 0.09, 100, 0.035, 0.5); });
     // 5 · le site, au bureau
-    a(25.9, (q) => vent(q));
-    a(27.3, (q) => clic(q));
-    for (let t = 27.45; t < 28.4; t += 0.06) a(t, (q) => cliquetis(q, 0.02));
-    a(28.4, (q) => { pop(q, 0.18); maillet(q + 0.05, 84, 0.1, 0.5); maillet(q + 0.15, 88, 0.1, 0.7); });
-    a(28.65, (q) => { pop(q, 0.12, 0.8); maillet(q + 0.05, 91, 0.05, 0.5); });   // le cœur
-    a(28.9, (q) => souffle(q, 0.2, 0.07, "bandpass", 900, 2600, 1.3, 0.05));        // il se retourne
-    a(29.15, (q) => pop(q, 0.12, 1.3));                                              // pouce levé
-    a(29.5, (q) => { maillet(q, 100, 0.05, 0.3); maillet(q + 0.06, 103, 0.04, 0.4); });   // clin d'œil
+    a(26.6, (q) => vent(q));
+    a(28, (q) => clic(q));
+    for (let t = 28.15; t < 29.1; t += 0.06) a(t, (q) => cliquetis(q, 0.02));
+    a(29.1, (q) => { pop(q, 0.18); maillet(q + 0.05, 84, 0.1, 0.5); maillet(q + 0.15, 88, 0.1, 0.7); });
+    a(29.35, (q) => { pop(q, 0.12, 0.8); maillet(q + 0.05, 91, 0.05, 0.5); });   // le cœur
+    a(29.6, (q) => souffle(q, 0.2, 0.07, "bandpass", 900, 2600, 1.3, 0.05));        // il se retourne
+    a(29.85, (q) => pop(q, 0.12, 1.3));                                              // pouce levé
+    a(30.2, (q) => { maillet(q, 100, 0.05, 0.3); maillet(q + 0.06, 103, 0.04, 0.4); });   // clin d'œil
     // 6 · en bref
-    a(30.3, (q) => oscillo(q, 0.5, "sine", 1100, 160, 0.16, 0.02));    // l'iris se ferme…
-    a(30.9, (q) => oscillo(q, 0.35, "sine", 200, 900, 0.14, 0.02));    // …et se rouvre
-    a(31.02, (q) => cuivres(q, [55, 59, 62, 67], 0.05, 0.14));
-    a(31.2, (q) => {
+    a(31, (q) => oscillo(q, 0.5, "sine", 1100, 160, 0.16, 0.02));      // l'iris se ferme…
+    a(31.6, (q) => oscillo(q, 0.35, "sine", 200, 900, 0.14, 0.02));    // …et se rouvre
+    a(31.72, (q) => cuivres(q, [55, 59, 62, 67], 0.05, 0.14));
+    a(31.9, (q) => {
       cuivres(q, [60, 64, 67, 72], 0.055, 1.9);
       pince(q, 36, 0.25);
       souffle(q, 0.25, 0.12, "highpass", 1500, 4000, 0.7, 0.003);      // les confettis
       [72, 76, 79, 84, 88].forEach((m, i) => maillet(q + 0.05 + i * 0.05, m, 0.05, 0.6));
     });
-    a(31.5, (q) => pop(q, 0.14));
-    a(32.15, (q) => pop(q, 0.14, 0.9));
-    a(32.25, (q) => pop(q, 0.14, 1.15));
-    a(32.8, (q) => { maillet(q, 84, 0.07, 1.4); maillet(q, 91, 0.05, 1.4); });
+    a(32.2, (q) => pop(q, 0.14));
+    a(32.85, (q) => pop(q, 0.14, 0.9));
+    a(32.95, (q) => pop(q, 0.14, 1.15));
+    a(33.5, (q) => { maillet(q, 84, 0.07, 1.4); maillet(q, 91, 0.05, 1.4); });
+    [33.8, 33.95, 34.1, 34.25].forEach((t, i) => a(t, (q) => pop(q, 0.1, 0.8 + i * 0.15)));   // le salut des personnages
 
     return ev.sort((x, y) => x.t - y.t);
   };
@@ -1556,23 +1558,23 @@ function lancerFilm(fig, son, lectureDemandee) {
   const boutonSon = fig.querySelector(".ctx-sound");
   if (boutonSon && !son) boutonSon.hidden = true;
 
-  const DUREE = 34.2;
+  const DUREE = 34.9;
   const TEMPS = [
     ["s1", 0], ["c1a", 0.2], ["c1b", 0.5], ["c1c", 1.9], ["c1d", 3], ["c1e", 4.2], ["c1f", 5], ["c1g", 6.1],
     ["s2", 7.5], ["c2a", 8.3], ["c2b", 9.4], ["c2c", 10.4],
     ["s3", 12.3], ["c3r", 12.6], ["c3a", 13.8], ["c3b", 14.6], ["c3c", 14.9], ["c3d", 15.7], ["c3e", 16.1],
-    ["c3f", 16.9], ["c3g", 17.7], ["c3h", 17.9], ["c3i", 18.5], ["c3j", 19.3],
-    ["s4", 20.9], ["c4a", 21.4], ["c4b", 22.2], ["c4c", 23.2], ["c4d", 24.2],
-    ["s5", 25.9], ["c5a", 26.4], ["c5b", 27.3], ["c5c", 28.4], ["c5d", 28.9],
-    ["s6", 30.3], ["c6a", 31.2],
+    ["c3f", 16.9], ["c3g", 18.4], ["c3h", 18.6], ["c3i", 19.2], ["c3j", 20],
+    ["s4", 21.6], ["c4a", 22.1], ["c4b", 22.9], ["c4c", 23.9], ["c4d", 24.9],
+    ["s5", 26.6], ["c5a", 27.1], ["c5b", 28], ["c5c", 29.1], ["c5d", 29.6],
+    ["s6", 31], ["c6a", 31.9],
   ];
   const CHAPITRES = [
     { debut: 0,    fin: 6.1,  texte: "12 h 30, sans VIKTO LABS : la burrata est finie… mais toujours sur la carte." },
     { debut: 6.1,  fin: 12.3, texte: "11 h 45, un peu plus tôt. En cuisine, plus de burrata : le chef donne l'alerte !" },
-    { debut: 12.3, fin: 20.9, texte: "Au comptoir, la gérante la masque d'un clic sur son Mac, puis enregistre." },
-    { debut: 20.9, fin: 25.9, texte: "12 h 30, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
-    { debut: 25.9, fin: 30.3, texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
-    { debut: 30.3, fin: DUREE, texte: "Une modification. Partout à jour." },
+    { debut: 12.3, fin: 21.6, texte: "Au comptoir, la gérante la masque en un clic sur son iPad, puis enregistre." },
+    { debut: 21.6, fin: 26.6, texte: "12 h 30, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
+    { debut: 26.6, fin: 31,   texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
+    { debut: 31,   fin: DUREE, texte: "Une modification. Partout à jour." },
   ];
 
   let t = 0;
