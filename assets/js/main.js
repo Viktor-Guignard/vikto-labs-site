@@ -1346,9 +1346,11 @@ function creerBandeSon() {
     a(0, (q) => nappe(q, 4.2, 0.025));
     [0.3, 1.2, 2.3].forEach((t, i) => a(t, (q) => voix(q, 4, 240 + 60 * i, 0.04, 1.1)));
     a(0.2, (q) => { pop(q, 0.16); maillet(q + 0.05, 84, 0.05, 0.3); });
+    a(0.5, (q) => souffle(q, 0.2, 0.05, "highpass", 2400, 4200, 0.8, 0.02));   // elle lève la carte
     a(0.55, (q) => voix(q, 7, 310, 0.3, 1.35));          // « Une burrata, s'il vous plaît ! »
     a(1.95, (q) => voix(q, 2, 175, 0.3, 0.9));           // « Euh… »
     a(2.2, (q) => gloups(q, 0.1));
+    for (let t = 1.95; t < 2.9; t += 0.14) a(t, (q) => souffle(q, 0.05, 0.035, "bandpass", 3800, 3000, 2, 0.005));   // il se gratte la tête
     a(2.45, (q) => voix(q, 4, 165, 0.3, 0.75));          // « … il n'y en a plus. »
     a(3, (q) => trombone(q, 0.26));
     a(4.2, (q) => { rayure(q, 0.3); souffle(q, 0.25, 0.1, "highpass", 3000, 6000, 0.7, 0.003); });
@@ -1363,17 +1365,19 @@ function creerBandeSon() {
     for (let t = 7.7; t < 12.2; t += 0.2) a(t, (q) => cliquetis(q, 0.018));
     a(8.6, (q) => { sourd(q, 0.22); souffle(q + 0.05, 0.5, 0.08, "lowpass", 900, 300, 0.7, 0.08); });
     a(8.75, (q) => bourdon(q, 0.8, 0.05));
-    a(9.4, (q) => boing(q, 0.24));
+    a(9.4, (q) => { boing(q, 0.24); oscillo(q, 0.16, "sine", 400, 1600, 0.07, 0.01); });   // zoom éclair
     a(9.5, (q) => klaxon(q, 0.09));
     a(9.52, (q) => souffle(q, 0.45, 0.28, "lowpass", 160, 90, 0.8, 0.01));
     a(9.55, (q) => pop(q, 0.14, 1.3));
     a(9.8, (q) => gloups(q, 0.16));
     a(10, (q) => tension(q, 2.2, [33, 39], 0.04));
+    a(10.4, (q) => souffle(q, 0.25, 0.08, "bandpass", 600, 2400, 1.2, 0.08));  // les bras au ciel
     a(10.5, (q) => voix(q, 6, 190, 0.34, 1.3));          // « Plus de burrata ! »
     // 3 · au comptoir
     a(12.3, (q) => vent(q));
     musique(12.5, 19.3, { groove: true, volume: 0.8 });
     a(12.65, (q) => voix(q, 5, 330, 0.28, 1.2));         // « Je m'en occupe ! »
+    a(12.9, (q) => { pop(q, 0.1, 1.4); maillet(q + 0.03, 91, 0.07, 0.4); });   // pouce levé
     a(13.8, (q) => vent(q, 0.07));                       // la caméra s'approche
     a(15.7, (q) => oscillo(q, 0.07, "sine", 700, 1050, 0.12, 0.003));
     a(16.9, (q) => clic(q));
@@ -1393,12 +1397,16 @@ function creerBandeSon() {
     a(23.2, (q) => { bip(q, 0.05); bip(q + 0.1, 0.05); });
     [96, 91, 100, 93, 98].forEach((m, i) => a(23.25 + i * 0.08, (q) => maillet(q, m, 0.04, 0.4)));
     a(24.2, (q) => voix(q, 6, 320, 0.26, 1.3));          // « Alors… un risotto ! »
+    a(24.75, (q) => { maillet(q, 96, 0.04, 0.4); maillet(q + 0.09, 100, 0.035, 0.5); });
     // 5 · le site, au bureau
     a(25.9, (q) => vent(q));
     a(27.3, (q) => clic(q));
     for (let t = 27.45; t < 28.4; t += 0.06) a(t, (q) => cliquetis(q, 0.02));
     a(28.4, (q) => { pop(q, 0.18); maillet(q + 0.05, 84, 0.1, 0.5); maillet(q + 0.15, 88, 0.1, 0.7); });
     a(28.65, (q) => { pop(q, 0.12, 0.8); maillet(q + 0.05, 91, 0.05, 0.5); });   // le cœur
+    a(28.9, (q) => souffle(q, 0.2, 0.07, "bandpass", 900, 2600, 1.3, 0.05));        // il se retourne
+    a(29.15, (q) => pop(q, 0.12, 1.3));                                              // pouce levé
+    a(29.5, (q) => { maillet(q, 100, 0.05, 0.3); maillet(q + 0.06, 103, 0.04, 0.4); });   // clin d'œil
     // 6 · en bref
     a(30.3, (q) => oscillo(q, 0.5, "sine", 1100, 160, 0.16, 0.02));    // l'iris se ferme…
     a(30.9, (q) => oscillo(q, 0.35, "sine", 200, 900, 0.14, 0.02));    // …et se rouvre
@@ -1555,7 +1563,7 @@ function lancerFilm(fig, son, lectureDemandee) {
     ["s3", 12.3], ["c3r", 12.6], ["c3a", 13.8], ["c3b", 14.6], ["c3c", 14.9], ["c3d", 15.7], ["c3e", 16.1],
     ["c3f", 16.9], ["c3g", 17.7], ["c3h", 17.9], ["c3i", 18.5], ["c3j", 19.3],
     ["s4", 20.9], ["c4a", 21.4], ["c4b", 22.2], ["c4c", 23.2], ["c4d", 24.2],
-    ["s5", 25.9], ["c5a", 26.4], ["c5b", 27.3], ["c5c", 28.4],
+    ["s5", 25.9], ["c5a", 26.4], ["c5b", 27.3], ["c5c", 28.4], ["c5d", 28.9],
     ["s6", 30.3], ["c6a", 31.2],
   ];
   const CHAPITRES = [
