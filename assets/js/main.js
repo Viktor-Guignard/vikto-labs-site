@@ -1244,6 +1244,51 @@ function creerBandeSon() {
       o.frequency.exponentialRampToValueAtTime(200, q + 0.7);
     });
   };
+  const trombone = (q, v) => {       // « wah wah wah waaah »
+    const d = [0.24, 0.24, 0.24, 0.9];
+    let t = q;
+    [55, 54, 53, 52].forEach((m, i) => {
+      const f = ctx.createBiquadFilter();
+      f.type = "bandpass"; f.Q.value = 2.2;
+      f.frequency.setValueAtTime(420, t);
+      f.frequency.linearRampToValueAtTime(1300, t + d[i] * 0.45);
+      f.frequency.linearRampToValueAtTime(520, t + d[i]);
+      f.connect(enveloppe(t, 0.03, d[i], v));
+      const o = oscillo(t, d[i], "sawtooth", hz(m), 0, 0, 0, f);
+      if (i === 3) {
+        const lfo = ctx.createOscillator();
+        lfo.frequency.value = 6;
+        const p = ctx.createGain();
+        p.gain.value = 5;
+        lfo.connect(p); p.connect(o.frequency);
+        lfo.start(t); lfo.stop(t + d[i] + 0.05);
+      }
+      t += d[i] + 0.02;
+    });
+  };
+  const rayure = (q, v) => {          // le disque qui déraille
+    souffle(q, 0.09, v, "bandpass", 700, 2600, 2.5, 0.005);
+    souffle(q + 0.1, 0.14, v * 0.9, "bandpass", 2400, 500, 2.5, 0.005);
+    oscillo(q, 0.22, "sawtooth", 300, 90, v * 0.35, 0.005);
+  };
+  const rembobinage = (q, d, v) => {
+    const f = filtre("lowpass", 2200, 0.8, enveloppe(q, 0.08, d, v));
+    const o = oscillo(q, d, "sawtooth", 160, 0, 0, 0, f);
+    o.frequency.exponentialRampToValueAtTime(900, q + d * 0.8);
+    for (let t = 0; t < d - 0.1; t += 0.07) oscillo(q + t, 0.05, "square", 900 + 380 * Math.sin(t * 37), 1400, v * 0.3, 0.004);
+  };
+  const nappe = (q, d, v) => {        // le brouhaha d'une salle
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, q);
+    g.gain.exponentialRampToValueAtTime(v, q + 0.3);
+    g.gain.setValueAtTime(v, q + d - 0.3);
+    g.gain.exponentialRampToValueAtTime(0.0001, q + d);
+    g.connect(bus);
+    const s = ctx.createBufferSource();
+    s.buffer = bruit; s.loop = true;
+    s.connect(filtre("bandpass", 500, 0.6, g));
+    s.start(q); s.stop(q + d + 0.05);
+  };
   const tension = (q, d, notes, v) => {
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, q);
@@ -1296,62 +1341,78 @@ function creerBandeSon() {
       }
     };
 
-    // 1 · la salle
-    musique(0, 4.8, { melodie: true });
-    a(0.4, (q) => { pop(q, 0.18); maillet(q + 0.05, 84, 0.06, 0.3); });
-    for (let t = 0.9; t < 4.6; t += 0.5) a(t, (q) => pas(q, 0.09));
-    a(2.75, (q) => bloc(q, 0.22));
+    // 1 · 12 h 30, sans VIKTO LABS
+    musique(0, 3, { melodie: true });
+    a(0, (q) => nappe(q, 4.2, 0.025));
+    [0.3, 1.2, 2.3].forEach((t, i) => a(t, (q) => voix(q, 4, 240 + 60 * i, 0.04, 1.1)));
+    a(0.2, (q) => { pop(q, 0.16); maillet(q + 0.05, 84, 0.05, 0.3); });
+    a(0.55, (q) => voix(q, 7, 310, 0.3, 1.35));          // « Une burrata, s'il vous plaît ! »
+    a(1.95, (q) => voix(q, 2, 175, 0.3, 0.9));           // « Euh… »
+    a(2.2, (q) => gloups(q, 0.1));
+    a(2.45, (q) => voix(q, 4, 165, 0.3, 0.75));          // « … il n'y en a plus. »
+    a(3, (q) => trombone(q, 0.26));
+    a(4.2, (q) => { rayure(q, 0.3); souffle(q, 0.25, 0.1, "highpass", 3000, 6000, 0.7, 0.003); });
+    a(4.28, (q) => sourd(q, 0.3));                       // le tampon
+    a(5, (q) => rembobinage(q, 1.1, 0.15));
+    a(6.1, (q) => { pop(q, 0.14); maillet(q, 84, 0.1, 0.5); maillet(q + 0.08, 91, 0.1, 0.7); });
+    musique(6.5, 7.5, { melodie: true });
     // 2 · la cuisine
-    a(4.8, (q) => vent(q));
-    musique(4.8, 7.1, { volume: 0.8 });
-    for (let t = 5; t < 10.3; t += 0.12 + hasard() * 0.18) a(t, (q) => bulle(q, 0.03));
-    for (let t = 5; t < 10.3; t += 0.2) a(t, (q) => cliquetis(q, 0.018));
-    a(6.2, (q) => { sourd(q, 0.22); souffle(q + 0.05, 0.5, 0.08, "lowpass", 900, 300, 0.7, 0.08); });
-    a(6.35, (q) => bourdon(q, 0.8, 0.05));
-    a(7.2, (q) => boing(q, 0.24));
-    a(7.3, (q) => klaxon(q, 0.09));
-    a(7.32, (q) => souffle(q, 0.45, 0.28, "lowpass", 160, 90, 0.8, 0.01));
-    a(7.35, (q) => pop(q, 0.14, 1.3));
-    a(7.6, (q) => gloups(q, 0.16));
-    a(7.8, (q) => tension(q, 2.5, [33, 39], 0.04));
-    a(8.4, (q) => voix(q, 6, 190, 0.34, 1.3));          // « Plus de burrata ! »
-    // 3 · le Mac du chef
-    a(10.4, (q) => vent(q));
-    musique(10.5, 17.8, { groove: true, volume: 0.8 });
-    a(10.95, (q) => voix(q, 5, 330, 0.28, 1.2));        // « Je m'en occupe ! »
-    a(13.45, (q) => oscillo(q, 0.07, "sine", 700, 1050, 0.12, 0.003));
-    a(15, (q) => clic(q));
-    a(15.05, (q) => { plouf(q, 0.16); souffle(q, 0.3, 0.05, "highpass", 2000, 5000, 0.7, 0.02); });
+    a(7.5, (q) => vent(q));
+    musique(7.5, 9.35, { volume: 0.8 });
+    for (let t = 7.7; t < 12.2; t += 0.12 + hasard() * 0.18) a(t, (q) => bulle(q, 0.03));
+    for (let t = 7.7; t < 12.2; t += 0.2) a(t, (q) => cliquetis(q, 0.018));
+    a(8.6, (q) => { sourd(q, 0.22); souffle(q + 0.05, 0.5, 0.08, "lowpass", 900, 300, 0.7, 0.08); });
+    a(8.75, (q) => bourdon(q, 0.8, 0.05));
+    a(9.4, (q) => boing(q, 0.24));
+    a(9.5, (q) => klaxon(q, 0.09));
+    a(9.52, (q) => souffle(q, 0.45, 0.28, "lowpass", 160, 90, 0.8, 0.01));
+    a(9.55, (q) => pop(q, 0.14, 1.3));
+    a(9.8, (q) => gloups(q, 0.16));
+    a(10, (q) => tension(q, 2.2, [33, 39], 0.04));
+    a(10.5, (q) => voix(q, 6, 190, 0.34, 1.3));          // « Plus de burrata ! »
+    // 3 · au comptoir
+    a(12.3, (q) => vent(q));
+    musique(12.5, 19.3, { groove: true, volume: 0.8 });
+    a(12.65, (q) => voix(q, 5, 330, 0.28, 1.2));         // « Je m'en occupe ! »
+    a(13.8, (q) => vent(q, 0.07));                       // la caméra s'approche
+    a(15.7, (q) => oscillo(q, 0.07, "sine", 700, 1050, 0.12, 0.003));
     a(16.9, (q) => clic(q));
-    a(17.15, (q) => { maillet(q, 88, 0.12, 0.6); maillet(q + 0.11, 91, 0.12, 0.8); });
-    a(17.8, (q) => { pop(q, 0.18); [72, 76, 79, 84].forEach((m, i) => maillet(q + i * 0.06, m, 0.06, 0.3)); });
-    a(18.05, (q) => pop(q, 0.18, 1.2));
-    musique(18, 20, { melodie: true, groove: true, volume: 0.9 });
-    // 4 · à table
-    a(20, (q) => vent(q));
-    musique(20, 31, { melodie: true });
-    a(20.7, (q) => souffle(q, 0.35, 0.12, "bandpass", 500, 3000, 1.4, 0.12));
-    a(21.75, (q) => vibre(q, 1.1, 950, 0.035, 9, 60));
-    a(22.9, (q) => { bip(q, 0.05); bip(q + 0.1, 0.05); });
-    [96, 91, 100, 93, 98].forEach((m, i) => a(22.95 + i * 0.08, (q) => maillet(q, m, 0.04, 0.4)));
+    a(16.95, (q) => { plouf(q, 0.16); souffle(q, 0.3, 0.05, "highpass", 2000, 5000, 0.7, 0.02); });
+    a(17.7, (q) => vent(q, 0.06));
+    a(18.5, (q) => clic(q));
+    a(18.75, (q) => { maillet(q, 88, 0.12, 0.6); maillet(q + 0.11, 91, 0.12, 0.8); });
+    a(19.3, (q) => { vent(q, 0.06); pop(q, 0.18); [72, 76, 79, 84].forEach((m, i) => maillet(q + i * 0.06, m, 0.06, 0.3)); });
+    a(19.55, (q) => pop(q, 0.18, 1.2));
+    a(19.7, (q) => { maillet(q, 100, 0.05, 0.3); maillet(q + 0.06, 103, 0.04, 0.4); });   // clin d'œil
+    musique(19.5, 20.9, { melodie: true, groove: true, volume: 0.9 });
+    // 4 · 12 h 30, à table
+    a(20.9, (q) => vent(q));
+    musique(21, 30.3, { melodie: true });
+    a(21.4, (q) => souffle(q, 0.35, 0.12, "bandpass", 500, 3000, 1.4, 0.12));
+    a(22.25, (q) => vibre(q, 1, 950, 0.035, 9, 60));
+    a(23.2, (q) => { bip(q, 0.05); bip(q + 0.1, 0.05); });
+    [96, 91, 100, 93, 98].forEach((m, i) => a(23.25 + i * 0.08, (q) => maillet(q, m, 0.04, 0.4)));
+    a(24.2, (q) => voix(q, 6, 320, 0.26, 1.3));          // « Alors… un risotto ! »
     // 5 · le site, au bureau
-    a(25.6, (q) => vent(q));
+    a(25.9, (q) => vent(q));
     a(27.3, (q) => clic(q));
     for (let t = 27.45; t < 28.4; t += 0.06) a(t, (q) => cliquetis(q, 0.02));
-    a(28.6, (q) => { pop(q, 0.18); maillet(q + 0.05, 84, 0.1, 0.5); maillet(q + 0.15, 88, 0.1, 0.7); });
+    a(28.4, (q) => { pop(q, 0.18); maillet(q + 0.05, 84, 0.1, 0.5); maillet(q + 0.15, 88, 0.1, 0.7); });
+    a(28.65, (q) => { pop(q, 0.12, 0.8); maillet(q + 0.05, 91, 0.05, 0.5); });   // le cœur
     // 6 · en bref
-    a(31, (q) => oscillo(q, 0.5, "sine", 1100, 160, 0.16, 0.02));    // l'iris se ferme…
-    a(31.6, (q) => oscillo(q, 0.35, "sine", 200, 900, 0.14, 0.02));  // …et se rouvre
-    a(31.72, (q) => cuivres(q, [55, 59, 62, 67], 0.05, 0.14));
-    a(31.9, (q) => {
+    a(30.3, (q) => oscillo(q, 0.5, "sine", 1100, 160, 0.16, 0.02));    // l'iris se ferme…
+    a(30.9, (q) => oscillo(q, 0.35, "sine", 200, 900, 0.14, 0.02));    // …et se rouvre
+    a(31.02, (q) => cuivres(q, [55, 59, 62, 67], 0.05, 0.14));
+    a(31.2, (q) => {
       cuivres(q, [60, 64, 67, 72], 0.055, 1.9);
       pince(q, 36, 0.25);
+      souffle(q, 0.25, 0.12, "highpass", 1500, 4000, 0.7, 0.003);      // les confettis
       [72, 76, 79, 84, 88].forEach((m, i) => maillet(q + 0.05 + i * 0.05, m, 0.05, 0.6));
     });
-    a(32.2, (q) => pop(q, 0.14));
-    a(32.85, (q) => pop(q, 0.14, 0.9));
-    a(32.95, (q) => pop(q, 0.14, 1.15));
-    a(33.5, (q) => { maillet(q, 84, 0.07, 1.4); maillet(q, 91, 0.05, 1.4); });
+    a(31.5, (q) => pop(q, 0.14));
+    a(32.15, (q) => pop(q, 0.14, 0.9));
+    a(32.25, (q) => pop(q, 0.14, 1.15));
+    a(32.8, (q) => { maillet(q, 84, 0.07, 1.4); maillet(q, 91, 0.05, 1.4); });
 
     return ev.sort((x, y) => x.t - y.t);
   };
@@ -1451,23 +1512,23 @@ function initContextVideo() {
   const son = boutonSon ? creerBandeSon() : null;
   if (boutonSon && !son) boutonSon.hidden = true;
 
-  const DUREE = 35;
+  const DUREE = 34.2;
   const TEMPS = [
-    ["s1", 0], ["c1a", 0.4], ["c1b", 2.6],
-    ["s2", 4.8], ["c2a", 5.9], ["c2b", 7.2], ["c2c", 8.3],
-    ["s3", 10.4], ["c3r", 10.9], ["c3a", 11.2], ["c3b", 12.1], ["c3c", 12.5], ["c3d", 13.45], ["c3e", 14],
-    ["c3f", 15], ["c3g", 15.9], ["c3h", 16.1], ["c3i", 16.9], ["c3j", 17.8],
-    ["s4", 20], ["c4a", 20.7], ["c4b", 21.7], ["c4c", 22.9],
-    ["s5", 25.6], ["c5a", 26.3], ["c5b", 27.3], ["c5c", 28.6],
-    ["s6", 31], ["c6a", 31.9],
+    ["s1", 0], ["c1a", 0.2], ["c1b", 0.5], ["c1c", 1.9], ["c1d", 3], ["c1e", 4.2], ["c1f", 5], ["c1g", 6.1],
+    ["s2", 7.5], ["c2a", 8.3], ["c2b", 9.4], ["c2c", 10.4],
+    ["s3", 12.3], ["c3r", 12.6], ["c3a", 13.8], ["c3b", 14.6], ["c3c", 14.9], ["c3d", 15.7], ["c3e", 16.1],
+    ["c3f", 16.9], ["c3g", 17.7], ["c3h", 17.9], ["c3i", 18.5], ["c3j", 19.3],
+    ["s4", 20.9], ["c4a", 21.4], ["c4b", 22.2], ["c4c", 23.2], ["c4d", 24.2],
+    ["s5", 25.9], ["c5a", 26.4], ["c5b", 27.3], ["c5c", 28.4],
+    ["s6", 30.3], ["c6a", 31.2],
   ];
   const CHAPITRES = [
-    { debut: 0,    fin: 4.8,  texte: "11 h 45 au Petit Bistrot. Le service commence dans un quart d'heure." },
-    { debut: 4.8,  fin: 10.4, texte: "En cuisine, plus une seule burrata. Le chef donne l'alerte !" },
-    { debut: 10.4, fin: 20,   texte: "Au comptoir, la gérante la masque d'un clic sur son Mac, puis enregistre." },
-    { debut: 20,   fin: 25.6, texte: "À table, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
-    { debut: 25.6, fin: 31,   texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
-    { debut: 31,   fin: DUREE, texte: "Une modification. Partout à jour." },
+    { debut: 0,    fin: 6.1,  texte: "12 h 30, sans VIKTO LABS : la burrata est finie… mais toujours sur la carte." },
+    { debut: 6.1,  fin: 12.3, texte: "11 h 45, un peu plus tôt. En cuisine, plus de burrata : le chef donne l'alerte !" },
+    { debut: 12.3, fin: 20.9, texte: "Au comptoir, la gérante la masque d'un clic sur son Mac, puis enregistre." },
+    { debut: 20.9, fin: 25.9, texte: "12 h 30, la cliente scanne le QR code : la burrata n'y figure déjà plus." },
+    { debut: 25.9, fin: 30.3, texte: "Sur le site du restaurant non plus. Rien d'autre à faire." },
+    { debut: 30.3, fin: DUREE, texte: "Une modification. Partout à jour." },
   ];
 
   let t = 0;
@@ -1530,6 +1591,7 @@ function initContextVideo() {
     if (fini) { t = 0; fini = false; poser(); if (son) son.recaler(); }
     lecture = true;
     precedent = null;
+    fig.classList.add("is-started");
     majBouton();
     image = requestAnimationFrame(avancer);
   };
@@ -1559,11 +1621,12 @@ function initContextVideo() {
   });
 
   // Le son part muet (les navigateurs l'exigent) : le visiteur l'active d'un clic.
+  const majSon = () => {
+    if (!son) return;
+    boutonSon.classList.toggle("is-on", son.actif());
+    boutonSon.setAttribute("aria-label", son.actif() ? "Couper le son" : "Activer le son");
+  };
   if (son) {
-    const majSon = () => {
-      boutonSon.classList.toggle("is-on", son.actif());
-      boutonSon.setAttribute("aria-label", son.actif() ? "Couper le son" : "Activer le son");
-    };
     boutonSon.addEventListener("click", () => {
       if (son.actif()) son.couper();
       else {
@@ -1573,6 +1636,21 @@ function initContextVideo() {
       majSon();
     });
     majSon();
+  }
+
+  // L'affiche : un clic lance le film, avec le son d'emblée (ce clic vaut autorisation).
+  const affiche = fig.querySelector(".ctx-poster");
+  if (affiche) {
+    if (!son) {
+      affiche.querySelector(".ctx-poster-sub").textContent = "Regarder le film";
+      affiche.setAttribute("aria-label", "Regarder le film");
+    }
+    affiche.addEventListener("click", () => {
+      if (son && !son.actif()) son.activer();
+      majSon();
+      pauseVoulue = false;
+      lire();
+    });
   }
 
   poser();

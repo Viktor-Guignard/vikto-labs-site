@@ -2602,13 +2602,64 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
   font-size: 0.8rem; font-variant-numeric: tabular-nums;
   color: var(--color-gray-600);
 }
-/* le lien vers l'offre ne se montre qu'une fois le film terminé */
+/* les suites ne se montrent qu'une fois le film terminé, à la place des chapitres */
+.ctx-ctas {
+  flex: 1; display: none;
+  align-items: center; justify-content: flex-end; flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.ctx-video.is-ended .ctx-ctas { display: flex; }
+.ctx-video.is-ended .ctx-chapters { display: none; }
 .ctx-cta {
-  flex: none; display: none;
+  flex: none; display: inline-block;
   font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem;
   color: var(--color-red); text-decoration: none; white-space: nowrap;
 }
-.ctx-video.is-ended .ctx-cta { display: inline-block; }
+.ctx-cta-demo {
+  padding: 10px 18px; border-radius: 999px;
+  background: var(--color-red); color: #fff;
+  box-shadow: 0 10px 20px -10px rgba(229,40,36,0.7);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+.ctx-cta-demo:hover { background: var(--color-red-dark); transform: scale(1.03); }
+
+/* l'affiche : avant la lecture, un titre et un gros bouton ; un clic lance le film avec le son */
+.ctx-poster {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  padding: 0; border: 0; cursor: pointer; color: #fff;
+  background: linear-gradient(180deg, rgba(31,27,28,0.30) 0%, rgba(31,27,28,0.78) 100%);
+  font-family: var(--font-heading);
+  transition: opacity .45s ease, visibility .45s;
+}
+.ctx-video.is-started .ctx-poster { opacity: 0; visibility: hidden; pointer-events: none; }
+.ctx-video:not(.is-started) .ctx-sound { display: none; }
+.ctx-poster-kicker {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.82);
+}
+.ctx-poster-title {
+  font-size: clamp(1.7rem, 5vw, 3.6rem); font-weight: 700; line-height: 1;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+}
+.ctx-poster-play {
+  display: grid; place-items: center;
+  width: 84px; height: 84px; margin-top: 6px;
+  border-radius: 50%; background: var(--color-red);
+  box-shadow: 0 16px 36px -12px rgba(229,40,36,0.85);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+.ctx-poster-play svg { width: 34px; height: 34px; margin-left: 4px; }
+.ctx-poster:hover .ctx-poster-play { transform: scale(1.08); background: var(--color-red-dark); }
+.ctx-poster-sub { font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; color: rgba(255,255,255,0.92); }
+.ctx-poster:focus-visible { outline: 3px solid var(--color-red); outline-offset: -3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .ctx-poster-play { animation: ctx-pouls 1.8s ease-in-out infinite; }
+}
+@keyframes ctx-pouls {
+  0%, 100% { box-shadow: 0 16px 36px -12px rgba(229,40,36,0.85), 0 0 0 0 rgba(229,40,36,0.45); }
+  50% { box-shadow: 0 16px 36px -12px rgba(229,40,36,0.85), 0 0 0 16px rgba(229,40,36,0); }
+}
 /* le son part coupé (exigence des navigateurs) : le bouton, posé sur l'image, invite à l'activer */
 .ctx-sound {
   position: absolute; top: 14px; right: 14px; z-index: 1;
@@ -2632,6 +2683,13 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
 @media (max-width: 560px) {
   .ctx-frame { border-radius: var(--radius-md); }
   .ctx-time { display: none; }
+  .ctx-poster { gap: 6px; }
+  .ctx-poster-kicker { font-size: 0.68rem; }
+  .ctx-poster-play { width: 58px; height: 58px; margin-top: 2px; }
+  .ctx-poster-play svg { width: 26px; height: 26px; }
+  .ctx-poster-sub { font-size: 0.78rem; }
+  .ctx-cta { font-size: 0.82rem; }
+  .ctx-cta-demo { padding: 8px 14px; }
   /* sur téléphone, l'icône seule suffit : le haut-parleur barré se lit partout */
   .ctx-sound { top: 8px; right: 8px; padding: 8px; }
   .ctx-sound span { display: none; }

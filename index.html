@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/css/style.css?v=20260924b">
+<link rel="stylesheet" href="assets/css/style.css?v=20260925a">
 
 <script type="application/ld+json">
 {
@@ -144,7 +144,7 @@
         <div class="ctx-frame">
           <svg class="ctx-svg" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ctx-t ctx-d" preserveAspectRatio="xMidYMid slice">
             <title id="ctx-t">Midi moins le quart au Petit Bistrot</title>
-            <desc id="ctx-d">À 11 h 45, le chef s'aperçoit qu'il n'a plus de burrata et donne l'alerte. Au comptoir, la gérante la masque d'un clic sur son Mac, dans l'éditeur VIKTO LABS, puis enregistre. À table, une cliente scanne le QR code : la carte est déjà à jour, sans la burrata. Au bureau, un habitué consulte le site du restaurant : à jour lui aussi.</desc>
+            <desc id="ctx-d">12 h 30, sans VIKTO LABS : une cliente commande une burrata, le serveur doit lui dire qu'il n'y en a plus. On rembobine jusqu'à 11 h 45 : le chef s'aperçoit qu'il n'a plus de burrata et donne l'alerte. Au comptoir, la gérante la masque d'un clic sur son Mac, dans l'éditeur VIKTO LABS, puis enregistre. À 12 h 30, la cliente scanne le QR code : la carte est déjà à jour, elle choisit un risotto. Au bureau, un habitué consulte le site du restaurant : à jour lui aussi.</desc>
             <defs>
               <pattern id="cx-dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="11" cy="11" r="1.6" fill="#2E2A2B"/></pattern>
               <pattern id="cx-tiles" width="80" height="44" patternUnits="userSpaceOnUse">
@@ -202,14 +202,52 @@
               /* ══ 1 · La salle ══ */
               .ctx-svg .cx-lamp{transform-box:view-box;animation:cx-lamp 4.5s ease-in-out infinite alternate}
               .ctx-svg .cx-sec{transform-box:view-box;transform-origin:800px 230px;animation:cx-spin 6s linear infinite}
-              .ctx-svg .cx-min{transform-box:view-box;transform-origin:800px 230px;transform:rotate(264deg);transition:transform .7s cubic-bezier(.3,1.8,.5,1)}
-              .ctx-svg.c1b .cx-min{transform:rotate(270deg)}
+              .ctx-svg.c1f:not(.c1g) .cx-sec{animation-duration:.25s;animation-direction:reverse}
+              .ctx-svg .cx-min{transform-box:view-box;transform-origin:800px 230px;transform:rotate(900deg);transition:transform 1.1s cubic-bezier(.5,0,.3,1.15)}
+              .ctx-svg .cx-hr{transform-box:view-box;transform-origin:800px 230px;transform:rotate(375deg);transition:transform 1.1s cubic-bezier(.5,0,.3,1.15)}
+              .ctx-svg.c1f .cx-min{transform:rotate(270deg)}
+              .ctx-svg.c1f .cx-hr{transform:rotate(352.5deg)}
               .ctx-svg .cx-stamp{transform-box:fill-box;transform-origin:0 50%;transform:scale(.3);opacity:0;transition:transform .55s cubic-bezier(.3,1.8,.5,1),opacity .2s}
-              .ctx-svg.c1a .cx-stamp{transform:none;opacity:1}
-              .ctx-svg .cx-walk1,.ctx-svg .cx-walk4{transform:translateX(-1050px)}
+              .ctx-svg.c1a:not(.c1f) .cx-stamp.st1,.ctx-svg.c1g .cx-stamp.st2{transform:none;opacity:1}
+              .ctx-svg .cx-walk4{transform:translateX(-1050px)}
               .ctx-svg .cx-passant{transform:translateX(280px)}
-              .ctx-svg.c1a:not(.s2) .cx-walk1{animation:cx-walk 4.6s linear both}
-              .ctx-svg.c1a:not(.s2) .cx-passant{animation:cx-passe 4.6s linear both}
+              .ctx-svg.c1a:not(.s2) .cx-passant{animation:cx-passe 6.5s linear both}
+
+              /* ══ 1 · 12 h 30, sans VIKTO LABS : la commande, la réponse, la déception ══ */
+              .ctx-svg .cx-bulle{opacity:0;transform-box:fill-box;transform:scale(.3);transition:transform .4s cubic-bezier(.3,1.8,.5,1),opacity .15s}
+              .ctx-svg .cx-bulle.b1{transform-origin:75% 100%}
+              .ctx-svg .cx-bulle.b2{transform-origin:65% 100%}
+              .ctx-svg .cx-bulle.b4{transform-origin:95% 100%}
+              .ctx-svg.c1b:not(.c1c) .cx-bulle.b1,.ctx-svg.c1c:not(.c1d) .cx-bulle.b2,.ctx-svg.c4d .cx-bulle.b4{opacity:1;transform:none}
+              .ctx-svg .cx-talk1,.ctx-svg .cx-talk2{opacity:0;transform-box:fill-box;transform-origin:center}
+              .ctx-svg.c1b:not(.c1c) .cx-talk1,.ctx-svg.c1c:not(.c1d) .cx-talk2{opacity:1;animation:cx-talk .13s steps(2) infinite}
+              .ctx-svg.c1b:not(.c1c) .cx-m1n,.ctx-svg.c1d .cx-m1n,.ctx-svg.c1d .cx-nb1{opacity:0}
+              .ctx-svg .cx-m1s,.ctx-svg .cx-sb1,.ctx-svg .cx-m2g,.ctx-svg .cx-sweat1{opacity:0}
+              .ctx-svg.c1d .cx-m1s,.ctx-svg.c1d .cx-sb1,.ctx-svg.c1d .cx-m2g,.ctx-svg.c1c .cx-sweat1{opacity:1}
+              .ctx-svg.c1c .cx-m2n{opacity:0}
+              .ctx-svg .cx-nuage{opacity:0;transform-box:fill-box;transform-origin:50% 100%;transform:scale(.2);transition:transform .45s cubic-bezier(.3,1.8,.5,1),opacity .15s}
+              .ctx-svg.c1d .cx-nuage{opacity:1;transform:none}
+              .ctx-svg.c1f .cx-nuage{opacity:0;transform:translateY(-320px);transition-duration:.6s}
+              .ctx-svg .cx-pluie{animation:cx-pluie .45s linear infinite}
+              .ctx-svg .cx-cliente,.ctx-svg .cx-serveur{transition:transform .9s cubic-bezier(.7,0,.9,.5)}
+              .ctx-svg.c1f .cx-cliente{transform:translateX(-820px)}
+              .ctx-svg.c1f .cx-serveur{transform:translateX(900px)}
+              .ctx-svg .cx-jambe{transform-box:fill-box;transform-origin:50% 0}
+              .ctx-svg.c1f:not(.c1g) .cx-jambe.a{animation:cx-stride .16s ease-in-out infinite alternate}
+              .ctx-svg.c1f:not(.c1g) .cx-jambe.b{animation:cx-stride .16s ease-in-out -.16s infinite alternate}
+              /* arrêt sur image, puis on rembobine */
+              .ctx-svg.c1e:not(.c1f) .sc1 *{animation-play-state:paused}
+              .ctx-svg .cx-veil{opacity:0;transition:opacity .25s}
+              .ctx-svg.c1e:not(.c1g) .cx-veil{opacity:.3}
+              .ctx-svg .cx-flash{opacity:0}
+              .ctx-svg.c1e .cx-flash{animation:cx-flash .4s ease-out both}
+              .ctx-svg .cx-sans{opacity:0;transform-box:fill-box;transform-origin:center;transform:rotate(-8deg) scale(2.4)}
+              .ctx-svg.c1e:not(.c1f) .cx-sans{opacity:1;transform:rotate(-8deg);transition:transform .2s cubic-bezier(.6,0,.8,1.3),opacity .1s}
+              .ctx-svg.c1f .cx-sans{opacity:0;transform:rotate(-8deg) scale(.4);transition:transform .35s ease-in,opacity .35s}
+              .ctx-svg .cx-rew,.ctx-svg .cx-rewlines{opacity:0}
+              .ctx-svg.c1f:not(.c1g) .cx-rew{opacity:1;animation:cx-osd .4s steps(2) infinite}
+              .ctx-svg.c1f:not(.c1g) .cx-rewlines{animation:cx-rewind .3s linear infinite}
+              .ctx-svg.c1f:not(.c1g) .sc1 .cx-vhs{animation:cx-vhs .1s steps(2) infinite alternate}
 
               /* ══ 2 · La cuisine ══ */
               .ctx-svg .cx-lid{transform-box:fill-box;transform-origin:50% 100%;animation:cx-rattle .2s steps(2,jump-none) infinite}
@@ -226,7 +264,9 @@
               .ctx-svg.c2a .cx-light{animation:cx-flicker .7s ease-out .45s both}
               .ctx-svg .cx-ring{opacity:0;transform-box:fill-box;transform-origin:center}
               .ctx-svg.c2b .cx-ring{opacity:1;animation:cx-pulse 1.2s ease-out infinite}
-              .ctx-svg.c2b .cx-chef2{transform-box:view-box;transform-origin:688px 900px;animation:cx-hop .7s cubic-bezier(.3,1.4,.5,1) both}
+              .ctx-svg.c2b .cx-chef2{transform-box:view-box;transform-origin:688px 900px;animation:cx-hop .8s ease-out both}
+              .ctx-svg .cx-toque{transform-box:fill-box;transform-origin:50% 100%}
+              .ctx-svg.c2b .cx-toque{animation:cx-toque .8s ease-out .12s both}
               .ctx-svg.c2b .cx-head2{transform-box:view-box;transform-origin:688px 440px;animation:cx-take .9s ease-out both}
               .ctx-svg .cx-bang{transform-box:fill-box;transform-origin:30% 100%;transform:scale(0);transition:transform .45s cubic-bezier(.3,1.9,.5,1) .15s}
               .ctx-svg.c2b .cx-bang{transform:scale(1)}
@@ -249,22 +289,30 @@
               .ctx-svg .cx-turn2{transform-box:view-box;transform-origin:688px 372px;transition:transform .3s cubic-bezier(.3,1.7,.5,1)}
               .ctx-svg.c2c .cx-turn2{transform:scaleX(-1)}
               .ctx-svg .cx-mouth-o{transform-box:fill-box;transform-origin:center;transition:transform .2s ease}
-              .ctx-svg.c2c .cx-mouth-o{transform:scale(1.7,2)}
+              .ctx-svg.c2c .cx-mouth-o{transform:scale(1.7,2);animation:cx-yell .12s steps(2) .1s 7}
               .ctx-svg.c2c .cx-bang{transform:scale(0)}
               .ctx-svg .cx-shout{opacity:0;transform-box:fill-box;transform-origin:95% 70%;transform:scale(.2);transition:transform .45s cubic-bezier(.3,1.8,.5,1) .1s,opacity .15s .1s}
               .ctx-svg.c2c .cx-shout{opacity:1;transform:none}
               .ctx-svg.c2c .cx-shout-in{animation:cx-jitter .09s steps(2) infinite alternate}
 
               /* ══ 3 · Le Mac du chef ══ */
-              .ctx-svg .cx-cx{transform:translateX(1150px);transition:transform .95s cubic-bezier(.55,0,.25,1)}
-              .ctx-svg .cx-cy{transform:translateY(610px);transition:transform .95s cubic-bezier(.2,.75,.35,1)}
+              .ctx-svg .cx-cam3{transform-box:view-box;transform-origin:0 0;transition:transform .9s cubic-bezier(.65,0,.25,1)}
+              .ctx-svg.c3a .cx-cam3{transform:translate(800px,450px) scale(2.2) translate(-935px,-345px)}
+              .ctx-svg.c3g .cx-cam3{transform:translate(800px,450px) scale(2.2) translate(-960px,-205px)}
+              .ctx-svg.c3j .cx-cam3{transform:none;transition-duration:1s}
+              .ctx-svg .cx-cx{transform:translateX(1150px);transition:transform .8s cubic-bezier(.55,0,.25,1)}
+              .ctx-svg .cx-cy{transform:translateY(610px);transition:transform .8s cubic-bezier(.2,.75,.35,1)}
               .ctx-svg.c3a .cx-cx{transform:translateX(790px)}  .ctx-svg.c3a .cx-cy{transform:translateY(336px)}
               .ctx-svg.c3c .cx-cx{transform:translateX(1319px)} .ctx-svg.c3c .cx-cy{transform:translateY(333px)}
               .ctx-svg.c3e .cx-cx{transform:translateX(1353px)} .ctx-svg.c3e .cx-cy{transform:translateY(368px)}
               .ctx-svg.c3g .cx-cx{transform:translateX(1048px)} .ctx-svg.c3g .cx-cy{transform:translateY(110px)}
               .ctx-svg .cx-tip{transform-box:fill-box;transform-origin:0 0}
               .ctx-svg.c3f:not(.c3g) .cx-tip,.ctx-svg.c3i:not(.c3j) .cx-tip{animation:cx-click .32s ease-out}
-              .ctx-svg .cx-hand3{transition:transform .95s cubic-bezier(.4,0,.3,1)}
+              .ctx-svg .cx-hand3{transition:transform .8s cubic-bezier(.4,0,.3,1)}
+              .ctx-svg .cx-doigt{transform-box:fill-box;transform-origin:0 50%}
+              .ctx-svg.c3f:not(.c3g) .cx-doigt,.ctx-svg.c3i:not(.c3j) .cx-doigt{animation:cx-tap .28s ease-out}
+              .ctx-svg .cx-clin{transform-box:fill-box;transform-origin:center}
+              .ctx-svg.c3j .cx-clin{animation:cx-clin .75s ease-in-out .35s both}
               .ctx-svg.c3a .cx-hand3{transform:translate(-16px,-4px)}
               .ctx-svg.c3c .cx-hand3{transform:translate(14px,-6px)}
               .ctx-svg.c3e .cx-hand3{transform:translate(18px,0)}
@@ -299,10 +347,10 @@
               .ctx-svg.c3j .cx-chip{opacity:1;transform:none}
               .ctx-svg.c3j .cx-chip.k2{transition-delay:.25s}
               .ctx-svg .cx-reply{opacity:0;transform-box:fill-box;transform-origin:0% 100%;transform:scale(.3);transition:transform .45s cubic-bezier(.3,1.8,.5,1),opacity .2s}
-              .ctx-svg.c3r:not(.c3b) .cx-reply{opacity:1;transform:none}
+              .ctx-svg.c3r:not(.c3a) .cx-reply{opacity:1;transform:none}
               .ctx-svg .cx-talk{opacity:0;transform-box:fill-box;transform-origin:center}
-              .ctx-svg.c3r:not(.c3b) .cx-talk{opacity:1;animation:cx-talk .14s steps(2) infinite}
-              .ctx-svg.c3r:not(.c3b) .cx-neutral{opacity:0}
+              .ctx-svg.c3r:not(.c3a) .cx-talk{opacity:1;animation:cx-talk .14s steps(2) infinite}
+              .ctx-svg.c3r:not(.c3a) .cx-neutral{opacity:0}
               .ctx-svg .cx-smile{opacity:0}
               .ctx-svg.c3j .cx-smile{opacity:1}
               .ctx-svg.c3j .cx-neutral{opacity:0}
@@ -318,6 +366,8 @@
               .ctx-svg.c4c .cx-cam{opacity:0}
               .ctx-svg .cx-m4{opacity:0;transform:translateY(26px);transition:opacity .35s ease,transform .5s cubic-bezier(.3,1.6,.5,1)}
               .ctx-svg.c4c .cx-m4{opacity:1;transform:none}
+              .ctx-svg .cx-wiggle{transform-box:fill-box;transform-origin:50% 90%}
+              .ctx-svg.c4c .cx-wiggle{animation:cx-wiggle .6s ease-in-out .1s}
               .ctx-svg.c4c .cx-m4.d1{transition-delay:.12s}.ctx-svg.c4c .cx-m4.d2{transition-delay:.24s}
               .ctx-svg.c4c .cx-m4.d3{transition-delay:.36s}.ctx-svg.c4c .cx-m4.d4{transition-delay:.48s}
               .ctx-svg .cx-spark{opacity:0;transform-box:fill-box;transform-origin:center}
@@ -338,6 +388,8 @@
               .ctx-svg.c5c .cx-head5{transform-box:fill-box;transform-origin:50% 100%;animation:cx-nod .45s ease-in-out 2 alternate}
               .ctx-svg .cx-badge5{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.3);transition:opacity .3s ease,transform .5s cubic-bezier(.3,1.9,.5,1)}
               .ctx-svg.c5c .cx-badge5{opacity:1;transform:none}
+              .ctx-svg .cx-coeur{opacity:0;transform-box:fill-box;transform-origin:50% 100%;transform:scale(.2)}
+              .ctx-svg.c5c .cx-coeur{animation:cx-coeur 1.5s ease-out .25s both}
               .ctx-svg .cx-sec5{transform-box:view-box;transform-origin:1370px 170px;animation:cx-spin 6s linear infinite}
 
               /* ══ 6 · En bref ══ */
@@ -353,6 +405,8 @@
               .ctx-svg .cx-lbl,.ctx-svg .cx-wm{opacity:0;transition:opacity .5s ease}
               .ctx-svg.c6a .cx-lbl{opacity:1;transition-delay:1.25s}
               .ctx-svg.c6a .cx-wm{opacity:1;transition-delay:1.6s}
+              .ctx-svg .cx-conf{opacity:0;transform-box:fill-box;transform-origin:center}
+              .ctx-svg.c6a .cx-conf{animation-name:cx-conf;animation-timing-function:cubic-bezier(.35,.55,.65,1);animation-fill-mode:both}
               .ctx-svg.s6 .cx-twinkle{transform-box:fill-box;transform-origin:center;animation:cx-twinkle 1.6s ease-in-out infinite}
               .ctx-svg.s6 .cx-twinkle.p2{animation-delay:-.5s}.ctx-svg.s6 .cx-twinkle.p3{animation-delay:-1.1s}
 
@@ -381,7 +435,20 @@
               @keyframes cx-flutter{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
               @keyframes cx-flicker{0%{opacity:0}20%{opacity:1}35%{opacity:.4}55%{opacity:1}70%{opacity:.7}100%{opacity:1}}
               @keyframes cx-pulse{0%{transform:scale(.92);opacity:1}100%{transform:scale(1.1);opacity:.3}}
-              @keyframes cx-hop{0%{transform:none}25%{transform:translateY(-34px) scaleY(1.05)}55%{transform:translateY(0) scaleY(.94)}75%{transform:translateY(-6px) scaleY(1.01)}100%{transform:none}}
+              @keyframes cx-hop{0%{transform:none}12%{transform:scale(1.05,.88)}32%{transform:translateY(-46px) scale(.95,1.1)}56%{transform:translateY(0) scale(1.06,.9)}74%{transform:translateY(-8px) scale(.99,1.02)}100%{transform:none}}
+              @keyframes cx-toque{0%{transform:none}30%{transform:scale(.9,1.22)}55%{transform:scale(1.1,.86)}75%{transform:scale(.97,1.05)}100%{transform:none}}
+              @keyframes cx-yell{0%{transform:scale(1.7,2)}50%{transform:scale(1.45,1.15)}}
+              @keyframes cx-flash{0%{opacity:.85}100%{opacity:0}}
+              @keyframes cx-pluie{from{transform:translateY(-6px);opacity:1}to{transform:translateY(24px);opacity:0}}
+              @keyframes cx-osd{0%{opacity:1}50%{opacity:.35}}
+              @keyframes cx-rewind{from{opacity:.9;transform:translateX(-700px)}to{opacity:.9;transform:translateX(700px)}}
+              @keyframes cx-vhs{from{transform:translateX(-5px) skewX(-.6deg)}to{transform:translateX(5px) skewX(.6deg)}}
+              @keyframes cx-chignon{0%{transform:none}35%{transform:rotate(-8deg)}65%{transform:rotate(3deg)}100%{transform:none}}
+              @keyframes cx-tap{0%,100%{transform:none}40%{transform:translateY(5px) scaleX(.9)}}
+              @keyframes cx-clin{0%,100%{transform:none}25%,72%{transform:scaleY(.08)}}
+              @keyframes cx-wiggle{0%,100%{transform:none}20%{transform:rotate(4deg)}45%{transform:rotate(-3deg)}70%{transform:rotate(1.5deg)}}
+              @keyframes cx-coeur{0%{opacity:0;transform:scale(.2)}18%{opacity:1;transform:scale(1.3)}32%{transform:scale(1)}78%{opacity:1;transform:translateY(-34px)}100%{opacity:0;transform:translateY(-64px) scale(.9)}}
+              @keyframes cx-conf{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:1;transform:translateY(1020px) rotate(900deg)}}
               @keyframes cx-take{0%{transform:none}15%{transform:translate(-8px,3px) rotate(-7deg)}35%{transform:translate(6px,-6px) rotate(6deg)}55%{transform:rotate(-3deg)}100%{transform:none}}
               @keyframes cx-wobble{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
               @keyframes cx-sweat{0%{opacity:0;transform:translateY(0) scale(.3)}20%{opacity:1;transform:scale(1)}100%{opacity:0;transform:translateY(46px)}}
@@ -404,11 +471,16 @@
               .ctx-svg .cx-beat{--bn:cx-beat;transform-box:fill-box;transform-origin:50% 100%}
               .ctx-svg .cx-beat.doux{--bn:cx-beat2}
               .ctx-svg .cx-hoche{--bn:cx-hoche}
-              .ctx-svg:not(.s2) .sc1 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out infinite}
-              .ctx-svg.s2:not(.c2b) .sc2 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out -.3s infinite}
-              .ctx-svg.s3:not(.s4) .sc3 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out -.4s infinite}
-              .ctx-svg.s4:not(.s5) .sc4 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out infinite}
-              .ctx-svg.s5:not(.s6) .sc5 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out -.1s infinite}
+              .ctx-svg:not(.c1d) .sc1 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out infinite}
+              .ctx-svg.c1g:not(.s2) .sc1 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out -.1s infinite}
+              .ctx-svg.s2:not(.c2b) .sc2 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out infinite}
+              .ctx-svg.s3:not(.s4) .sc3 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out -.3s infinite}
+              .ctx-svg.s4:not(.s5) .sc4 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out -.4s infinite}
+              .ctx-svg.s5:not(.s6) .sc5 :is(.cx-beat,.cx-hoche){animation:var(--bn) .5s ease-out -.4s infinite}
+              /* suivi : le chignon de la gérante rebondit un poil après sa tête */
+              .ctx-svg .cx-chignon{transform-box:fill-box;transform-origin:85% 85%}
+              .ctx-svg.s3:not(.s4) .sc3 .cx-chignon{animation:cx-chignon .5s ease-out -.22s infinite}
+              .ctx-svg .cx-foulard{transform-box:fill-box;transform-origin:50% 0;animation:cx-flutter 1.1s ease-in-out infinite alternate}
 
               /* ══ Onomatopées ══ */
               .ctx-svg .cx-ono{font-weight:700;font-size:46px;fill:#E52824;stroke:#2A2324;stroke-width:8px;paint-order:stroke;stroke-linejoin:round;opacity:0;transform-box:fill-box;transform-origin:center}
@@ -439,8 +511,8 @@
               }
             </style>
 
-            <!-- ═══════════════ 1 · LA SALLE, 11 H 45 ═══════════════ -->
-            <g class="sc sc1"><g class="kb">
+            <!-- ═══════════════ 1 · LA SALLE : 12 H 30 SANS VIKTO LABS, PUIS ON REMBOBINE ═══════════════ -->
+            <g class="sc sc1"><g class="kb"><g class="cx-vhs">
               <rect width="1600" height="900" fill="#F1EADF"/>
               <rect y="556" width="1600" height="8" fill="#D6C6AE"/>
               <rect y="564" width="1600" height="96" fill="#E7DCCB"/>
@@ -474,7 +546,7 @@
               <circle cx="800" cy="230" r="72" fill="#1F1B1C"/>
               <circle cx="800" cy="230" r="62" fill="#F8F9F4"/>
               <path d="M800 176v12M800 272v12M746 230h12M842 230h12" stroke="#1F1B1C" stroke-width="5" stroke-linecap="round"/>
-              <line x1="800" y1="230" x2="800" y2="196" stroke="#1F1B1C" stroke-width="8" stroke-linecap="round" transform="rotate(352.5 800 230)"/>
+              <g class="cx-hr"><line x1="800" y1="230" x2="800" y2="196" stroke="#1F1B1C" stroke-width="8" stroke-linecap="round"/></g>
               <g class="cx-min"><line x1="800" y1="230" x2="800" y2="182" stroke="#1F1B1C" stroke-width="5" stroke-linecap="round"/></g>
               <g class="cx-sec"><line x1="800" y1="240" x2="800" y2="180" stroke="#E52824" stroke-width="2.5" stroke-linecap="round"/></g>
               <circle cx="800" cy="230" r="7" fill="#E52824"/>
@@ -507,26 +579,6 @@
                 <rect x="968" y="204" width="144" height="8" rx="2" fill="#C41F1C"/>
               </g>
 
-              <!-- le serveur traverse la salle, derrière les tables -->
-              <g class="cx-walk1"><g transform="translate(-480 -402) scale(1.6)"><g class="cx-bob cx-ink" style="--ink:2.6px">
-                <g class="cx-speed"><path d="M758 530h-46M750 562h-66M758 594h-40" stroke="#2A2324" stroke-opacity=".35" stroke-width="4" stroke-linecap="round"/></g>
-                <g class="cx-leg cx-leg-b"><rect x="793" y="598" width="16" height="92" rx="7" fill="#2E2A2B"/><ellipse cx="806" cy="690" rx="14" ry="6" fill="#2E2A2B"/></g>
-                <g class="cx-leg cx-leg-a"><rect x="789" y="598" width="16" height="92" rx="7" fill="#1F1B1C"/><ellipse cx="802" cy="690" rx="14" ry="6" fill="#1F1B1C"/></g>
-                <g class="cx-swing"><rect x="780" y="532" width="14" height="62" rx="7" fill="#F1F2EC" stroke="#DFE0D8" stroke-width="2"/><circle cx="787" cy="596" r="8" fill="#E3B08A"/></g>
-                <rect x="772" y="518" width="56" height="88" rx="16" fill="#FFFFFF" stroke="#DFE0D8" stroke-width="2"/>
-                <path d="M774 566h52v80q-26 8-52 0z" fill="#1F1B1C"/>
-                <rect x="795" y="500" width="14" height="22" fill="#CF9A74"/>
-                <circle cx="802" cy="490" r="22" fill="#E3B08A"/>
-                <path d="M780 488q0-24 24-26q20 0 22 16q-10-6-24-4q-12 2-22 14z" fill="#3A2F2B"/>
-                <g class="cx-eyes"><ellipse cx="812" cy="485" rx="6" ry="7.5" fill="#FFFFFF" stroke="#2A2324" stroke-width="2" class="cx-noink"/><circle cx="815" cy="487" r="3.2" fill="#1F1B1C" class="cx-noink"/><circle cx="816" cy="485" r="1.1" fill="#FFFFFF" class="cx-noink"/></g>
-                <path d="M813 500q6 4 11-1" stroke="#8A4B3A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                <path d="M818 532q26 4 34-14" stroke="#2A2324" stroke-width="19" fill="none" stroke-linecap="round"/><path d="M818 532q26 4 34-14" stroke="#FFFFFF" stroke-width="14" fill="none" stroke-linecap="round"/>
-                <circle cx="854" cy="514" r="8" fill="#E3B08A"/>
-                <ellipse cx="862" cy="506" rx="38" ry="6" fill="#98938F"/>
-                <path d="M848 478h16l-2 26h-12z" fill="#DCE6E3" stroke="#AEB3B1" stroke-width="2"/>
-                <path d="M872 488h14l-2 16h-10z" fill="#8C2E24"/>
-              </g></g></g>
-
               <!-- table A -->
               <path d="M348 722V612q0-32 32-32h18" stroke="#8A6343" stroke-width="11" fill="none" stroke-linecap="round"/>
               <rect x="330" y="716" width="112" height="13" rx="5" fill="#B98A5E"/>
@@ -534,6 +586,34 @@
               <path d="M772 722V612q0-32-32-32h-18" stroke="#8A6343" stroke-width="11" fill="none" stroke-linecap="round"/>
               <rect x="678" y="716" width="112" height="13" rx="5" fill="#B98A5E"/>
               <path d="M692 729l-8 110M776 729l8 110" stroke="#8A6343" stroke-width="8" stroke-linecap="round"/>
+              <!-- la cliente, attablée -->
+              <g class="cx-cliente"><g class="cx-ink">
+                <rect x="376" y="692" width="100" height="26" rx="12" fill="#2E3F4F"/>
+                <rect x="452" y="700" width="24" height="120" rx="11" fill="#2E3F4F"/>
+                <path d="M450 810h40q12 0 12 12v6h-52z" fill="#8C2E24"/>
+                <rect x="398" y="528" width="26" height="46" fill="#CF9A74"/>
+                <rect x="360" y="564" width="88" height="148" rx="34" fill="#3E5566"/>
+                <circle cx="462" cy="512" r="7" fill="#E3B08A"/>
+                <circle cx="412" cy="500" r="48" fill="#E3B08A"/>
+                <path d="M458 478Q450 446 410 448Q358 450 358 500Q358 538 372 558L400 558Q386 520 398 494Q418 468 458 478Z" fill="#A4452C"/>
+                <path d="M446 470q-14 12-34 10" stroke="#8A3A24" stroke-width="4" fill="none" stroke-linecap="round"/>
+                <circle cx="440" cy="516" r="7" fill="#E8907A" opacity=".45" class="cx-noink"/>
+                <g class="cx-eyes" style="animation-delay:-2.6s"><ellipse cx="430" cy="497" rx="8.0" ry="10.0" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><circle cx="432.4" cy="499" r="3.8" fill="#1F1B1C" class="cx-noink"/><circle cx="433.6" cy="495.5" r="1.2" fill="#FFFFFF" class="cx-noink"/><ellipse cx="450" cy="496" rx="6.8" ry="9.3" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><circle cx="452.0" cy="498" r="3.4" fill="#1F1B1C" class="cx-noink"/><circle cx="453.1" cy="494.5" r="1.1" fill="#FFFFFF" class="cx-noink"/></g>
+                <path class="cx-nb1" d="M421 481q8-5 17-1M444 480q6-3 12 0" stroke="#5A2A1C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <path class="cx-sb1" d="M421 478q9 2 17 6M444 484q6-4 12-6" stroke="#5A2A1C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <path class="cx-m1n" d="M437 522q8 5 16 0" stroke="#7A2E24" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <ellipse class="cx-talk1" cx="445" cy="524" rx="6" ry="5" fill="#7A2E24"/>
+                <path class="cx-m1s" d="M437 530q8-7 16 0" stroke="#7A2E24" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <g transform="rotate(-6 513 560)">
+                  <rect x="486" y="518" width="56" height="82" rx="4" fill="#FBF6EC"/>
+                  <text x="514" y="537" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1" fill="#1F1B1C">CARTE</text>
+                  <path d="M495 550h38M495 562h28M495 574h34" stroke="#98938F" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M495 587h30" stroke="#E52824" stroke-width="3.5" stroke-linecap="round"/>
+                </g>
+                <path d="M404 596Q440 616 486 594" stroke="#2A2324" stroke-width="28" fill="none" stroke-linecap="round"/>
+                <path d="M404 596Q440 616 486 594" stroke="#3E5566" stroke-width="20" fill="none" stroke-linecap="round"/>
+                <circle cx="494" cy="588" r="11" fill="#E3B08A"/>
+              </g></g>
               <rect x="420" y="640" width="280" height="18" rx="5" fill="#1F1B1C"/>
               <rect x="551" y="658" width="18" height="172" fill="#5C5854"/>
               <ellipse cx="560" cy="834" rx="72" ry="11" fill="#5C5854"/>
@@ -571,13 +651,60 @@
               </g>
               <path d="M1452 660l10 176h112l10-176z" fill="#B98A5E"/>
 
+              <!-- le serveur, carnet en main -->
+              <g class="cx-serveur"><g transform="translate(820 830) scale(1.38) translate(-820 -708)"><g class="cx-ink" style="--ink:2.9px">
+                <g class="cx-jambe b"><rect x="826" y="572" width="20" height="128" rx="9" fill="#2E2A2B"/><path d="M806 694h40v14h-44q-6 0-4-6z" fill="#2E2A2B"/></g>
+                <g class="cx-jambe a"><rect x="800" y="572" width="20" height="128" rx="9" fill="#1F1B1C"/><path d="M780 694h40v14h-44q-6 0-4-6z" fill="#1F1B1C"/></g>
+                <rect x="846" y="446" width="20" height="96" rx="10" fill="#FFFFFF"/>
+                <rect x="788" y="424" width="72" height="160" rx="26" fill="#FFFFFF"/>
+                <path d="M788 530h72v96q-36 10-72 0z" fill="#1F1B1C"/>
+                <rect x="814" y="398" width="20" height="30" fill="#CF9A74"/>
+                <path d="M810 428l14 8-14 8zM838 428l-14 8 14 8z" fill="#1F1B1C"/>
+                <circle cx="778" cy="378" r="7" fill="#E3B08A"/>
+                <circle cx="822" cy="370" r="40" fill="#E3B08A"/>
+                <path d="M784 356Q788 326 826 326Q866 328 864 374Q852 352 830 350Q806 348 784 356Z" fill="#3A2F2B"/>
+                <ellipse cx="852" cy="378" rx="7" ry="10" fill="#CF9A74"/>
+                <g class="cx-eyes" style="animation-delay:-.7s"><ellipse cx="802" cy="366" rx="8.0" ry="10.0" fill="#FFFFFF" stroke="#2A2324" stroke-width="2.2" class="cx-noink"/><circle cx="799.6" cy="368" r="3.8" fill="#1F1B1C" class="cx-noink"/><circle cx="798.4" cy="364.5" r="1.2" fill="#FFFFFF" class="cx-noink"/><ellipse cx="784" cy="368" rx="6.8" ry="9.3" fill="#FFFFFF" stroke="#2A2324" stroke-width="2.2" class="cx-noink"/><circle cx="782.0" cy="370" r="3.4" fill="#1F1B1C" class="cx-noink"/><circle cx="780.9" cy="366.5" r="1.1" fill="#FFFFFF" class="cx-noink"/></g>
+                <path d="M794 350q7-4 14-1M776 352q5-3 10 0" stroke="#3A2F2B" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+                <path class="cx-m2n" d="M784 392q7 4 14 0" stroke="#8A4B3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <ellipse class="cx-talk2" cx="791" cy="393" rx="5.5" ry="4.5" fill="#7A2E24"/>
+                <path class="cx-m2g" d="M780 394l4-3 4 3 4-3 4 3 4-3" stroke="#8A4B3A" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <path class="cx-sweat1" d="M858 344q-8 13 0 18q8-5 0-18z" fill="#9CC3DA"/>
+                <rect x="736" y="470" width="30" height="40" rx="3" fill="#FFFFFF"/>
+                <path d="M742 482h18M742 490h14M742 498h16" stroke="#98938F" stroke-width="2" stroke-linecap="round"/>
+                <path d="M802 446Q786 478 770 494" stroke="#2A2324" stroke-width="22" fill="none" stroke-linecap="round"/>
+                <path d="M802 446Q786 478 770 494" stroke="#FFFFFF" stroke-width="17" fill="none" stroke-linecap="round"/>
+                <circle cx="768" cy="496" r="8" fill="#E3B08A"/>
+              </g></g></g>
+              <!-- la déception : un petit nuage de pluie -->
+              <g class="cx-nuage">
+                <path d="M368 412q-28 0-28-22q0-22 26-22q6-26 36-26q28 0 36 22q28-2 30 24q2 24-26 24z" fill="#8A969E" stroke="#2A2324" stroke-width="4" stroke-linejoin="round"/>
+                <path class="cx-pluie" d="M374 428l-5 14M404 428l-5 14M434 428l-5 14" stroke="#5E9BD1" stroke-width="4.5" stroke-linecap="round"/>
+              </g>
+              <!-- « Une burrata, s'il vous plaît ! » -->
+              <g class="cx-bulle b1">
+                <path d="M232 292H520Q556 292 556 328V376Q556 412 520 412H452L446 462L420 412H232Q196 412 196 376V328Q196 292 232 292Z" fill="#FFFFFF" stroke="#2A2324" stroke-width="6" stroke-linejoin="round"/>
+                <text x="376" y="344" text-anchor="middle" font-size="31" font-weight="700" fill="#1F1B1C">Une burrata,</text>
+                <text x="376" y="386" text-anchor="middle" font-size="31" font-weight="700" fill="#1F1B1C">s'il vous plaît !</text>
+              </g>
+              <!-- « Euh… il n'y en a plus. » -->
+              <g class="cx-bulle b2">
+                <path d="M578 176H850Q886 176 886 212V256Q886 292 850 292H792L770 346L760 292H578Q542 292 542 256V212Q542 176 578 176Z" fill="#FFFFFF" stroke="#2A2324" stroke-width="6" stroke-linejoin="round"/>
+                <text x="714" y="226" text-anchor="middle" font-size="31" font-weight="700" fill="#1F1B1C">Euh… il n'y</text>
+                <text x="714" y="268" text-anchor="middle" font-size="31" font-weight="700" fill="#E52824">en a plus.</text>
+              </g>
               <!-- horodatage -->
-              <g class="cx-stamp">
+              <g class="cx-stamp st1">
+                <rect x="56" y="44" width="232" height="64" rx="32" fill="#1F1B1C"/>
+                <circle cx="94" cy="76" r="9" fill="#E52824"/>
+                <text x="116" y="88" font-size="32" font-weight="700" fill="#F8F9F4">12 h 30</text>
+              </g>
+              <g class="cx-stamp st2">
                 <rect x="56" y="44" width="232" height="64" rx="32" fill="#1F1B1C"/>
                 <circle cx="94" cy="76" r="9" fill="#E52824"/>
                 <text x="116" y="88" font-size="32" font-weight="700" fill="#F8F9F4">11 h 45</text>
               </g>
-            </g></g>
+            </g></g></g>
 
             <!-- ═══════════════ 2 · LA CUISINE : PLUS DE BURRATA ═══════════════ -->
             <g class="sc sc2"><g class="kb"><g class="cx-punch2"><g class="cx-shake">
@@ -667,14 +794,16 @@
                 </g>
                 <rect x="668" y="420" width="40" height="36" fill="#CF9A74"/>
                 <g class="cx-head2"><g class="cx-hoche"><g class="cx-turn2">
+                  <g class="cx-toque">
                   <circle cx="652" cy="262" r="30" fill="#FFFFFF" stroke="#DFE0D8" stroke-width="3"/>
                   <circle cx="728" cy="262" r="30" fill="#FFFFFF" stroke="#DFE0D8" stroke-width="3"/>
                   <circle cx="690" cy="246" r="38" fill="#FFFFFF" stroke="#DFE0D8" stroke-width="3"/>
                   <rect x="630" y="276" width="120" height="40" rx="6" fill="#FFFFFF" stroke="#DFE0D8" stroke-width="3"/>
+                  </g>
                   <circle cx="688" cy="372" r="64" fill="#E3B08A"/>
                   <path d="M626 360q4-42 42-50h40q-28 12-38 32q-20 4-44 18z" fill="#3A2F2B"/>
                   <circle cx="630" cy="376" r="12" fill="#CF9A74"/>
-                  <g class="cx-eyepop"><g class="cx-eyes"><ellipse cx="712" cy="362" rx="12" ry="15" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><ellipse cx="741" cy="361" rx="10.2" ry="14.0" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><circle cx="715.6" cy="364" r="5.5" fill="#1F1B1C" class="cx-noink"/><circle cx="744.0" cy="363" r="5.0" fill="#1F1B1C" class="cx-noink"/><circle cx="717.4" cy="360.5" r="1.8" fill="#FFFFFF" class="cx-noink"/><circle cx="745.8" cy="359.5" r="1.6" fill="#FFFFFF" class="cx-noink"/></g></g>
+                  <g class="cx-eyepop"><g class="cx-eyes" style="animation-delay:-1.2s"><ellipse cx="712" cy="362" rx="12" ry="15" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><ellipse cx="741" cy="361" rx="10.2" ry="14.0" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><circle cx="715.6" cy="364" r="5.5" fill="#1F1B1C" class="cx-noink"/><circle cx="744.0" cy="363" r="5.0" fill="#1F1B1C" class="cx-noink"/><circle cx="717.4" cy="360.5" r="1.8" fill="#FFFFFF" class="cx-noink"/><circle cx="745.8" cy="359.5" r="1.6" fill="#FFFFFF" class="cx-noink"/></g></g>
                   <g class="cx-brow"><path d="M700 338l20-4M732 334l15 3" stroke="#3A2F2B" stroke-width="5" stroke-linecap="round"/></g>
                   <path class="cx-mouth" d="M720 404q12 6 24 0" stroke="#8A4B3A" stroke-width="4" fill="none" stroke-linecap="round"/>
                   <ellipse class="cx-mouth-o" cx="732" cy="408" rx="8" ry="10" fill="#7A2E24"/>
@@ -699,7 +828,7 @@
             </g></g></g></g>
 
             <!-- ═══════════════ 3 · AU COMPTOIR : LA GÉRANTE ═══════════════ -->
-            <g class="sc sc3"><g class="kb">
+            <g class="sc sc3"><g class="kb"><g class="cx-cam3">
               <rect width="1600" height="900" fill="#2F4A40"/>
               <path d="M0 470H1600" stroke="#294036" stroke-width="6"/>
               <!-- l'ardoise -->
@@ -845,23 +974,25 @@
                 <path d="M30 900V640Q30 540 130 514H340Q430 532 452 640L474 900Z" fill="#3A3536"/>
                 <path d="M210 514l40 56 40-56z" fill="#FFFFFF"/>
                 <path d="M212 510q38 28 76 0l-8 24q-30 16-60 0z" fill="#E52824"/>
-                <path d="M246 532l-18 50 24-10 12 28 8-58z" fill="#C41F1C"/>
+                <path class="cx-foulard" d="M246 532l-18 50 24-10 12 28 8-58z" fill="#C41F1C"/>
                 <g class="cx-hand3">
                   <path d="M396 590Q500 760 836 722" stroke="#2A2324" stroke-width="74" fill="none" stroke-linecap="round"/>
                   <path d="M396 590Q500 760 836 722" stroke="#3A3536" stroke-width="66" fill="none" stroke-linecap="round"/>
-                  <rect x="880" y="700" width="50" height="15" rx="7.5" fill="#C68A62"/>
+                  <rect class="cx-doigt" x="880" y="700" width="50" height="15" rx="7.5" fill="#C68A62"/>
                   <ellipse cx="872" cy="719" rx="42" ry="25" fill="#C68A62"/>
                 </g>
                 <g class="cx-hoche"><g class="cx-head3">
+                  <g class="cx-chignon">
                   <circle cx="168" cy="318" r="44" fill="#2A2324"/>
                   <rect x="120" y="296" width="96" height="10" rx="5" fill="#F2C94C" transform="rotate(-28 168 301)"/>
+                  </g>
                   <circle cx="340" cy="418" r="11" fill="#C68A62"/>
                   <circle cx="250" cy="402" r="82" fill="#C68A62"/>
                   <path d="M172 430Q150 322 252 318Q330 318 336 384Q300 354 252 362Q212 370 204 440Z" fill="#2A2324"/>
                   <ellipse cx="198" cy="414" rx="13" ry="18" fill="#A96F4B"/>
                   <circle cx="198" cy="438" r="5.5" fill="#E52824" class="cx-noink"/>
                   <circle cx="306" cy="432" r="11" fill="#E8907A" opacity=".45" class="cx-noink"/>
-                  <g class="cx-eyes"><ellipse cx="284" cy="396" rx="11" ry="13" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><ellipse cx="314" cy="394" rx="9.3" ry="12.1" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><circle cx="287.3" cy="398" r="5" fill="#1F1B1C" class="cx-noink"/><circle cx="316.8" cy="396" r="4.5" fill="#1F1B1C" class="cx-noink"/><circle cx="288.9" cy="394.5" r="1.7" fill="#FFFFFF" class="cx-noink"/><circle cx="318.4" cy="392.5" r="1.5" fill="#FFFFFF" class="cx-noink"/></g>
+                  <g class="cx-eyes" style="animation-delay:-2.1s"><ellipse cx="284" cy="396" rx="11.0" ry="13.0" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><circle cx="287.3" cy="398" r="5.0" fill="#1F1B1C" class="cx-noink"/><circle cx="288.9" cy="394.5" r="1.6" fill="#FFFFFF" class="cx-noink"/><g class="cx-clin"><ellipse cx="314" cy="394" rx="9.3" ry="12.1" fill="#FFFFFF" stroke="#2A2324" stroke-width="3" class="cx-noink"/><circle cx="316.8" cy="396" r="4.5" fill="#1F1B1C" class="cx-noink"/><circle cx="318.2" cy="392.5" r="1.4" fill="#FFFFFF" class="cx-noink"/></g></g>
                   <g fill="none" stroke="#2A2324" stroke-width="3.5"><circle cx="286" cy="396" r="18"/><circle cx="316" cy="394" r="14"/><path d="M302 396h0M268 398L206 408"/></g>
                   <path d="M268 366q16-9 32-2M306 364q10-6 20 0" stroke="#2A2324" stroke-width="5" fill="none" stroke-linecap="round"/>
                   <path class="cx-neutral" d="M292 450q14 4 26-2" stroke="#7A3E2E" stroke-width="4" fill="none" stroke-linecap="round"/>
@@ -875,8 +1006,8 @@
                 <text x="527" y="235" text-anchor="middle" font-size="34" font-weight="700" fill="#1F1B1C">Je m'en occupe !</text>
               </g>
               <!-- les clics -->
-              <text class="cx-ono o1" x="1300" y="292" text-anchor="middle">clic !</text>
-              <text class="cx-ono o2" x="1010" y="60" text-anchor="middle">clic !</text>
+              <text class="cx-ono o1" x="1214" y="276" text-anchor="middle" style="font-size:28px;stroke-width:6px">clic !</text>
+              <text class="cx-ono o2" x="1010" y="74" text-anchor="middle" style="font-size:28px;stroke-width:6px">clic !</text>
 
               <!-- la modification part vers le site et le QR code -->
               <g stroke="#E52824" stroke-width="6" fill="none" stroke-linecap="round">
@@ -899,7 +1030,7 @@
                 <path d="M1492 438l4 4 7-8" stroke="#FFFFFF" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 <text x="1466" y="540" text-anchor="middle" font-size="17" font-weight="700" fill="#F1EADF">QR code</text>
               </g>
-            </g></g>
+            </g></g></g>
 
             <!-- ═══════════════ 4 · À TABLE : LA CLIENTE SCANNE ═══════════════ -->
             <g class="sc sc4"><g class="kb">
@@ -964,7 +1095,7 @@
               </g>
 
               <!-- la main et le téléphone, qui se lèvent -->
-              <g transform="rotate(-10 1000 400)"><g class="cx-phone4-in">
+              <g transform="rotate(-10 1000 400)"><g class="cx-phone4-in"><g class="cx-wiggle">
                 <path d="M900 900C900 780 930 712 986 690L1176 706C1206 770 1206 840 1196 900Z" fill="#E3B08A" class="cx-i"/>
                 <path d="M888 900L898 812Q1050 826 1206 842L1204 900Z" fill="#3E5566" class="cx-i"/>
                 <path d="M898 812Q1050 826 1206 842" stroke="#2F4250" stroke-width="6" fill="none"/>
@@ -1011,8 +1142,13 @@
                 <rect x="840" y="430" width="44" height="30" rx="15" fill="#E3B08A" class="cx-i"/>
                 <rect x="840" y="476" width="44" height="30" rx="15" fill="#E3B08A" class="cx-i"/>
                 <rect x="840" y="522" width="44" height="30" rx="15" fill="#E3B08A" class="cx-i"/>
-              </g></g>
+              </g></g></g>
 
+              <!-- « Alors… un risotto ! » -->
+              <g class="cx-bulle b4">
+                <path d="M470 56H830Q870 56 870 96V112Q870 152 830 152H800L866 236L752 152H470Q430 152 430 112V96Q430 56 470 56Z" fill="#FFFFFF" stroke="#2A2324" stroke-width="6" stroke-linejoin="round"/>
+                <text x="650" y="118" text-anchor="middle" font-size="36" font-weight="700" fill="#1F1B1C">Alors… un risotto !</text>
+              </g>
               <text class="cx-ono o3" x="1190" y="92" text-anchor="middle">bip !</text>
               <!-- étincelles quand la carte s'affiche -->
               <g style="color:#F2D47A">
@@ -1123,6 +1259,7 @@
                 <path d="M770 736h-6M930 736h6" stroke="#1F1B1C" stroke-width="4" stroke-linecap="round"/>
               </g></g>
               </g>
+              <g class="cx-coeur"><path d="M850 580c-14-18-42-8-36 14c4 16 24 26 36 36c12-10 32-20 36-36c6-22-22-32-36-14z" fill="#E52824" stroke="#2A2324" stroke-width="5" stroke-linejoin="round"/></g>
               <g class="cx-hand5 cx-ink">
                 <path d="M1080 910Q1120 840 1164 796" stroke="#C9A24D" stroke-width="46" fill="none" stroke-linecap="round"/>
                 <rect x="1150" y="740" width="56" height="66" rx="27" fill="#F4F5F3" stroke="#C9CDCB" stroke-width="2"/>
@@ -1176,7 +1313,47 @@
                 <text x="800" y="806" text-anchor="middle" font-size="30" font-weight="700" letter-spacing="8" fill="#F8F9F4">VIKTO LABS</text>
                 <circle cx="800" cy="832" r="5" fill="#E52824"/>
               </g>
+              <!-- confettis -->
+              <circle class="cx-conf" cx="113" cy="-38" r="6" fill="#E52824" style="animation-duration:2.26s;animation-delay:0.19s"/>
+              <rect class="cx-conf" x="190" y="-78" width="16" height="8" rx="2" fill="#F2D47A" style="animation-duration:2.37s;animation-delay:0.25s"/>
+              <rect class="cx-conf" x="207" y="-61" width="12" height="8" rx="2" fill="#F8F9F4" style="animation-duration:2.68s;animation-delay:0.13s"/>
+              <circle class="cx-conf" cx="270" cy="-67" r="6" fill="#7C9A74" style="animation-duration:2.44s;animation-delay:0.10s"/>
+              <rect class="cx-conf" x="331" y="-30" width="20" height="8" rx="2" fill="#E52824" style="animation-duration:2.66s;animation-delay:0.23s"/>
+              <rect class="cx-conf" x="377" y="-42" width="20" height="8" rx="2" fill="#F2D47A" style="animation-duration:1.95s;animation-delay:0.44s"/>
+              <circle class="cx-conf" cx="445" cy="-75" r="6" fill="#E52824" style="animation-duration:2.69s;animation-delay:0.20s"/>
+              <rect class="cx-conf" x="467" y="-35" width="12" height="8" rx="2" fill="#F2D47A" style="animation-duration:2.02s;animation-delay:0.07s"/>
+              <rect class="cx-conf" x="543" y="-58" width="16" height="8" rx="2" fill="#F8F9F4" style="animation-duration:2.10s;animation-delay:0.39s"/>
+              <circle class="cx-conf" cx="601" cy="-74" r="6" fill="#7C9A74" style="animation-duration:2.30s;animation-delay:0.40s"/>
+              <rect class="cx-conf" x="651" y="-63" width="20" height="8" rx="2" fill="#E52824" style="animation-duration:2.60s;animation-delay:0.23s"/>
+              <rect class="cx-conf" x="677" y="-88" width="20" height="8" rx="2" fill="#F2D47A" style="animation-duration:1.88s;animation-delay:0.38s"/>
+              <circle class="cx-conf" cx="738" cy="-49" r="6" fill="#E52824" style="animation-duration:2.48s;animation-delay:0.31s"/>
+              <rect class="cx-conf" x="796" y="-47" width="16" height="8" rx="2" fill="#F2D47A" style="animation-duration:2.18s;animation-delay:0.42s"/>
+              <rect class="cx-conf" x="837" y="-68" width="16" height="8" rx="2" fill="#F8F9F4" style="animation-duration:2.73s;animation-delay:0.17s"/>
+              <circle class="cx-conf" cx="898" cy="-40" r="6" fill="#7C9A74" style="animation-duration:2.74s;animation-delay:0.09s"/>
+              <rect class="cx-conf" x="944" y="-80" width="20" height="8" rx="2" fill="#E52824" style="animation-duration:2.09s;animation-delay:0.07s"/>
+              <rect class="cx-conf" x="1012" y="-56" width="20" height="8" rx="2" fill="#F2D47A" style="animation-duration:2.51s;animation-delay:0.10s"/>
+              <circle class="cx-conf" cx="1070" cy="-44" r="6" fill="#E52824" style="animation-duration:2.69s;animation-delay:0.06s"/>
+              <rect class="cx-conf" x="1105" y="-60" width="12" height="8" rx="2" fill="#F2D47A" style="animation-duration:1.82s;animation-delay:0.18s"/>
+              <rect class="cx-conf" x="1145" y="-76" width="20" height="8" rx="2" fill="#F8F9F4" style="animation-duration:1.75s;animation-delay:0.19s"/>
+              <circle class="cx-conf" cx="1217" cy="-37" r="6" fill="#7C9A74" style="animation-duration:1.89s;animation-delay:0.42s"/>
+              <rect class="cx-conf" x="1253" y="-44" width="12" height="8" rx="2" fill="#E52824" style="animation-duration:2.36s;animation-delay:0.01s"/>
+              <rect class="cx-conf" x="1333" y="-40" width="16" height="8" rx="2" fill="#F2D47A" style="animation-duration:2.24s;animation-delay:0.04s"/>
+              <circle class="cx-conf" cx="1349" cy="-66" r="6" fill="#E52824" style="animation-duration:2.17s;animation-delay:0.16s"/>
+              <rect class="cx-conf" x="1406" y="-76" width="16" height="8" rx="2" fill="#F2D47A" style="animation-duration:1.90s;animation-delay:0.04s"/>
             </g></g>
+            <!-- ═══════════════ arrêt sur image, puis on rembobine ═══════════════ -->
+            <rect class="cx-veil" width="1600" height="900" fill="#1F1B1C"/>
+            <rect class="cx-flash" width="1600" height="900" fill="#FFFFFF"/>
+            <g class="cx-sans">
+              <rect x="470" y="372" width="660" height="146" rx="18" fill="#F8F9F4" fill-opacity=".92" stroke="#E52824" stroke-width="12"/>
+              <text x="800" y="468" text-anchor="middle" font-size="62" font-weight="700" letter-spacing="3" fill="#E52824">SANS VIKTO LABS</text>
+            </g>
+            <use class="cx-rewlines" href="#cx-file"/>
+            <g class="cx-rew">
+              <path d="M1172 64l-36 24 36 24zM1214 64l-36 24 36 24z" fill="#FFFFFF" stroke="#2A2324" stroke-width="5" stroke-linejoin="round"/>
+              <text x="1552" y="100" text-anchor="end" font-size="38" font-weight="700" fill="#FFFFFF" stroke="#2A2324" stroke-width="7" paint-order="stroke">On rembobine…</text>
+            </g>
+
             <!-- ═══════════════ transitions ═══════════════ -->
             <use class="cx-streak k2" href="#cx-file"/>
             <use class="cx-streak k3" href="#cx-file"/>
@@ -1184,6 +1361,12 @@
             <use class="cx-streak k5" href="#cx-file"/>
             <circle class="cx-iris" cx="1069" cy="203" r="1360" fill="none" stroke="#1F1B1C"/>
           </svg>
+          <button class="ctx-poster" type="button" aria-label="Regarder le film, avec le son">
+            <span class="ctx-poster-kicker">Le film · 34 s</span>
+            <span class="ctx-poster-title">Plus de burrata&nbsp;!</span>
+            <span class="ctx-poster-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+            <span class="ctx-poster-sub">Regarder avec le son</span>
+          </button>
           <button class="ctx-sound" type="button" aria-label="Activer le son">
             <svg class="ctx-sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h4l5-4v14l-5-4H3z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             <svg class="ctx-sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h4l5-4v14l-5-4H3z" fill="currentColor"/><path d="M15.5 8.5q2.5 3.5 0 7M18.5 6q4.5 6 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
@@ -1194,15 +1377,18 @@
         <div class="ctx-controls">
           <button class="ctx-toggle" type="button" aria-label="Lire la vidéo"><span aria-hidden="true">▶</span></button>
           <div class="ctx-chapters" role="group" aria-label="Chapitres">
-            <button class="ctx-chap" type="button" style="--d:4.8" aria-label="Chapitre 1 : en salle"><span></span></button>
-            <button class="ctx-chap" type="button" style="--d:5.6" aria-label="Chapitre 2 : en cuisine"><span></span></button>
-            <button class="ctx-chap" type="button" style="--d:9.6" aria-label="Chapitre 3 : au comptoir"><span></span></button>
-            <button class="ctx-chap" type="button" style="--d:5.6" aria-label="Chapitre 4 : à table"><span></span></button>
-            <button class="ctx-chap" type="button" style="--d:5.4" aria-label="Chapitre 5 : sur le site"><span></span></button>
-            <button class="ctx-chap" type="button" style="--d:4" aria-label="Chapitre 6 : en bref"><span></span></button>
+            <button class="ctx-chap" type="button" style="--d:6.1" aria-label="Chapitre 1 : sans VIKTO LABS"><span></span></button>
+            <button class="ctx-chap" type="button" style="--d:6.2" aria-label="Chapitre 2 : en cuisine"><span></span></button>
+            <button class="ctx-chap" type="button" style="--d:8.6" aria-label="Chapitre 3 : au comptoir"><span></span></button>
+            <button class="ctx-chap" type="button" style="--d:5" aria-label="Chapitre 4 : à table"><span></span></button>
+            <button class="ctx-chap" type="button" style="--d:4.4" aria-label="Chapitre 5 : sur le site"><span></span></button>
+            <button class="ctx-chap" type="button" style="--d:3.9" aria-label="Chapitre 6 : en bref"><span></span></button>
           </div>
-          <span class="ctx-time" aria-hidden="true">0:00 / 0:35</span>
-          <a class="ctx-cta" href="#tarifs">Voir l'offre →</a>
+          <span class="ctx-time" aria-hidden="true">0:00 / 0:34</span>
+          <div class="ctx-ctas">
+            <a class="ctx-cta ctx-cta-demo" href="#demonstration">Essayer la démo</a>
+            <a class="ctx-cta" href="#tarifs">Voir l'offre →</a>
+          </div>
         </div>
       </figure>
     </div>
@@ -1670,6 +1856,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20260924c"></script>
+<script src="assets/js/main.js?v=20260925a"></script>
 </body>
 </html>
