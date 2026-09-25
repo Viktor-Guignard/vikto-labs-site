@@ -1501,6 +1501,43 @@ function creerBandeSon() {
 function initContextVideo() {
   const fig = document.querySelector(".ctx-video");
   if (!fig) return;
+  const cadre = fig.querySelector(".ctx-frame");
+  const boutonSon = fig.querySelector(".ctx-sound");
+  const son = boutonSon ? creerBandeSon() : null;
+  if (fig.querySelector(".ctx-svg")) { lancerFilm(fig, son, false); return; }
+
+  // Le dessin vit dans son propre fichier : on le charge à l'approche de la section,
+  // pour que l'accueil reste léger.
+  let chargement = null;
+  let demande = false;
+  const charger = () => {
+    if (chargement) return;
+    chargement = fetch(cadre.dataset.film)
+      .then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then((texte) => {
+        cadre.insertAdjacentHTML("afterbegin", texte);
+        lancerFilm(fig, son, demande);
+      })
+      .catch(() => { chargement = null; fig.classList.add("is-broken"); });
+  };
+  // Un clic sur l'affiche avant l'arrivée du dessin : on active le son dans le geste,
+  // et la lecture partira dès que le film sera là.
+  const affiche = fig.querySelector(".ctx-poster");
+  if (affiche) affiche.addEventListener("click", () => {
+    if (fig.dataset.pret) return;
+    if (son && !son.actif()) son.activer();
+    demande = true;
+    charger();
+  });
+  if ("IntersectionObserver" in window) {
+    const guet = new IntersectionObserver((entrees) => {
+      if (entrees.some((e) => e.isIntersecting)) { guet.disconnect(); charger(); }
+    }, { rootMargin: "900px 0px" });
+    guet.observe(fig);
+  } else charger();
+}
+
+function lancerFilm(fig, son, lectureDemandee) {
   const svg = fig.querySelector(".ctx-svg");
   const legende = fig.querySelector(".ctx-caption");
   const bouton = fig.querySelector(".ctx-toggle");
@@ -1509,7 +1546,6 @@ function initContextVideo() {
   const barres = [...fig.querySelectorAll(".ctx-chap")];
   const reduit = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const boutonSon = fig.querySelector(".ctx-sound");
-  const son = boutonSon ? creerBandeSon() : null;
   if (boutonSon && !son) boutonSon.hidden = true;
 
   const DUREE = 34.2;
@@ -1562,6 +1598,7 @@ function initContextVideo() {
     icone.textContent = lecture ? "❚❚" : fini ? "↻" : "▶";
     bouton.setAttribute("aria-label", lecture ? "Mettre en pause" : fini ? "Revoir la vidéo" : "Lire la vidéo");
     fig.classList.toggle("is-ended", fini);
+    fig.classList.toggle("is-playing", lecture);
     svg.classList.toggle("is-paused", !lecture);
   };
 
@@ -1668,5 +1705,8 @@ function initContextVideo() {
   // exposé pour le débogage / les tests
   window.__ctxAller = (s) => { t = Math.min(Math.max(s, 0), DUREE); poser(); if (son) son.recaler(); terminerSiBesoin(); };
   window.__ctxEtat = () => ({ t, lecture, fini, pauseVoulue });
+
+  fig.dataset.pret = "1";
+  if (lectureDemandee) { majSon(); pauseVoulue = false; lire(); }
 }
 
