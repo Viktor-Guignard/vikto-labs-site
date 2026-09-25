@@ -177,8 +177,10 @@
     .ctx-svg.c2b .cx-punch2{transform:translate(800px,450px) scale(2.1) translate(-706px,-350px);transition:transform .16s cubic-bezier(.2,.9,.3,1.15)}
     .ctx-svg.c2c .cx-punch2{transform:translate(800px,450px) scale(1.12) translate(-690px,-440px);transition:transform .45s cubic-bezier(.5,0,.3,1)}
     .ctx-svg .cx-arm2b{transform-box:view-box;transform-origin:580px 512px;transition:transform .32s cubic-bezier(.3,1.6,.5,1)}
-    .ctx-svg.c2c .cx-arm2b{transform:rotate(140deg)}
+    .ctx-svg.c2c .cx-arm2b{transform:rotate(80deg)}
     .ctx-svg.c2c .cx-agite{animation:cx-jitter .09s steps(2) infinite alternate}
+    .ctx-svg .cx-vite2{opacity:0}
+    .ctx-svg.c2c .cx-vite2{animation:cx-vite .55s ease-out .08s both}
     .ctx-svg .cx-eyepop{transform-box:fill-box;transform-origin:center}
     .ctx-svg.c2b .cx-eyepop{animation:cx-eyepop .9s cubic-bezier(.3,1.6,.5,1) .1s both}
     .ctx-svg .cx-burst{opacity:0;transform-box:fill-box;transform-origin:center}
@@ -342,6 +344,7 @@
     @keyframes cx-moust{0%,86%,100%{transform:none}90%{transform:rotate(-5deg) translateY(-2px)}94%{transform:rotate(4deg)}}
     @keyframes cx-flap{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.7) translateY(3px)}}
     @keyframes cx-bobble{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+    @keyframes cx-vite{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
     @keyframes cx-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
     @keyframes cx-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.018)}}
     @keyframes cx-steam{0%{opacity:0;transform:translateY(12px) scaleX(.8)}35%{opacity:.75}100%{opacity:0;transform:translateY(-34px) scaleX(1.15)}}
@@ -600,8 +603,10 @@
       </g>
       <path d="M404 596Q440 616 486 594" stroke="#2A2324" stroke-width="28" fill="none" stroke-linecap="round"/>
       <path d="M404 596Q440 616 486 594" stroke="#3E5566" stroke-width="20" fill="none" stroke-linecap="round"/>
-      <circle cx="494" cy="588" r="11" fill="#E3B08A"/>
-      <rect x="494" y="580" width="22" height="8" rx="4" fill="#E3B08A"/>
+      <ellipse cx="492" cy="592" rx="13" ry="11" fill="#E3B08A"/>
+      <path d="M484 596q6 4 14 2M485 602q6 3 12 1" stroke="#C98A66" stroke-width="2" fill="none" stroke-linecap="round" class="cx-noink"/>
+      <rect x="494" y="580" width="24" height="9" rx="4.5" fill="#E3B08A"/>
+      <ellipse cx="514" cy="584.5" rx="3.2" ry="2.8" fill="#F6D2BA" class="cx-noink"/>
       </g>
       </g></g>
     </g></g>
@@ -800,7 +805,13 @@
     <g class="cx-chef2 cx-ink">
       <g class="cx-arm2"><g class="cx-agite">
         <path d="M800 506q64-8 112-60l26 26q-52 62-126 80z" fill="#FFFFFF" stroke="#DFE0D8" stroke-width="3"/>
-        <circle cx="930" cy="452" r="22" fill="#E8B48E"/>
+        <g transform="rotate(20 930 452)">
+          <rect x="934" y="436" width="46" height="14" rx="7" fill="#E8B48E"/>
+          <rect x="904" y="434" width="42" height="38" rx="15" fill="#E8B48E"/>
+          <path d="M914 436q2-14 16-12q8 2 6 12z" fill="#E8B48E"/>
+          <path d="M930 452h12M930 462h12" stroke="#C98A66" stroke-width="2.5" stroke-linecap="round" class="cx-noink"/>
+          <ellipse cx="974" cy="443" rx="4" ry="3.5" fill="#F6D2BA" class="cx-noink"/>
+        </g>
       </g></g>
       <g class="cx-breathe">
         <path d="M560 900V540q0-80 80-88h96q80 8 80 88V900Z" fill="#FFFFFF" stroke="#DFE0D8" stroke-width="3"/>
@@ -813,7 +824,10 @@
       </g>
       <g class="cx-arm2b"><g class="cx-agite">
         <path d="M594 512q-30 62-40 132l-32-4q8-74 40-136z" fill="#FFFFFF"/>
-        <circle cx="536" cy="652" r="22" fill="#E8B48E"/>
+        <path d="M522 656q-10 18-6 34M532 660q-4 22 0 36M544 660q2 22 8 34M554 652q10 12 16 22" stroke="#2A2324" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <path d="M522 656q-10 18-6 34M532 660q-4 22 0 36M544 660q2 22 8 34M554 652q10 12 16 22" stroke="#E8B48E" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <ellipse cx="538" cy="650" rx="20" ry="18" fill="#E8B48E"/>
+        <path d="M530 646q8 4 16 0" stroke="#C98A66" stroke-width="2.5" fill="none" stroke-linecap="round" class="cx-noink"/>
       </g></g>
       <rect x="668" y="420" width="40" height="36" fill="#CF9A74"/>
       <g class="cx-head2"><g class="cx-hoche"><g class="cx-turn2">
@@ -844,6 +858,7 @@
       </g></g></g>
     </g>
     <rect class="cx-teinte " width="1600" height="900" fill="#A8D8EA" opacity="0.06"/>
+    <path class="cx-vite2" d="M404 520l-18 12M428 532l-8 18M456 534l2 20M794 336l6-22M814 348l18-14M822 372l22-6" stroke="#2A2324" stroke-width="5" stroke-linecap="round" fill="none"/>
     <g class="cx-shout"><g class="cx-shout-in">
       <path d="M380 248L419 265L468 260L488 285L536 293L533 320L569 339L542 363L636 404L514 403L506 430L456 431L425 453L380 441L335 453L304 431L254 430L246 403L202 389L218 363L191 339L227 320L224 293L272 285L292 260L341 265Z" fill="#FFFFFF" stroke="#2A2324" stroke-width="6" stroke-linejoin="round"/>
       <text x="380" y="344" text-anchor="middle" font-size="46" font-weight="700" fill="#1F1B1C">Plus de</text>
@@ -1026,8 +1041,12 @@
         <path d="M648 684v18" stroke="#DADCDA" stroke-width="3" class="cx-noink"/>
         <path d="M396 590Q470 700 590 712" stroke="#2A2324" stroke-width="74" fill="none" stroke-linecap="round"/>
         <path d="M396 590Q470 700 590 712" stroke="#3A3536" stroke-width="66" fill="none" stroke-linecap="round"/>
-        <rect class="cx-doigt" x="636" y="684" width="34" height="13" rx="6.5" fill="#C68A62"/>
-        <ellipse cx="628" cy="702" rx="36" ry="22" fill="#C68A62"/>
+        <ellipse cx="612" cy="716" rx="10" ry="8" fill="#C68A62"/>
+        <ellipse cx="628" cy="702" rx="34" ry="21" fill="#C68A62"/>
+        <rect class="cx-doigt" x="640" y="682" width="36" height="12" rx="6" fill="#C68A62"/>
+        <rect x="644" y="694" width="36" height="12" rx="6" fill="#C68A62"/>
+        <rect x="642" y="706" width="30" height="11" rx="5.5" fill="#C68A62"/>
+        <path d="M630 690q4 12 0 24" stroke="#A96F4B" stroke-width="2.5" fill="none" stroke-linecap="round" class="cx-noink"/>
       </g>
       <g class="cx-hoche"><g class="cx-head3">
         <g class="cx-chignon">
@@ -1231,9 +1250,21 @@
         </g>
       </g>
       <path d="M874 104H1000L874 340Z" fill="#FFFFFF" opacity=".09"/>
-      <rect x="840" y="430" width="44" height="30" rx="15" fill="#E3B08A" class="cx-i"/>
-      <rect x="840" y="476" width="44" height="30" rx="15" fill="#E3B08A" class="cx-i"/>
-      <rect x="840" y="522" width="44" height="30" rx="15" fill="#E3B08A" class="cx-i"/>
+      <rect x="838" y="420" width="48" height="30" rx="15.0" fill="#E3B08A" class="cx-i"/>
+      <ellipse cx="846" cy="435.0" rx="5.5" ry="10.0" fill="#F6D2BA" class="cx-noink"/>
+      <path d="M860 426v18" stroke="#C98A66" stroke-width="2.4" stroke-linecap="round" class="cx-noink"/>
+      <rect x="836" y="462" width="50" height="30" rx="15.0" fill="#E3B08A" class="cx-i"/>
+      <ellipse cx="844" cy="477.0" rx="5.5" ry="10.0" fill="#F6D2BA" class="cx-noink"/>
+      <path d="M858 468v18" stroke="#C98A66" stroke-width="2.4" stroke-linecap="round" class="cx-noink"/>
+      <rect x="838" y="504" width="48" height="29" rx="14.5" fill="#E3B08A" class="cx-i"/>
+      <ellipse cx="846" cy="518.5" rx="5.5" ry="9.5" fill="#F6D2BA" class="cx-noink"/>
+      <path d="M860 510v17" stroke="#C98A66" stroke-width="2.4" stroke-linecap="round" class="cx-noink"/>
+      <rect x="844" y="544" width="40" height="25" rx="12.5" fill="#E3B08A" class="cx-i"/>
+      <ellipse cx="852" cy="556.5" rx="5.5" ry="7.5" fill="#F6D2BA" class="cx-noink"/>
+      <path d="M866 550v13" stroke="#C98A66" stroke-width="2.4" stroke-linecap="round" class="cx-noink"/>
+      <path d="M1196 760Q1178 670 1150 616Q1136 592 1120 602Q1108 614 1120 638Q1138 686 1146 760Z" fill="#E3B08A" class="cx-i"/>
+      <ellipse cx="1126" cy="612" rx="7" ry="9" fill="#F6D2BA" transform="rotate(-24 1126 612)" class="cx-noink"/>
+      <path d="M1138 664q10 4 16 0" stroke="#C98A66" stroke-width="2.4" fill="none" stroke-linecap="round" class="cx-noink"/>
     </g></g></g>
 
     <text class="cx-ono o3" x="1190" y="92" text-anchor="middle">bip !</text>
