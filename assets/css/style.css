@@ -352,6 +352,18 @@ textarea:focus-visible {
   margin-bottom: var(--space-sm);
   max-width: 46ch;
 }
+/* Accueil : le film « En situation » sert de démonstration juste en dessous ;
+   le haut de page n'est plus qu'un texte, centré, avec la trame de points sur les bords */
+.hero--solo { padding-bottom: var(--space-2xl); }
+.hero--solo::before {
+  -webkit-mask-image: linear-gradient(to right, black 0%, transparent 28%, transparent 72%, black 100%);
+  mask-image: linear-gradient(to right, black 0%, transparent 28%, transparent 72%, black 100%);
+}
+.hero-inner--solo { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+.hero-inner--solo .hero-copy { max-width: 900px; }
+.hero-inner--solo .hero-copy h1 { font-size: clamp(2.4rem, 6vw, 4.8rem); }
+.hero-inner--solo .hero-copy .lead { margin-left: auto; margin-right: auto; max-width: 52ch; }
+.hero-inner--solo .hero-actions { justify-content: center; }
 .hero-support {
   font-weight: 600;
   margin-bottom: var(--space-lg);
