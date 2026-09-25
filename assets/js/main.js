@@ -27,13 +27,11 @@ const SITE_CONFIG = {
 
   CONTACT_EMAIL: "vikto.labs@gmail.com", // destination des demandes + adresse affichée
 
-  // ⚠️ LIENS DE PAIEMENT STRIPE EN MODE TEST — à remplacer par les liens de
-  // PRODUCTION avant tout vrai client (dashboard Stripe → basculer sur le
-  // compte de production → recréer les 2 liens → coller les URLs ci-dessous).
-  // Ce sont des URLs publiques (faites pour être partagées/cliquées),
+  // Liens de paiement Stripe — compte de production VIKTO LABS, TVA 20 % ajoutée
+  // par Stripe Tax. Ce sont des URLs publiques (faites pour être partagées/cliquées),
   // aucun souci à les laisser dans ce fichier.
-  STRIPE_LINK_SITE: "https://buy.stripe.com/test_4gMeV60ne5Zy3J19aWefC01", // 500 € — paiement unique
-  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/test_00weV6da0ew4a7p4UGefC00" // 54 €/mois — abonnement
+  STRIPE_LINK_SITE: "https://buy.stripe.com/cNi3cogoX84F3c790n4ZG01", // Site vitrine — 500 € HT, paiement unique
+  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/9B65kw5KjacN7sn6Sf4ZG02" // Menu Synchro — 54 € HT/mois, abonnement
 };
 
 // Branche les boutons de tarifs sur les liens de paiement Stripe.
