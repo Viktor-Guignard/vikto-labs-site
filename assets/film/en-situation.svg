@@ -1,6 +1,6 @@
 <svg class="ctx-svg" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ctx-t ctx-d" preserveAspectRatio="xMidYMid slice">
   <title id="ctx-t">Midi moins le quart au Petit Bistrot</title>
-  <desc id="ctx-d">12 h 30, sans VIKTO LABS : une cliente commande une burrata, le serveur doit lui dire qu'il n'y en a plus. On rembobine jusqu'à 11 h 45 : le chef s'aperçoit qu'il n'a plus de burrata et donne l'alerte. Au comptoir, l'écran se partage : à gauche, la gérante la masque en un clic sur son iPad, à la souris ; à droite, la même chose sur iPhone, en cherchant « burr » puis en touchant l'œil. Puis elle enregistre. À 12 h 30, la cliente scanne le QR code : la carte est déjà à jour, elle choisit un risotto. Au bureau, un habitué consulte le site du restaurant : à jour lui aussi.</desc>
+  <desc id="ctx-d">12 h 30, sans VIKTO LABS : une cliente commande une burrata, le serveur doit lui dire qu'il n'y en a plus. On rembobine jusqu'à 11 h 45 : le chef s'aperçoit qu'il n'a plus de burrata et donne l'alerte. Au comptoir, l'écran se partage : à gauche, sur son iPad, la gérante clique sur la burrata et tape « Tartare de saumon » directement sur la carte ; à droite, l'autre option : sur iPhone, elle cherche « burr » et touche l'œil pour la masquer. Puis elle enregistre. À 12 h 30, la cliente scanne le QR code : le tartare a déjà remplacé la burrata, elle le commande. Au bureau, un habitué consulte le site du restaurant : à jour lui aussi.</desc>
   <defs>
     <pattern id="cx-dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="11" cy="11" r="1.6" fill="#2E2A2B"/></pattern>
     <pattern id="cx-tiles" width="80" height="44" patternUnits="userSpaceOnUse">
@@ -202,38 +202,33 @@
     .ctx-svg.c3j .cx-cam3{transform:none;transition-duration:1s}
     .ctx-svg .cx-cx{transform:translateX(1150px);transition:transform .8s cubic-bezier(.55,0,.25,1)}
     .ctx-svg .cx-cy{transform:translateY(610px);transition:transform .8s cubic-bezier(.2,.75,.35,1)}
-    .ctx-svg.c3a .cx-cx{transform:translateX(790px)}  .ctx-svg.c3a .cx-cy{transform:translateY(336px)}
-    .ctx-svg.c3c .cx-cx{transform:translateX(1150px)} .ctx-svg.c3c .cx-cy{transform:translateY(338px)}
-    .ctx-svg.c3e .cx-cx{transform:translateX(1363.0px)} .ctx-svg.c3e .cx-cy{transform:translateY(333px)}
+    .ctx-svg.c3a .cx-cx{transform:translateX(628px)}  .ctx-svg.c3a .cx-cy{transform:translateY(325px)}
+    .ctx-svg.c3d .cx-cx{transform:translateX(612px);transition-duration:.3s} .ctx-svg.c3d .cx-cy{transform:translateY(345px);transition-duration:.3s}
     .ctx-svg.c3g .cx-cx{transform:translateX(1048px)} .ctx-svg.c3g .cx-cy{transform:translateY(110px)}
     .ctx-svg .cx-tip{transform-box:fill-box;transform-origin:0 0}
-    .ctx-svg.c3f:not(.c3g) .cx-tip,.ctx-svg.c3i:not(.c3j) .cx-tip{animation:cx-click .32s ease-out}
+    .ctx-svg.c3b:not(.c3c) .cx-tip,.ctx-svg.c3e:not(.c3f) .cx-tip,.ctx-svg.c3i:not(.c3j) .cx-tip{animation:cx-click .32s ease-out}
     .ctx-svg .cx-hand3{transition:transform .8s cubic-bezier(.4,0,.3,1)}
     .ctx-svg .cx-doigt{transform-box:fill-box;transform-origin:0 50%}
-    .ctx-svg.c3f:not(.c3g) .cx-doigt,.ctx-svg.c3i:not(.c3j) .cx-doigt{animation:cx-tap .28s ease-out}
+    .ctx-svg.c3b:not(.c3c) .cx-doigt,.ctx-svg.c3e:not(.c3f) .cx-doigt,.ctx-svg.c3i:not(.c3j) .cx-doigt{animation:cx-tap .28s ease-out}
     .ctx-svg .cx-clin{transform-box:fill-box;transform-origin:center}
     .ctx-svg.c3j .cx-clin{animation:cx-clin .75s ease-in-out .35s both}
     .ctx-svg.c3a .cx-hand3{transform:translate(-16px,-4px)}
-    .ctx-svg.c3c .cx-hand3{transform:translate(14px,-6px)}
-    .ctx-svg.c3e .cx-hand3{transform:translate(18px,0)}
+    .ctx-svg.c3d .cx-hand3{transform:translate(-18px,-2px);transition-duration:.3s}
     .ctx-svg.c3g .cx-hand3{transform:translate(-6px,-12px)}
     .ctx-svg .cx-hov,.ctx-svg .cx-grip,.ctx-svg .cx-pal{opacity:0;transition:opacity .18s ease}
     .ctx-svg.c3b:not(.c3h) .cx-hov,.ctx-svg.c3b:not(.c3h) .cx-grip{opacity:1}
     .ctx-svg .cx-pal{transform-box:fill-box;transform-origin:0 0;transform:scale(.4);transition:opacity .18s ease,transform .3s cubic-bezier(.3,1.6,.5,1)}
     .ctx-svg.c3d:not(.c3h) .cx-pal{opacity:1;transform:none}
     .ctx-svg .cx-r1{transition:opacity .35s ease}
-    .ctx-svg.c3f .cx-r1{opacity:.4}
     .ctx-svg .cx-strike{transform-box:fill-box;transform-origin:0 50%;transform:scaleX(0);transition:transform .4s ease}
-    .ctx-svg.c3f .cx-strike{transform:none}
     .ctx-svg .cx-badge{opacity:0;transform-box:fill-box;transform-origin:0 100%;transform:scale(.5);transition:opacity .25s ease,transform .45s cubic-bezier(.3,1.8,.5,1)}
-    .ctx-svg.c3f .cx-badge{opacity:1;transform:none}
     .ctx-svg .cx-eye-off{opacity:0}
     .ctx-svg.c3f .cx-eye-on{opacity:0}
     .ctx-svg.c3f .cx-eye-off{opacity:1}
     .ctx-svg .cx-rip{opacity:0;transform-box:fill-box;transform-origin:center}
-    .ctx-svg.c3f:not(.c3g) .cx-rip.r1,.ctx-svg.c3i:not(.c3j) .cx-rip.r2{animation:cx-ripple .7s ease-out both}
+    .ctx-svg.c3b:not(.c3c) .cx-rip.r1,.ctx-svg.c3e:not(.c3f) .cx-rip.r3,.ctx-svg.c3i:not(.c3j) .cx-rip.r2{animation:cx-ripple .7s ease-out both}
     .ctx-svg .cx-unsaved,.ctx-svg .cx-saved{opacity:0;transition:opacity .25s ease}
-    .ctx-svg.c3f:not(.c3i) .cx-unsaved{opacity:1}
+    .ctx-svg.c3c:not(.c3i) .cx-unsaved{opacity:1}
     .ctx-svg.c3i .cx-saved{opacity:1}
     .ctx-svg .cx-save{transform-box:fill-box;transform-origin:center}
     .ctx-svg.c3i .cx-save{animation:cx-press .35s ease-out}
@@ -272,7 +267,7 @@
     .ctx-svg .cx-wiggle{transform-box:fill-box;transform-origin:50% 90%}
     .ctx-svg.c4c .cx-wiggle{animation:cx-wiggle .6s ease-in-out .1s}
     .ctx-svg.c4c .cx-m4.d1{transition-delay:.12s}.ctx-svg.c4c .cx-m4.d2{transition-delay:.24s}
-    .ctx-svg.c4c .cx-m4.d3{transition-delay:.36s}.ctx-svg.c4c .cx-m4.d4{transition-delay:.48s}
+    .ctx-svg.c4c .cx-m4.d3{transition-delay:.36s}.ctx-svg.c4c .cx-m4.d4{transition-delay:.48s}.ctx-svg.c4c .cx-m4.d5{transition-delay:.6s}
     .ctx-svg .cx-spark{opacity:0;transform-box:fill-box;transform-origin:center}
     .ctx-svg.c4c .cx-spark{animation:cx-spark .9s ease-out both}
     .ctx-svg.c4c .cx-spark.p2{animation-delay:.1s}.ctx-svg.c4c .cx-spark.p3{animation-delay:.2s}
@@ -440,14 +435,21 @@
     /* ══ L'iPad : pointeur rond qui se colle aux boutons ══ */
     .ctx-svg .cx-point{transition:opacity .12s}
     .ctx-svg .cx-aim{opacity:0;transform-box:fill-box;transform-origin:center;transition:opacity .12s}
-    .ctx-svg.c3e:not(.c3g) .cx-aim.a2,.ctx-svg.c3g:not(.c3j) .cx-aim.a3{opacity:1;transition-delay:.72s}
-    .ctx-svg.c3e:not(.c3g) .cx-point,.ctx-svg.c3g:not(.c3j) .cx-point{opacity:0;transition-delay:.72s}
-    .ctx-svg.c3f:not(.c3g) .cx-aim.a2,.ctx-svg.c3i:not(.c3j) .cx-aim.a3{animation:cx-press .3s ease-out}
-    /* ══ Le masquage en 1 clic, mis en avant ══ */
+    .ctx-svg.c3g:not(.c3j) .cx-aim.a3{opacity:1;transition-delay:.72s}
+    .ctx-svg.c3g:not(.c3j) .cx-point{opacity:0;transition-delay:.72s}
+    .ctx-svg.c3i:not(.c3j) .cx-aim.a3{animation:cx-press .3s ease-out}
+    /* au-dessus du texte, le pointeur devient une barre ; il s'efface pendant qu'on tape */
+    .ctx-svg .cx-ibeam{opacity:0;transition:opacity .12s}
+    .ctx-svg.c3a:not(.c3g) .cx-ibeam{opacity:1;transition-delay:.7s}
+    .ctx-svg.c3a:not(.c3g) .cx-point{opacity:0;transition-delay:.7s}
+    .ctx-svg .cx-tip{transition:opacity .12s}
+    .ctx-svg.c3c:not(.c3d) .cx-tip{opacity:0}
+    .ctx-svg.c3e:not(.c3g) .cx-tip{opacity:0;transition-delay:.3s}
+    /* ══ Le remplacement, mis en avant ══ */
     .ctx-svg.c3f:not(.c3g) .cx-cam3{transform:translate(800px,450px) scale(2.45) translate(-924px,-330px);transition:transform .25s cubic-bezier(.2,.9,.3,1.2)}
     .ctx-svg .cx-unclic{opacity:0;transform-box:fill-box;transform-origin:30% 100%;transform:scale(.2) rotate(-12deg)}
     .ctx-svg.c3f:not(.c3g) .cx-unclic{opacity:1;transform:rotate(-4deg);transition:transform .45s cubic-bezier(.3,1.9,.5,1) .12s,opacity .12s .12s}
-    .ctx-svg .cx-fleche1{stroke-dasharray:130;stroke-dashoffset:130}
+    .ctx-svg .cx-fleche1{stroke-dasharray:80;stroke-dashoffset:80}
     .ctx-svg.c3f:not(.c3g) .cx-fleche1{stroke-dashoffset:0;transition:stroke-dashoffset .3s ease-out .35s}
     .ctx-svg .cx-fleche1b{opacity:0}
     .ctx-svg.c3f:not(.c3g) .cx-fleche1b{opacity:1;transition:opacity .1s .62s}
@@ -552,10 +554,25 @@
     .ctx-svg .cx-dels > g{opacity:.3;transition:opacity .15s}
     .ctx-svg.c3b:not(.c3g) .cx-dels .cx-del1{opacity:1}
     .ctx-svg .cx-ctrl,.ctx-svg .cx-eyebtn{opacity:0;transition:opacity .15s}
-    .ctx-svg.c3b:not(.c3g) .cx-ctrl,.ctx-svg.c3b .cx-eyebtn{opacity:1}
+    .ctx-svg.c3b:not(.c3g) .cx-ctrl,.ctx-svg.c3b:not(.c3g) .cx-eyebtn{opacity:1}
     .ctx-svg .cx-eye-off2{opacity:0}
-    .ctx-svg.c3f .cx-eye-on2{opacity:0}
-    .ctx-svg.c3f .cx-eye-off2{opacity:1}
+    /* ══ La frappe : sélection, puis les lettres arrivent une à une derrière le curseur ══ */
+    .ctx-svg .cx-new1,.ctx-svg .cx-new2,.ctx-svg .cx-sel,.ctx-svg .cx-caret1,.ctx-svg .cx-caret2{opacity:0}
+    .ctx-svg .cx-cover1,.ctx-svg .cx-cover2{transform-box:fill-box;transform-origin:100% 50%}
+    .ctx-svg.c3b .cx-old1 .cx-sel{opacity:1}
+    .ctx-svg.c3c .cx-old1{opacity:0}
+    .ctx-svg.c3c .cx-new1{opacity:1}
+    .ctx-svg.c3c .cx-cover1{transform:scaleX(0);animation:cx-uncover .75s steps(17,end) both}
+    .ctx-svg.c3c:not(.c3d) .cx-caret1{opacity:1;transform:translateX(177px);animation:cx-caret1 .75s steps(17,end) both,cx-blink 1s linear .75s infinite}
+    .ctx-svg.c3e .cx-old2 .cx-sel{opacity:1}
+    .ctx-svg.c3e .cx-old2{opacity:0;transition:opacity 0s .3s}
+    .ctx-svg.c3e .cx-new2{opacity:1;transition:opacity 0s .3s}
+    .ctx-svg.c3e .cx-cover2{transform:scaleX(0);animation:cx-uncover .6s steps(19,end) .3s both}
+    .ctx-svg.c3e:not(.c3g) .cx-caret2{opacity:1;transition:opacity 0s .3s;transform:translateX(102px);animation:cx-caret2 .6s steps(19,end) .3s both,cx-blink 1s linear .9s infinite}
+    @keyframes cx-uncover{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+    @keyframes cx-caret1{from{transform:translateX(0)}to{transform:translateX(177px)}}
+    @keyframes cx-caret2{from{transform:translateX(0)}to{transform:translateX(102px)}}
+    @keyframes cx-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
 
     /* Les boucles ne tournent que dans le plan à l'écran */
     .ctx-svg .sc *{animation-play-state:paused}
@@ -1048,17 +1065,20 @@
       <rect x="626" y="292" width="668" height="2" fill="#D6C6AE"/>
 
       <rect class="cx-hov" x="618" y="308" width="684" height="50" rx="4" fill="#46423A" fill-opacity=".07"/>
+      <!-- la ligne qu'on réécrit : clic = sélection, puis on tape par-dessus -->
       <g class="cx-r1">
-        <text x="626" y="331" font-size="16" font-weight="700" letter-spacing="1" fill="#1F1B1C">BURRATA DI PUGLIA</text>
-        <text x="626" y="350" class="cx-it" font-size="15" fill="#5C5854">Tomates anciennes, basilic</text>
+        <g class="cx-old1"><rect class="cx-sel" x="623" y="314" width="168" height="22" rx="3" fill="#B7D3F2"/>
+          <text x="626" y="331" font-size="16" font-weight="700" letter-spacing="1" fill="#1F1B1C">BURRATA DI PUGLIA</text></g>
+        <g class="cx-new1"><text x="626" y="331" font-size="16" font-weight="700" letter-spacing="1" fill="#1F1B1C">TARTARE DE SAUMON</text>
+          <rect class="cx-cover1" x="624" y="312" width="182" height="25" fill="#F2F0EC"/></g>
+        <rect class="cx-caret1" x="626" y="315" width="2" height="20" fill="#1F1B1C"/>
+        <g class="cx-old2"><rect class="cx-sel" x="623" y="337" width="150" height="19" rx="3" fill="#B7D3F2"/>
+          <text x="626" y="350" class="cx-it" font-size="15" fill="#5C5854">Tomates anciennes, basilic</text></g>
+        <g class="cx-new2"><text x="626" y="350" class="cx-it" font-size="15" fill="#5C5854">Avocat, citron vert</text>
+          <rect class="cx-cover2" x="624" y="337" width="108" height="19" fill="#F2F0EC"/></g>
+        <rect class="cx-caret2" x="626" y="338" width="1.6" height="16" fill="#1F1B1C"/>
         <text x="1290" y="331" text-anchor="end" font-size="17" font-weight="700" fill="#C41F1C">14</text>
-        <rect class="cx-strike" x="624" y="325" width="186" height="2" fill="#1F1B1C"/>
-        <rect class="cx-strike" x="624" y="345" width="176" height="1.6" fill="#1F1B1C" opacity=".6"/>
-        <rect class="cx-strike" x="1272" y="325" width="22" height="2" fill="#1F1B1C"/>
       </g>
-      <g class="cx-badge"><rect x="622" y="298" width="112" height="18" rx="9" fill="#7A5B1E"/>
-        <path d="M630 307q6-6 12 0q-6 6-12 0z" fill="none" stroke="#FFFFFF" stroke-width="1.4"/><circle cx="636" cy="307" r="1.8" fill="#FFFFFF"/>
-        <text x="647" y="311" class="cx-b" font-size="10.5" font-weight="600" fill="#FFFFFF">Masqué du site</text></g>
 
       <text x="626" y="393" font-size="16" font-weight="700" letter-spacing="1" fill="#1F1B1C">RISOTTO AUX CÈPES</text>
       <text x="626" y="412" class="cx-it" font-size="15" fill="#5C5854">Parmesan affiné 18 mois</text>
@@ -1106,7 +1126,8 @@
       <g class="cx-dels"><g class="cx-del1"><rect x="1252" y="322.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><path d="M1259.0 329.0l8 8M1267.0 329.0l-8 8" stroke="#C94B4B" stroke-width="2" stroke-linecap="round"/></g><g class=""><rect x="1252" y="387.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><path d="M1259.0 394.0l8 8M1267.0 394.0l-8 8" stroke="#C94B4B" stroke-width="2" stroke-linecap="round"/></g><g class=""><rect x="1252" y="449.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><path d="M1259.0 456.0l8 8M1267.0 456.0l-8 8" stroke="#C94B4B" stroke-width="2" stroke-linecap="round"/></g><g class=""><rect x="1252" y="511.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><path d="M1259.0 518.0l8 8M1267.0 518.0l-8 8" stroke="#C94B4B" stroke-width="2" stroke-linecap="round"/></g><g class=""><rect x="1252" y="632.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><path d="M1259.0 639.0l8 8M1267.0 639.0l-8 8" stroke="#C94B4B" stroke-width="2" stroke-linecap="round"/></g></g>
       <g class="cx-ctrl"><g class=""><rect x="1277" y="322.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><rect x="1283.0" y="328.0" width="8" height="8" rx="1.5" fill="none" stroke="#444" stroke-width="1.5"/><rect x="1286.0" y="331.0" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#444" stroke-width="1.5"/></g><g class=""><rect x="1302" y="322.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><path d="M1313.0 338.0v-10m-4 4 4-4 4 4" stroke="#444" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g class=""><rect x="1327" y="322.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><path d="M1338.0 328.0v10m-4-4 4 4 4-4" stroke="#444" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><g class=""><rect x="1377" y="322.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><path d="M1383.0 329.0h6l4 4-4 4h-6z" fill="none" stroke="#444" stroke-width="1.5" stroke-linejoin="round"/><circle cx="1385.5" cy="333.0" r="1.2" fill="#444"/></g></g>
       <g class="cx-eyebtn"><rect x="1352" y="322.0" width="22" height="22" rx="5" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/><g class="cx-eye-on2"><path d="M1357.0 333.0q6-6 12 0q-6 6-12 0z" fill="none" stroke="#444" stroke-width="1.5"/><circle cx="1363.0" cy="333.0" r="2" fill="#444"/></g><g class="cx-eye-off2"><path d="M1357.0 333.0q6-6 12 0q-6 6-12 0z" fill="none" stroke="#B0782A" stroke-width="1.5"/><path d="M1357.0 339.0l12-12" stroke="#B0782A" stroke-width="1.8" stroke-linecap="round"/></g></g>
-      <circle class="cx-rip r1" cx="1363.0" cy="333" r="16" fill="none" stroke="#E52824" stroke-width="3"/>
+      <circle class="cx-rip r1" cx="628" cy="325" r="13" fill="none" stroke="#E52824" stroke-width="3"/>
+      <circle class="cx-rip r3" cx="612" cy="345" r="11" fill="none" stroke="#E52824" stroke-width="3"/>
 
       <!-- confirmation -->
       <g class="cx-toast">
@@ -1120,7 +1141,7 @@
       <rect class="cx-aim a1" x="1301" y="314" width="38" height="38" rx="10" fill="#1F1B1C" fill-opacity=".14"/>
       <rect class="cx-aim a2" x="1348" y="318.0" width="30" height="30" rx="8" fill="#1F1B1C" fill-opacity=".14"/>
       <rect class="cx-aim a3" x="988" y="88" width="124" height="42" rx="12" fill="#1F1B1C" fill-opacity=".2"/>
-      <g class="cx-cx"><g class="cx-cy"><g class="cx-tip"><circle class="cx-point" r="12" fill="#1F1B1C" fill-opacity=".36" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="2.5"/></g></g></g>
+      <g class="cx-cx"><g class="cx-cy"><g class="cx-tip"><circle class="cx-point" r="12" fill="#1F1B1C" fill-opacity=".36" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="2.5"/><rect class="cx-ibeam" x="-2" y="-10" width="4" height="20" rx="2" fill="#1F1B1C" fill-opacity=".5" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="1.5"/></g></g></g>
     </g>
 
     <path d="M498 78H720L498 430Z" fill="#FFFFFF" opacity=".07"/>
@@ -1190,17 +1211,17 @@
       <text x="527" y="235" text-anchor="middle" font-size="34" font-weight="700" fill="#1F1B1C">Je m'en occupe !</text>
     </g>
     <!-- les clics -->
-    <!-- « 1 clic ! » : le masquage, en un seul clic -->
+    <!-- « Remplacée en direct ! » : on tape sur la carte, c'est tout -->
     <g style="color:#F2D47A">
-      <g transform="translate(1250 312)"><use class="cx-etin3" href="#cx-star" x="-10" y="-10" width="20" height="20"/></g>
-      <g transform="translate(1248 364)"><use class="cx-etin3 p2" href="#cx-star" x="-8" y="-8" width="16" height="16"/></g>
-      <g transform="translate(1204 318)"><use class="cx-etin3 p3" href="#cx-star" x="-7" y="-7" width="14" height="14"/></g>
+      <g transform="translate(700 284)"><use class="cx-etin3" href="#cx-star" x="-10" y="-10" width="20" height="20"/></g>
+      <g transform="translate(548 279)"><use class="cx-etin3 p2" href="#cx-star" x="-7" y="-7" width="14" height="14"/></g>
+      <g transform="translate(606 322)"><use class="cx-etin3 p3" href="#cx-star" x="-6" y="-6" width="12" height="12"/></g>
     </g>
     <g class="cx-unclic">
-      <path class="cx-fleche1" d="M1140 402q60-8 86-80" stroke="#E52824" stroke-width="5" fill="none" stroke-linecap="round"/>
-      <path class="cx-fleche1b" d="M1216 334l10-12 9 10" stroke="#E52824" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="1016" y="392" width="128" height="48" rx="24" fill="#E52824" stroke="#2A2324" stroke-width="4"/>
-      <text x="1080" y="425" text-anchor="middle" font-size="27" font-weight="700" fill="#FFFFFF">1 clic !</text>
+      <path class="cx-fleche1" d="M748 362q-8-38-50-54" stroke="#E52824" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path class="cx-fleche1b" d="M707 322L698 308L714 305" stroke="#E52824" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="700" y="364" width="290" height="52" rx="26" fill="#E52824" stroke="#2A2324" stroke-width="4"/>
+      <text x="845" y="399" text-anchor="middle" font-size="25" font-weight="700" fill="#FFFFFF">Remplacée en direct !</text>
     </g>
 
     <!-- la modification part vers le site et le QR code -->
@@ -1227,8 +1248,8 @@
   </g></g>
   <!-- ═══ l'écran partagé : à droite, la même chose sur iPhone ═══ -->
   <g class="cx-lab3">
-    <rect x="24" y="16" width="300" height="46" rx="23" fill="#FFFFFF" stroke="#2A2324" stroke-width="4"/>
-    <text x="174" y="48" text-anchor="middle" font-size="23" font-weight="700" fill="#1F1B1C">Sur iPad, à la souris</text>
+    <rect x="24" y="16" width="302" height="46" rx="23" fill="#FFFFFF" stroke="#2A2324" stroke-width="4"/>
+    <text x="175" y="47" text-anchor="middle" font-size="21" font-weight="700" fill="#1F1B1C">Sur iPad : on la remplace</text>
   </g>
   <g class="cx-split3">
     <rect x="970" y="0" width="30" height="900" fill="#1F1B1C" opacity=".14"/>
@@ -1412,8 +1433,8 @@
       <text x="1300" y="636" text-anchor="middle" font-size="25" font-weight="700" fill="#FFFFFF">Trouvée, masquée !</text>
     </g>
     <g class="cx-lab3 l2">
-      <rect x="1040" y="22" width="190" height="46" rx="23" fill="#FFFFFF" stroke="#2A2324" stroke-width="4"/>
-      <text x="1135" y="54" text-anchor="middle" font-size="23" font-weight="700" fill="#1F1B1C">Sur iPhone</text>
+      <rect x="1016" y="22" width="314" height="46" rx="23" fill="#FFFFFF" stroke="#2A2324" stroke-width="4"/>
+      <text x="1173" y="53" text-anchor="middle" font-size="21" font-weight="700" fill="#1F1B1C">Sur iPhone : on la masque</text>
     </g>
     <g class="cx-ou3">
       <circle cx="1000" cy="836" r="34" fill="#FFFFFF" stroke="#2A2324" stroke-width="5"/>
@@ -1531,21 +1552,27 @@
         </g>
         <g class="cx-m4 d2">
           <rect x="890" y="316" width="220" height="64" rx="12" fill="#FFFFFF" stroke="#EAEBE4" stroke-width="2"/>
-          <text x="906" y="344" font-size="16" font-weight="700" fill="#1F1B1C">Risotto aux cèpes</text>
-          <text x="906" y="366" class="cx-b" font-size="12" fill="#98938F">Parmesan 18 mois</text>
-          <text x="1098" y="344" text-anchor="end" font-size="15" font-weight="700" fill="#E52824">13 €</text>
+          <text x="906" y="344" font-size="16" font-weight="700" fill="#1F1B1C">Tartare de saumon</text>
+          <text x="906" y="366" class="cx-b" font-size="12" fill="#98938F">Avocat, citron vert</text>
+          <text x="1098" y="344" text-anchor="end" font-size="15" font-weight="700" fill="#E52824">14 €</text>
         </g>
         <g class="cx-m4 d3">
           <rect x="890" y="390" width="220" height="64" rx="12" fill="#FFFFFF" stroke="#EAEBE4" stroke-width="2"/>
-          <text x="906" y="418" font-size="16" font-weight="700" fill="#1F1B1C">Tarte au citron</text>
-          <text x="906" y="440" class="cx-b" font-size="12" fill="#98938F">Meringue flambée</text>
-          <text x="1098" y="418" text-anchor="end" font-size="15" font-weight="700" fill="#E52824">7 €</text>
+          <text x="906" y="418" font-size="16" font-weight="700" fill="#1F1B1C">Risotto aux cèpes</text>
+          <text x="906" y="440" class="cx-b" font-size="12" fill="#98938F">Parmesan 18 mois</text>
+          <text x="1098" y="418" text-anchor="end" font-size="15" font-weight="700" fill="#E52824">13 €</text>
         </g>
         <g class="cx-m4 d4">
           <rect x="890" y="464" width="220" height="64" rx="12" fill="#FFFFFF" stroke="#EAEBE4" stroke-width="2"/>
-          <text x="906" y="492" font-size="16" font-weight="700" fill="#1F1B1C">Café gourmand</text>
-          <text x="906" y="514" class="cx-b" font-size="12" fill="#98938F">Trois mignardises</text>
-          <text x="1098" y="492" text-anchor="end" font-size="15" font-weight="700" fill="#E52824">9 €</text>
+          <text x="906" y="492" font-size="16" font-weight="700" fill="#1F1B1C">Tarte au citron</text>
+          <text x="906" y="514" class="cx-b" font-size="12" fill="#98938F">Meringue flambée</text>
+          <text x="1098" y="492" text-anchor="end" font-size="15" font-weight="700" fill="#E52824">7 €</text>
+        </g>
+        <g class="cx-m4 d5">
+          <rect x="890" y="538" width="220" height="64" rx="12" fill="#FFFFFF" stroke="#EAEBE4" stroke-width="2"/>
+          <text x="906" y="566" font-size="16" font-weight="700" fill="#1F1B1C">Café gourmand</text>
+          <text x="906" y="588" class="cx-b" font-size="12" fill="#98938F">Trois mignardises</text>
+          <text x="1098" y="566" text-anchor="end" font-size="15" font-weight="700" fill="#E52824">9 €</text>
         </g>
       </g>
       <path d="M874 104H1000L874 340Z" fill="#FFFFFF" opacity=".09"/>
@@ -1618,10 +1645,10 @@
         <g transform="translate(1000 560)"><use class="cx-scint4 p2" href="#cx-star" x="-14" y="-14" width="28" height="28"/></g>
         <g transform="translate(620 620)"><use class="cx-scint4 p3" href="#cx-star" x="-11" y="-11" width="22" height="22"/></g>
       </g>
-      <!-- « Alors… un risotto ! » -->
+      <!-- « Alors… un tartare ! » -->
       <g class="cx-bulle b4">
         <path d="M970 160H1350Q1390 160 1390 200V220Q1390 260 1350 260H1030L896 548L982 260H970Q930 260 930 220V200Q930 160 970 160Z" fill="#FFFFFF" stroke="#2A2324" stroke-width="6" stroke-linejoin="round"/>
-        <text x="1160" y="223" text-anchor="middle" font-size="38" font-weight="700" fill="#1F1B1C">Alors… un risotto !</text>
+        <text x="1160" y="223" text-anchor="middle" font-size="38" font-weight="700" fill="#1F1B1C">Alors… un tartare !</text>
       </g>
     </g>
   </g></g>
@@ -1691,6 +1718,13 @@
           <path d="M1000 381l3 3 6-7" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           <text x="1020" y="386" class="cx-b" font-size="13" font-weight="600" fill="#2E7D4F">À jour · il y a 6 s</text>
         </g>
+        <g class="cx-row5 d0">
+          <text x="446" y="438" font-size="19" font-weight="700" fill="#1F1B1C">Tartare de saumon</text>
+          <text x="446" y="458" class="cx-b" font-size="13" fill="#98938F">Avocat, citron vert</text>
+          <text x="1154" y="438" text-anchor="end" font-size="19" font-weight="700" fill="#E52824">14 €</text>
+          <path d="M446 474H1154" stroke="#EAEBE4" stroke-width="2"/>
+        </g>
+        <g transform="translate(0 62)">
         <g class="cx-row5 d1">
           <text x="446" y="438" font-size="19" font-weight="700" fill="#1F1B1C">Risotto aux cèpes</text>
           <text x="446" y="458" class="cx-b" font-size="13" fill="#98938F">Parmesan affiné 18 mois</text>
@@ -1708,8 +1742,9 @@
           <text x="446" y="582" class="cx-b" font-size="13" fill="#98938F">Trois mignardises</text>
           <text x="1154" y="562" text-anchor="end" font-size="19" font-weight="700" fill="#E52824">9 €</text>
         </g>
-        <rect x="416" y="620" width="768" height="220" fill="#1F1B1C"/>
-        <text x="800" y="672" text-anchor="middle" class="cx-b" font-size="14" fill="#98938F">Ouvert du mardi au samedi · 12 h – 14 h 30 · 19 h – 22 h</text>
+        </g>
+        <rect x="416" y="682" width="768" height="220" fill="#1F1B1C"/>
+        <text x="800" y="734" text-anchor="middle" class="cx-b" font-size="14" fill="#98938F">Ouvert du mardi au samedi · 12 h – 14 h 30 · 19 h – 22 h</text>
       </g>
       <rect x="416" y="92" width="768" height="34" fill="#EAEBE4"/>
       <circle cx="438" cy="109" r="5.5" fill="#E0442F"/><circle cx="456" cy="109" r="5.5" fill="#E4C35F"/><circle cx="474" cy="109" r="5.5" fill="#7C9A74"/>
