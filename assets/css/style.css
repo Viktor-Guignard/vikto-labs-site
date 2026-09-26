@@ -331,7 +331,7 @@ textarea:focus-visible {
   background-size: 26px 26px;
   -webkit-mask-image: linear-gradient(to left, black 30%, transparent 70%);
   mask-image: linear-gradient(to left, black 30%, transparent 70%);
-  opacity: 0.55;
+  opacity: 0.26;
   pointer-events: none;
 }
 .hero .container { position: relative; }
@@ -2630,13 +2630,15 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
 /* un léger grain de pellicule, par-dessus le dessin ; il frémit pendant la lecture */
 .ctx-frame::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: url("../images/grain.png") 0 0 / 160px 160px repeat;
-  mix-blend-mode: overlay; opacity: 0.16;
+  /* grain clair/sombre sur fond transparent : même rendu qu'un fondu « overlay »,
+     sans le recalcul de mélange à chaque image (38 → 60 i/s mesurés) */
+  background: url("../images/grain-a.png") 0 0 / 192px 192px repeat;
+  opacity: 0.26;
 }
 @media (prefers-reduced-motion: no-preference) {
   .ctx-video.is-playing .ctx-frame::after { animation: ctx-grain 0.5s steps(5) infinite; }
 }
-@keyframes ctx-grain { to { background-position: 160px 96px; } }
+@keyframes ctx-grain { to { background-position: 192px 115px; } }
 .ctx-caption {
   margin: var(--space-md) auto 0;
   max-width: 46ch;
