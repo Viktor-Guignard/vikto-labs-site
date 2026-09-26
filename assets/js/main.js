@@ -711,6 +711,13 @@ function initContactForm() {
   const statusBox = document.getElementById("form-status");
   const ouvertLe = Date.now();   // un humain met plus de 3 s à remplir le formulaire
 
+  // Arrivée depuis une carte tarif (contact.html?prestation=site) : prestation pré-choisie
+  const prestation = new URLSearchParams(location.search).get("prestation");
+  const choixService = form.elements["service"];
+  if (prestation && choixService && [...choixService.options].some((o) => o.value === prestation)) {
+    choixService.value = prestation;
+  }
+
   const validators = {
     "full-name": (v) => v.trim().length >= 2 || "Merci d'indiquer votre nom et prénom.",
     "establishment-name": (v) => v.trim().length >= 2 || "Merci d'indiquer le nom de l'établissement.",

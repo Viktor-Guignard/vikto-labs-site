@@ -1265,6 +1265,13 @@ textarea:focus-visible {
 .contact-side h3 { font-size: 1.05rem; }
 .contact-side p, .contact-side a { font-size: 0.92rem; color: var(--color-gray-600); }
 .contact-side a { color: var(--color-black); font-weight: 600; }
+.contact-side .contact-delai { margin-top: 0.3rem; font-size: 0.85rem; color: var(--color-muted); }
+.contact-etapes { display: grid; gap: 0.55rem; counter-reset: etape; margin-top: 0.4rem; list-style: none; padding-left: 0; }
+.contact-etapes li { position: relative; padding-left: 2rem; font-size: 0.9rem; line-height: 1.5; color: var(--color-gray-600); counter-increment: etape; }
+.contact-etapes li::before { content: counter(etape); position: absolute; left: 0; top: 0.05rem; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: var(--color-black); color: var(--color-white); font-family: var(--font-heading); font-weight: 700; font-size: 0.75rem; display: grid; place-items: center; }
+.contact-raccourcis { border-top: 1px solid var(--color-gray-200); padding-top: var(--space-md); display: grid; gap: 0.35rem; }
+.contact-raccourcis h3 { margin-top: 0.4rem; }
+.contact-raccourcis a { color: var(--color-red-dark); text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 960px) {
   .contact-layout { grid-template-columns: 1fr; }
 }
