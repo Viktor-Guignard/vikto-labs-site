@@ -1480,11 +1480,19 @@ textarea:focus-visible {
   height: 460px;
 }
 
-/* Démo à un seul cadre : pleine largeur, plus haut pour voir la planche */
+/* Démo à un seul cadre : pleine largeur, plus haut pour voir la planche.
+   L'éditeur est affiché dézoomé (--zoom) : l'iframe est rendue plus grande puis
+   réduite, pour voir la carte entière sans toucher à l'éditeur lui-même. */
 .live-demo--single { grid-template-columns: 1fr; }
-.live-demo--single .browser-frame .live-viewport { height: 620px; }
+.live-demo--single .browser-frame .live-viewport { height: 680px; --zoom: 0.7; }
+.live-demo--single .live-viewport iframe {
+  width: calc(100% / var(--zoom));
+  height: calc(100% / var(--zoom));
+  transform: scale(var(--zoom));
+  transform-origin: 0 0;
+}
 @media (max-width: 700px) {
-  .live-demo--single .browser-frame .live-viewport { height: 460px; }
+  .live-demo--single .browser-frame .live-viewport { height: 520px; --zoom: 0.8; }
 }
 
 /* --- Cadre téléphone (menu client) --- */
