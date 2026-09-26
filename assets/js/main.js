@@ -709,6 +709,7 @@ function initContactForm() {
   if (!form) return;
 
   const statusBox = document.getElementById("form-status");
+  const ouvertLe = Date.now();   // un humain met plus de 3 s à remplir le formulaire
 
   const validators = {
     "full-name": (v) => v.trim().length >= 2 || "Merci d'indiquer votre nom et prénom.",
@@ -758,6 +759,7 @@ function initContactForm() {
     if (honeypot && honeypot.value.trim() !== "") {
       return;
     }
+    if (Date.now() - ouvertLe < 3000) return;   // envoi robotisé
 
     const allValid = Object.keys(validators)
       .map(validateField)

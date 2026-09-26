@@ -64,6 +64,10 @@ h1, h2, h3, h4 { font-family: var(--font-heading); margin: 0; line-height: 1.15;
 h1, h2 { text-wrap: balance; }
 p { margin: 0; }
 
+/* Le menu mobile, rangé hors écran à droite, ne doit jamais permettre de
+   faire glisser la page de côté (Safari iOS) */
+html, body { overflow-x: clip; }
+
 /* Les ancres (#tarifs…) ne doivent pas se cacher sous le header sticky */
 section[id] { scroll-margin-top: 90px; }
 
@@ -382,6 +386,21 @@ textarea:focus-visible {
   flex-wrap: wrap;
   gap: var(--space-sm);
 }
+.hero-alt { flex-basis: 100%; margin: 0.2rem 0 0; font-size: 0.92rem; color: var(--color-gray-600); }
+.hero-inner--solo .hero-alt { text-align: center; }
+.hero-alt a, .final-alt a { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.hero-alt a { color: var(--color-black); }
+.hero-alt a:hover { color: var(--color-red-dark); }
+.final-alt { margin: var(--space-md) auto 0 !important; font-size: 0.95rem !important; }
+.final-alt a { color: var(--color-white); }
+/* page 404 */
+.page-404 { padding: var(--space-3xl) 0; text-align: center; }
+.page-404 .code-404 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(5rem, 18vw, 11rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 2px var(--color-black); letter-spacing: -0.03em; }
+.page-404 .code-404 em { font-style: normal; -webkit-text-stroke-color: var(--color-red); }
+.page-404 h1 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); margin: var(--space-md) 0 var(--space-sm); }
+.page-404 p { color: var(--color-gray-600); max-width: 46ch; margin: 0 auto var(--space-lg); }
+.page-404 .liens-404 { display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-md); justify-content: center; margin-top: var(--space-md); }
+.page-404 .liens-404 a { color: var(--color-red-dark); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 /* --- Mockup démo hero (100% HTML/CSS) --- */
 .demo-stage {
