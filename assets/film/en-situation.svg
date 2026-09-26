@@ -563,16 +563,16 @@
     .ctx-svg.c3c .cx-old1{opacity:0}
     .ctx-svg.c3c .cx-new1{opacity:1}
     .ctx-svg.c3c .cx-cover1{transform:scaleX(0);animation:cx-uncover .75s steps(17,end) both}
-    .ctx-svg.c3c:not(.c3d) .cx-caret1{opacity:1;transform:translateX(177px);animation:cx-caret1 .75s steps(17,end) both,cx-blink 1s linear .75s infinite}
+    .ctx-svg.c3c:not(.c3d) .cx-caret1{opacity:1;transform:translateX(177px);animation:cx-caret1 .75s steps(17,end) both,cx-curseur 1s linear .75s infinite}
     .ctx-svg.c3e .cx-old2 .cx-sel{opacity:1}
     .ctx-svg.c3e .cx-old2{opacity:0;transition:opacity 0s .3s}
     .ctx-svg.c3e .cx-new2{opacity:1;transition:opacity 0s .3s}
     .ctx-svg.c3e .cx-cover2{transform:scaleX(0);animation:cx-uncover .6s steps(19,end) .3s both}
-    .ctx-svg.c3e:not(.c3g) .cx-caret2{opacity:1;transition:opacity 0s .3s;transform:translateX(102px);animation:cx-caret2 .6s steps(19,end) .3s both,cx-blink 1s linear .9s infinite}
+    .ctx-svg.c3e:not(.c3g) .cx-caret2{opacity:1;transition:opacity 0s .3s;transform:translateX(102px);animation:cx-caret2 .6s steps(19,end) .3s both,cx-curseur 1s linear .9s infinite}
     @keyframes cx-uncover{from{transform:scaleX(1)}to{transform:scaleX(0)}}
     @keyframes cx-caret1{from{transform:translateX(0)}to{transform:translateX(177px)}}
     @keyframes cx-caret2{from{transform:translateX(0)}to{transform:translateX(102px)}}
-    @keyframes cx-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+    @keyframes cx-curseur{0%,49%{opacity:1}50%,100%{opacity:0}}
 
     /* Les boucles ne tournent que dans le plan à l'écran */
     .ctx-svg .sc *{animation-play-state:paused}
@@ -1761,10 +1761,10 @@
     <!-- l'habitué, vu de dos -->
     <g class="cx-ink"><g class="cx-breathe" style="animation-delay:-.9s">
     <rect x="826" y="770" width="48" height="60" fill="#CF9A74"/>
-    <path d="M560 910Q576 824 700 806H1000Q1124 824 1140 910Z" fill="#C9A24D"/>
+    <path d="M650 910Q664 830 742 808H958Q1036 830 1050 910Z" fill="#C9A24D"/>
     <path d="M800 806q50 26 100 0" stroke="#B38E3E" stroke-width="5" fill="none"/>
     <path d="M806 808l44 22 44-22-10-8-34 16-34-16z" fill="#FFFFFF"/>
-    <path d="M630 888q42-44 110-66M1070 888q-42-44-110-66" stroke="#B38E3E" stroke-width="5" fill="none" stroke-linecap="round" class="cx-noink"/>
+    <path d="M702 888q30-40 84-62M998 888q-30-40-84-62" stroke="#B38E3E" stroke-width="5" fill="none" stroke-linecap="round" class="cx-noink"/>
     <g class="cx-hoche"><g class="cx-head5"><g class="cx-dos5">
       <path d="M772 738c-18-8-26 14-16 30c6 10 14 12 20 6z" fill="#E3B08A"/>
       <path d="M928 738c18-8 26 14 16 30c-6 10-14 12-20 6z" fill="#E3B08A"/>
@@ -1795,15 +1795,15 @@
     <g class="cx-hand5 cx-ink">
       <rect x="1150" y="740" width="56" height="66" rx="27" fill="#F4F5F3" stroke="#C9CDCB" stroke-width="2"/>
       <g class="cx-bras5">
-        <path d="M1080 910Q1120 840 1164 796" stroke="#2A2324" stroke-width="54" fill="none" stroke-linecap="round"/>
-        <path d="M1080 910Q1120 840 1164 796" stroke="#C9A24D" stroke-width="46" fill="none" stroke-linecap="round"/>
+        <path d="M1026 910Q1096 850 1164 796" stroke="#2A2324" stroke-width="54" fill="none" stroke-linecap="round"/>
+        <path d="M1026 910Q1096 850 1164 796" stroke="#C9A24D" stroke-width="46" fill="none" stroke-linecap="round"/>
         <ellipse cx="1176" cy="774" rx="30" ry="26" fill="#E3B08A"/>
         <rect x="1166" y="738" width="12" height="30" rx="6" fill="#E3B08A"/>
       </g>
     </g>
     <g class="cx-pouce5 cx-ink">
-      <path d="M1070 910Q1060 830 1010 782" stroke="#2A2324" stroke-width="54" fill="none" stroke-linecap="round"/>
-      <path d="M1070 910Q1060 830 1010 782" stroke="#C9A24D" stroke-width="46" fill="none" stroke-linecap="round"/>
+      <path d="M1026 910Q1040 830 1004 782" stroke="#2A2324" stroke-width="54" fill="none" stroke-linecap="round"/>
+      <path d="M1026 910Q1040 830 1004 782" stroke="#C9A24D" stroke-width="46" fill="none" stroke-linecap="round"/>
       <rect x="990" y="694" width="18" height="50" rx="9" fill="#E3B08A"/>
       <rect x="976" y="736" width="56" height="50" rx="15" fill="#E3B08A"/>
       <path d="M982 752h42M982 768h42" stroke="#C98A66" stroke-width="3" stroke-linecap="round" class="cx-noink"/>
