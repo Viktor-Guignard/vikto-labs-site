@@ -31,7 +31,7 @@ const SITE_CONFIG = {
   // par Stripe Tax. Ce sont des URLs publiques (faites pour être partagées/cliquées),
   // aucun souci à les laisser dans ce fichier.
   STRIPE_LINK_SITE: "https://buy.stripe.com/cNi3cogoX84F3c790n4ZG01", // Site vitrine — 500 € HT, paiement unique
-  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/9B65kw5KjacN7sn6Sf4ZG02" // Menu Synchro — 54 € HT/mois, abonnement
+  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/9B628ka0z70B4gb4K74ZG03" // Menu Synchro — 150 € HT (création de la carte) à la souscription, puis 54 € HT/mois après 30 jours
 };
 
 // Branche les boutons de tarifs sur les liens de paiement Stripe.
@@ -117,7 +117,7 @@ const HELP_CENTER = [
       },
       {
         q: "Y a-t-il des frais de création ?",
-        a: "La création du site vitrine est offerte. Seule la reprise de vos cartes existantes est facturée&nbsp;: 150&nbsp;€ HT, une seule fois à la mise en place, jusqu'à 200 articles. Vous les modifiez ensuite vous-même, sans frais."
+        a: "La création du site vitrine est offerte. Seule la reprise de vos cartes existantes est facturée&nbsp;: 150&nbsp;€ HT, une seule fois, réglée à la souscription, jusqu'à 200 articles&nbsp;; l'abonnement démarre le mois suivant. Vous les modifiez ensuite vous-même, sans frais."
       },
       {
         q: "Puis-je prendre seulement le site vitrine ?",
