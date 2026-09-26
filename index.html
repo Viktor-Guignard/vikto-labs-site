@@ -10,19 +10,28 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="VIKTO LABS — Votre site et votre menu, toujours à jour">
 <meta property="og:description" content="Sites vitrines et menus numériques synchronisés pour restaurants et commerces de bouche.">
-<meta property="og:image" content="assets/images/og-cover.jpg">
+<meta property="og:image" content="https://vikto-labs.fr/assets/images/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="VIKTO LABS — votre site et votre menu, toujours à jour">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="VIKTO LABS">
 <meta property="og:url" content="https://vikto-labs.fr/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://vikto-labs.fr/assets/images/og-cover.jpg">
 
 <link rel="canonical" href="https://vikto-labs.fr/">
 
 <link rel="icon" type="image/svg+xml" href="assets/images/vikto-labs.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+<meta name="theme-color" content="#F8F9F4">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/Inter-latin-3.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/SpaceGrotesk-latin-5.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css?v=20260926e">
 
-<link rel="stylesheet" href="assets/css/style.css?v=20260926d">
+<link rel="stylesheet" href="assets/css/style.css?v=20260926e">
 
 <script type="application/ld+json">
 {
@@ -30,9 +39,46 @@
   "@type": "ProfessionalService",
   "name": "VIKTO LABS",
   "description": "Studio indépendant de création de sites vitrines et de menus numériques synchronisés pour restaurants et commerces de bouche.",
+  "url": "https://vikto-labs.fr/",
+  "logo": "https://vikto-labs.fr/assets/images/apple-touch-icon.png",
+  "image": "https://vikto-labs.fr/assets/images/og-cover.jpg",
+  "email": "vikto.labs@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "155 Rue de Paris",
+    "postalCode": "93000",
+    "addressLocality": "Bobigny",
+    "addressCountry": "FR"
+  },
   "areaServed": "FR",
   "priceRange": "€€",
-  "url": "https://vikto-labs.fr/"
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Site vitrine",
+      "price": "500",
+      "priceCurrency": "EUR",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "price": "500",
+        "priceCurrency": "EUR",
+        "valueAddedTaxIncluded": false
+      }
+    },
+    {
+      "@type": "Offer",
+      "name": "Site + menu synchronisé",
+      "price": "54",
+      "priceCurrency": "EUR",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "54",
+        "priceCurrency": "EUR",
+        "unitText": "mois",
+        "valueAddedTaxIncluded": false
+      }
+    }
+  ]
 }
 </script>
 </head>
@@ -205,15 +251,16 @@
             <li>Menu classique ou fichier PDF</li>
             <li>Mise en ligne</li>
           </ul>
-          <a href="contact.html?prestation=site" data-stripe-link="site" class="btn btn-outline btn-block btn-arrow">Demander mon site</a>
+          <a href="contact.html?prestation=site" data-stripe-link="site" class="btn btn-outline btn-block btn-arrow">Commander mon site</a>
+          <p class="price-secure">Paiement sécurisé par Stripe · nous vous contactons ensuite pour démarrer</p>
         </div>
 
         <div class="price-card is-featured" data-reveal>
-          <span class="price-badge">Le plus choisi</span>
+          <span class="price-badge">Recommandé</span>
           <h3>Site + menu synchronisé</h3>
           <div class="price-value">54&nbsp;€/mois&nbsp;<span class="price-tax-tag">HT</span></div>
           <p class="price-mention">Site vitrine offert · 64,80&nbsp;€/mois TTC</p>
-          <p class="price-mention-alt">Reprise de vos cartes 150&nbsp;€ HT une fois · Engagement initial de 12 mois</p>
+          <p class="price-mention-alt">Création de la carte 150&nbsp;€ HT à la souscription · Engagement 12 mois</p>
           <ul>
             <li>Création du site vitrine</li>
             <li>Toutes vos cartes : menu, vins, desserts, version anglaise</li>
@@ -225,10 +272,16 @@
             <li>Mises à jour techniques</li>
           </ul>
           <a href="contact.html?prestation=synchronise" data-stripe-link="subscription" class="btn btn-primary btn-block btn-arrow">Choisir cette formule</a>
+          <p class="price-secure">Paiement sécurisé par Stripe · 150&nbsp;€ HT aujourd'hui, puis 54&nbsp;€ HT/mois</p>
         </div>
       </div>
 
-      <p class="pricing-footnote">Prix exprimés hors taxes (HT), TVA de 20&nbsp;% en sus. La reprise de vos cartes existantes — PDF, Word ou papier — et leur mise en forme dans votre espace est facturée 150&nbsp;€ HT, une seule fois, à la souscription, jusqu'à 200 articles au total ; l'abonnement de 54&nbsp;€ HT/mois démarre le mois suivant. Vous les modifiez ensuite vous-même autant que vous le souhaitez. Après les 12 premiers mois, l'abonnement se poursuit sans nouvel engagement et peut être résilié à tout moment.</p>
+      <ul class="pricing-notes">
+        <li><strong>Prix hors taxes</strong>, TVA de 20&nbsp;% en sus.</li>
+        <li><strong>Création de la carte&nbsp;: 150&nbsp;€ HT</strong>, réglés une seule fois à la souscription. Nous reprenons vos cartes existantes (PDF, Word ou papier) et les mettons en forme dans votre espace, jusqu'à 200 articles&nbsp;; vous les modifiez ensuite vous-même, sans limite.</li>
+        <li><strong>Abonnement&nbsp;: 54&nbsp;€ HT/mois</strong> à partir du mois suivant. Engagement de 12 mois à compter de la première mensualité, puis résiliable chaque mois.</li>
+      </ul>
+      <p class="pricing-more">Tous les détails dans nos <a href="cgv.html">conditions générales de vente</a> · Une question avant de vous lancer&nbsp;? <a href="contact.html">Parlons de votre projet</a></p>
     </div>
   </section>
 
@@ -351,7 +404,7 @@
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
           <div class="faq-answer" id="faq-a6" role="region" aria-labelledby="faq-q6" data-open="false">
-            <p>L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement.</p>
+            <p>L'abonnement démarre avec un engagement initial de 12 mois, compté à partir de la première mensualité. Passé ce délai, il se poursuit de mois en mois et reste résiliable à tout moment.</p>
           </div>
         </div>
 
@@ -391,7 +444,7 @@
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
           <div class="faq-answer" id="faq-a10" role="region" aria-labelledby="faq-q10" data-open="false">
-            <p>Les modalités précises de résiliation vous seront détaillées dans le contrat associé à votre formule.</p>
+            <p>Après les 12 premiers mois, un simple e-mail suffit&nbsp;: la résiliation prend effet à la fin du mois en cours. Vos contenus et votre nom de domaine restent les vôtres, et nous vous remettons vos cartes sur demande. Tout est détaillé dans nos <a href="cgv.html">conditions générales de vente</a>.</p>
           </div>
         </div>
       </div>
@@ -458,6 +511,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20260926a"></script>
+<script src="assets/js/main.js?v=20260926e"></script>
 </body>
 </html>

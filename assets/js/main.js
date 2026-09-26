@@ -125,7 +125,7 @@ const HELP_CENTER = [
       },
       {
         q: "Quelle est la durée d'engagement ?",
-        a: "L'abonnement démarre avec un engagement initial de 12 mois. Passé ce délai, il se poursuit sans nouvel engagement. Les modalités précises de résiliation sont détaillées dans le contrat."
+        a: "L'abonnement démarre avec un engagement initial de 12 mois. Il est compté à partir de la première mensualité. Passé ce délai, il se poursuit de mois en mois et reste résiliable à tout moment, par simple e-mail."
       },
       {
         q: "Vos prix sont-ils HT ou TTC ?",
@@ -252,11 +252,11 @@ const HELP_CENTER = [
       },
       {
         q: "Y a-t-il un contrat à signer ?",
-        a: "Oui. La prestation est encadrée par un contrat clair reprenant le périmètre, le tarif et les conditions (dont la résiliation). Il vous est transmis avant tout démarrage&nbsp;: rien ne commence sans votre accord écrit."
+        a: 'La prestation est encadrée par nos <a href="cgv.html">conditions générales de vente</a>&nbsp;: périmètre, tarifs, engagement et résiliation. Vous les acceptez au moment de la commande, et rien n\'est mis en ligne sans votre validation.'
       },
       {
         q: "À qui appartiennent le site et le nom de domaine ?",
-        a: 'Votre contenu et votre nom de domaine vous appartiennent. Les modalités précises de reprise en fin de contrat sont détaillées dans le contrat — nous en parlons ouvertement dès le départ.'
+        a: 'Votre contenu et votre nom de domaine vous appartiennent. En fin d\'abonnement, nous vous remettons vos contenus et vous accompagnons pour transférer votre nom de domaine (voir nos <a href="cgv.html">CGV</a>).'
       },
       {
         q: "Où êtes-vous situés ? Travaillez-vous à distance ?",
@@ -293,7 +293,7 @@ const HELP_CENTER = [
       },
       {
         q: "Que se passe-t-il si je résilie ?",
-        a: "L'abonnement s'arrête selon les modalités prévues au contrat. Nous ne pratiquons pas de rétention&nbsp;: les conditions vous sont communiquées clairement avant signature."
+        a: "Après les 12 premiers mois, un simple e-mail suffit&nbsp;: l'abonnement s'arrête à la fin du mois en cours. Aucune rétention, et vos contenus vous sont remis sur demande."
       }
     ]
   },
