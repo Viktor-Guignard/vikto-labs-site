@@ -1563,7 +1563,9 @@ textarea:focus-visible {
   .live-demo--single .browser-frame .live-viewport { height: 520px; --zoom: 0.55; }
   /* Sur téléphone, la démo « Ma carte » (chercher un plat, le masquer) remplace
      l'éditeur complet : elle est faite pour cette largeur, donc sans zoom. */
-  .live-demo--single.is-phone .browser-frame .live-viewport { height: 640px; --zoom: 1; }
+  /* Moins haute que l'écran : une fois la démo activée, elle capte le doigt ;
+     il faut toujours voir la page au-dessous pour continuer à descendre. */
+  .live-demo--single.is-phone .browser-frame .live-viewport { height: 440px; height: min(440px, 54svh); --zoom: 1; }
 }
 /* Deux versions d'un même texte : ordinateur / téléphone (même seuil que la démo) */
 @media (min-width: 701px) { .only-phone { display: none !important; } }
