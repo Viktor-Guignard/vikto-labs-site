@@ -78,6 +78,7 @@ if ("scrollRestoration" in history) {
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
+  garderMotsComposes();
   initNav();
   initHeaderState();
   initFaq();
@@ -523,6 +524,17 @@ function initDemoVideo() {
    Par défaut les iframes ont pointer-events:none (pas de piège au scroll).
    Un clic sur l'overlay rend la vraie page interactive. */
 function initLiveDemos() {
+  // Téléphone : la démo « Ma carte » remplace l'éditeur complet (trop large pour
+  // un écran de 390 px). L'iframe est en loading="lazy" et loin sous la ligne de
+  // flottaison : on change sa source avant qu'elle ne commence à charger.
+  if (window.matchMedia("(max-width: 700px)").matches) {
+    document.querySelectorAll("iframe[data-src-phone]").forEach((iframe) => {
+      iframe.src = iframe.dataset.srcPhone;
+      if (iframe.dataset.titlePhone) iframe.title = iframe.dataset.titlePhone;
+      const bloc = iframe.closest(".live-demo");
+      if (bloc) bloc.classList.add("is-phone");
+    });
+  }
   document.querySelectorAll(".live-viewport .live-overlay").forEach((overlay) => {
     overlay.addEventListener("click", () => {
       overlay.closest(".live-viewport").classList.add("is-active");
@@ -582,11 +594,53 @@ function initSyncScenes() {
   });
 }
 
+/* ---- Césure : « vous-même », « e-mail », « Puis-je »… ne se coupent jamais
+   au trait d'union (un « vous- » en fin de ligne et « même. » seul sur la
+   suivante, en tête de la page d'accueil). Chaque mot composé du contenu est
+   enveloppé dans un .insecable (white-space: nowrap). */
+function garderMotsComposes() {
+  const motif = /[\p{L}\p{N}’']+(?:-[\p{L}\p{N}]+)+/gu;
+  const present = new RegExp(motif.source, "u");   // sans « g » : test() ne garde pas d'état entre deux nœuds
+  const marcheur = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: (n) => {
+      const el = n.parentElement;
+      if (!el || el.closest("script, style, svg, textarea, input, select, .insecable, h1, [contenteditable]")) return NodeFilter.FILTER_REJECT;
+      return present.test(n.textContent) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    },
+  });
+  const noeuds = [];
+  while (marcheur.nextNode()) noeuds.push(marcheur.currentNode);
+  noeuds.forEach((n) => {
+    const t = n.textContent;
+    const frag = document.createDocumentFragment();
+    let dernier = 0;
+    t.replace(motif, (mot, i) => {
+      if (i > dernier) frag.appendChild(document.createTextNode(t.slice(dernier, i)));
+      const span = document.createElement("span");
+      span.className = "insecable";
+      span.textContent = mot;
+      frag.appendChild(span);
+      dernier = i + mot.length;
+      return mot;
+    });
+    if (dernier < t.length) frag.appendChild(document.createTextNode(t.slice(dernier)));
+    n.replaceWith(frag);
+  });
+}
+
 /* ---- Navigation mobile ---- */
 function initNav() {
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".main-nav");
   if (!toggle || !nav) return;
+
+  // Le panneau mobile commence juste sous l'en-tête, quelle que soit sa hauteur
+  const header = document.querySelector(".site-header");
+  const poserHauteur = () => {
+    if (header) document.documentElement.style.setProperty("--header-h", header.offsetHeight + "px");
+  };
+  poserHauteur();
+  window.addEventListener("resize", poserHauteur);
 
   toggle.addEventListener("click", () => {
     const isOpen = nav.classList.toggle("is-open");

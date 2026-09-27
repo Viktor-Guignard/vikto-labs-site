@@ -63,6 +63,8 @@ button { font-family: inherit; cursor: pointer; }
 h1, h2, h3, h4 { font-family: var(--font-heading); margin: 0; line-height: 1.15; letter-spacing: -0.01em; }
 h1, h2 { text-wrap: balance; }
 p { margin: 0; }
+p, li, figcaption { text-wrap: pretty; }
+.insecable { white-space: nowrap; }
 
 /* Le menu mobile, rangé hors écran à droite, ne doit jamais permettre de
    faire glisser la page de côté (Safari iOS) */
@@ -202,10 +204,21 @@ textarea:focus-visible {
   position: sticky;
   top: 0;
   z-index: 500;
-  background: rgba(248, 249, 244, 0.92);
-  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-gray-200);
   transition: box-shadow var(--transition-base);
+}
+/* Le fond flouté vit sur un calque à part : posé sur l'en-tête lui-même,
+   backdrop-filter en faisait le bloc conteneur des éléments « fixed ». Le menu
+   mobile (position: fixed) se retrouvait alors enfermé dans les 85 px de
+   l'en-tête : seul « Démo » dépassait, le reste passait sous la page. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(248, 249, 244, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .site-header.is-scrolled {
   box-shadow: 0 10px 30px -18px rgba(0,0,0,0.25);
@@ -292,14 +305,14 @@ textarea:focus-visible {
 .nav-toggle span::before { position: absolute; top: -7px; }
 .nav-toggle span::after { position: absolute; top: 7px; }
 .nav-toggle[aria-expanded="true"] span { background: transparent; }
-.nav-toggle[aria-expanded="true"] span::before { transform: rotate(45deg) translate(-5px,-5px); top:0; }
-.nav-toggle[aria-expanded="true"] span::after { transform: rotate(-45deg) translate(-5px,5px); top:0; }
+.nav-toggle[aria-expanded="true"] span::before { transform: rotate(45deg); top:0; }
+.nav-toggle[aria-expanded="true"] span::after { transform: rotate(-45deg); top:0; }
 
 @media (max-width: 860px) {
   .nav-toggle { display: flex; }
   .main-nav {
     position: fixed;
-    inset: 72px 0 0 0;
+    inset: var(--header-h, 85px) 0 0 0;   /* hauteur réelle posée par initNav() */
     background: var(--color-ivory);
     flex-direction: column;
     align-items: stretch;
@@ -1548,7 +1561,13 @@ textarea:focus-visible {
 }
 @media (max-width: 700px) {
   .live-demo--single .browser-frame .live-viewport { height: 520px; --zoom: 0.55; }
+  /* Sur téléphone, la démo « Ma carte » (chercher un plat, le masquer) remplace
+     l'éditeur complet : elle est faite pour cette largeur, donc sans zoom. */
+  .live-demo--single.is-phone .browser-frame .live-viewport { height: 640px; --zoom: 1; }
 }
+/* Deux versions d'un même texte : ordinateur / téléphone (même seuil que la démo) */
+@media (min-width: 701px) { .only-phone { display: none !important; } }
+@media (max-width: 700px) { .only-desktop { display: none !important; } }
 
 /* --- Cadre téléphone (menu client) --- */
 .live-demo-item.is-mobile { justify-self: center; max-width: 300px; }

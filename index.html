@@ -31,7 +31,7 @@
 <link rel="preload" href="assets/fonts/SpaceGrotesk-latin-5.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css?v=20260926e">
 
-<link rel="stylesheet" href="assets/css/style.css?v=20260926g">
+<link rel="stylesheet" href="assets/css/style.css?v=20260927a">
 
 <script type="application/ld+json">
 {
@@ -193,21 +193,24 @@
           <div class="browser-frame">
             <div class="browser-bar">
               <span class="browser-dots"><span></span><span></span><span></span></span>
-              <span class="browser-url">vikto-labs · éditeur de carte</span>
+              <span class="browser-url"><span class="only-desktop">vikto-labs · éditeur de carte</span><span class="only-phone">vikto-labs · ma carte, sur téléphone</span></span>
             </div>
             <div class="live-viewport" data-live>
-              <iframe src="https://viktor-guignard.github.io/vikto-labs-cafe/?v=20260926e" title="Éditeur de carte VIKTO LABS — démo" loading="lazy"></iframe>
+              <!-- Sur téléphone, initLiveDemos() remplace l'éditeur complet par la démo « chercher un plat et le masquer » -->
+              <iframe src="https://viktor-guignard.github.io/vikto-labs-cafe/?v=20260927a" data-src-phone="https://viktor-guignard.github.io/vikto-labs-cafe/telephone.html?v=20260927a" data-title-phone="Ma carte sur téléphone — démo VIKTO LABS" title="Éditeur de carte VIKTO LABS — démo" loading="lazy"></iframe>
               <button type="button" class="live-overlay" aria-label="Activer l'interaction avec la démo">
-                <span class="live-overlay-btn">▶ Cliquer pour tester</span>
+                <span class="live-overlay-btn"><span class="only-desktop">▶ Cliquer pour tester</span><span class="only-phone">▶ Toucher pour essayer</span></span>
               </button>
             </div>
           </div>
-          <figcaption><strong>L'espace de gestion</strong> — vous modifiez plats, prix et catégories vous-même, et la carte se met en page toute seule.</figcaption>
+          <figcaption class="only-desktop"><strong>L'espace de gestion</strong> — vous modifiez plats, prix et catégories vous-même, et la carte se met en page toute seule.</figcaption>
+          <figcaption class="only-phone"><strong>Depuis votre téléphone</strong> — cherchez un plat, touchez l'œil&nbsp;: il disparaît du site et du QR code dès que vous enregistrez.</figcaption>
         </figure>
       </div>
 
       <div class="live-demo-actions" data-reveal>
-        <a href="https://viktor-guignard.github.io/vikto-labs-cafe/" class="btn btn-dark btn-arrow" target="_blank" rel="noopener">Ouvrir l'éditeur de démo</a>
+        <a href="https://viktor-guignard.github.io/vikto-labs-cafe/" class="btn btn-dark btn-arrow only-desktop" target="_blank" rel="noopener">Ouvrir l'éditeur de démo</a>
+        <a href="https://viktor-guignard.github.io/vikto-labs-cafe/telephone.html" class="btn btn-dark btn-arrow only-phone" target="_blank" rel="noopener">Ouvrir la démo en plein écran</a>
       </div>
     </div>
   </section>
@@ -516,6 +519,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20260926h"></script>
+<script src="assets/js/main.js?v=20260927a"></script>
 </body>
 </html>
