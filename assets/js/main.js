@@ -31,7 +31,7 @@ const SITE_CONFIG = {
   // par Stripe Tax. Ce sont des URLs publiques (faites pour être partagées/cliquées),
   // aucun souci à les laisser dans ce fichier.
   STRIPE_LINK_SITE: "https://buy.stripe.com/cNi3cogoX84F3c790n4ZG01", // Site vitrine — 500 € HT, paiement unique
-  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/9B628ka0z70B4gb4K74ZG03" // Menu Synchro — 150 € HT (création de la carte) à la souscription, puis 54 € HT/mois après 30 jours
+  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/9B628ka0z70B4gb4K74ZG03" // Menu Synchro — 150 € HT (mise en place des cartes) à la souscription, puis 54 € HT/mois après 30 jours
 };
 
 // Branche les boutons de tarifs sur les liens de paiement Stripe.
@@ -110,7 +110,7 @@ const HELP_CENTER = [
     questions: [
       {
         q: "Quels sont vos tarifs ?",
-        a: "Deux formules&nbsp;:<br><br><strong>Site vitrine</strong> — 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC).<br><br><strong>Site + menu synchronisé</strong> — 54&nbsp;€ HT/mois soit 64,80&nbsp;€ TTC, site vitrine offert, avec un engagement initial de 12 mois. La reprise de vos cartes existantes est facturée 150&nbsp;€ HT, une seule fois."
+        a: "Deux formules&nbsp;:<br><br><strong>Site vitrine</strong> — 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC).<br><br><strong>Site + menu synchronisé</strong> — 54&nbsp;€ HT/mois soit 64,80&nbsp;€ TTC, site vitrine offert, avec un engagement initial de 12 mois. La mise en place de vos cartes (création ou reprise) est facturée 150&nbsp;€ HT, une seule fois."
       },
       {
         q: "Que comprend l'abonnement à 54 € HT/mois ?",
@@ -118,7 +118,7 @@ const HELP_CENTER = [
       },
       {
         q: "Y a-t-il des frais de création ?",
-        a: "La création du site vitrine est offerte. Seule la reprise de vos cartes existantes est facturée&nbsp;: 150&nbsp;€ HT, une seule fois, réglée à la souscription, jusqu'à 200 articles&nbsp;; l'abonnement démarre le mois suivant. Vous les modifiez ensuite vous-même, sans frais."
+        a: "La création du site vitrine est offerte. Seule la mise en place de vos cartes (création ou reprise) est facturée&nbsp;: 150&nbsp;€ HT, une seule fois, réglée à la souscription, jusqu'à 200 articles&nbsp;; l'abonnement démarre le mois suivant. Vous les modifiez ensuite vous-même, sans frais."
       },
       {
         q: "Puis-je prendre seulement le site vitrine ?",
@@ -130,7 +130,7 @@ const HELP_CENTER = [
       },
       {
         q: "Vos prix sont-ils HT ou TTC ?",
-        a: "Nos prix sont affichés <strong>hors taxes</strong>, TVA de 20&nbsp;% en sus&nbsp;:<br><br>• Site vitrine&nbsp;: 500&nbsp;€ HT → <strong>600&nbsp;€ TTC</strong><br>• Abonnement&nbsp;: 54&nbsp;€ HT → <strong>64,80&nbsp;€ TTC</strong>/mois<br>• Reprise des cartes&nbsp;: 150&nbsp;€ HT → <strong>180&nbsp;€ TTC</strong>, une fois<br><br>Une facture conforme est fournie à chaque paiement."
+        a: "Nos prix sont affichés <strong>hors taxes</strong>, TVA de 20&nbsp;% en sus&nbsp;:<br><br>• Site vitrine&nbsp;: 500&nbsp;€ HT → <strong>600&nbsp;€ TTC</strong><br>• Abonnement&nbsp;: 54&nbsp;€ HT → <strong>64,80&nbsp;€ TTC</strong>/mois<br>• Mise en place des cartes&nbsp;: 150&nbsp;€ HT → <strong>180&nbsp;€ TTC</strong>, une fois<br><br>Une facture conforme est fournie à chaque paiement."
       },
       {
         q: "Puis-je passer du site seul à la formule complète ?",
