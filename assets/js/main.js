@@ -599,6 +599,15 @@ function initSyncScenes() {
    suivante, en tête de la page d'accueil). Chaque mot composé du contenu est
    enveloppé dans un .insecable (white-space: nowrap). */
 function garderMotsComposes() {
+  // Dans les boutons des questions fréquentes (en flex), le texte doit rester un seul bloc :
+  // sinon chaque mot composé enveloppé devient un élément flex et la phrase s'éparpille en colonnes.
+  document.querySelectorAll(".faq-question").forEach((b) => {
+    if (b.querySelector(".faq-texte")) return;
+    const icone = b.querySelector(".faq-icon"), texte = document.createElement("span");
+    texte.className = "faq-texte";
+    [...b.childNodes].forEach((n) => { if (n !== icone) texte.appendChild(n); });
+    b.insertBefore(texte, icone);
+  });
   const motif = /[\p{L}\p{N}’']+(?:-[\p{L}\p{N}]+)+/gu;
   const present = new RegExp(motif.source, "u");   // sans « g » : test() ne garde pas d'état entre deux nœuds
   const marcheur = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {

@@ -1089,7 +1089,7 @@ textarea:focus-visible {
 .site-footer .container { container-type: inline-size; }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 0.8fr 1.1fr;
+  grid-template-columns: 1.4fr 1fr 1.05fr 0.8fr 1.1fr;
   gap: var(--space-lg);
   padding-bottom: var(--space-lg);
 }
@@ -1162,7 +1162,7 @@ textarea:focus-visible {
 .footer-totop:hover svg { transform: translateY(-3px); }
 
 @media (max-width: 960px) {
-  .footer-grid { grid-template-columns: repeat(3, 1fr); }
+  .footer-grid { grid-template-columns: repeat(4, 1fr); }
   .footer-brand { grid-column: 1 / -1; }
 }
 @media (max-width: 600px) {
@@ -2865,3 +2865,43 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
   .ctx-sound svg { width: 16px; height: 16px; }
 }
 
+
+/* ==========================================================================
+   PAGES GUIDES — menu QR code, carte en ligne, site internet pour restaurant
+   Des pages d'article sobres : fil d'Ariane, en-tête, texte à 70 caractères,
+   étapes numérotées, encart tarif sombre, questions fréquentes, liens croisés.
+   ========================================================================== */
+.fil-ariane { padding-top: var(--space-md); font-size: 0.85rem; color: var(--color-muted); }
+.fil-ariane ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4em; }
+.fil-ariane li + li::before { content: "›"; margin-right: 0.4em; color: var(--color-gray-400); }
+.fil-ariane a { color: var(--color-muted); text-decoration: underline; text-underline-offset: 2px; }
+.guide-hero { padding-top: var(--space-lg); }
+.guide-hero h1 { max-width: 24ch; text-wrap: balance; }
+.guide-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); margin-top: var(--space-md); }
+.guide.container { max-width: 800px; padding-bottom: var(--space-2xl); }
+.guide h2 { font-size: clamp(1.35rem, 2.4vw, 1.7rem); margin: var(--space-xl) 0 var(--space-sm); text-wrap: balance; }
+.guide h3 { font-size: 1.1rem; margin: var(--space-md) 0 var(--space-xs); }
+.guide p, .guide li { color: var(--color-gray-600); font-size: 1.05rem; line-height: 1.7; }
+.guide p { margin: 0 0 var(--space-sm); }
+.guide ul { margin: 0 0 var(--space-md); padding-left: 1.3rem; }
+.guide li { margin-bottom: 0.4rem; }
+.guide strong { color: var(--color-black); }
+.guide a:not(.btn) { color: var(--color-red-dark); text-decoration: underline; text-underline-offset: 2px; }
+.guide-etapes { counter-reset: etape; list-style: none; margin: 0 0 var(--space-md); padding: 0; display: grid; gap: var(--space-sm); }
+.guide-etapes li { counter-increment: etape; position: relative; margin: 0; padding: var(--space-sm) var(--space-sm) var(--space-sm) 3.6rem; background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-md); }
+.guide-etapes li::before { content: counter(etape, decimal-leading-zero); position: absolute; left: var(--space-sm); top: var(--space-sm); font-family: var(--font-heading); font-weight: 700; color: var(--color-red); }
+.guide-encart { margin: var(--space-xl) 0; padding: var(--space-md) var(--space-lg); background: var(--color-black); border-radius: var(--radius-lg); }
+.guide-encart h2 { color: var(--color-white); margin-top: 0; }
+.guide-encart p, .guide-encart li { color: var(--color-gray-200); }
+.guide-encart strong { color: var(--color-white); }
+.guide-encart a:not(.btn) { color: var(--color-white); }
+.guide .faq-list { margin-top: var(--space-md); }
+.guide-liens { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-sm); margin-top: var(--space-md); }
+.guide .guide-liens a:not(.btn) { text-decoration: none; color: inherit; }
+.guide-liens a { display: block; padding: var(--space-md); background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: var(--radius-md); text-decoration: none; transition: border-color var(--transition-fast), transform var(--transition-fast); }
+.guide-liens a:hover { border-color: var(--color-red); transform: translateY(-2px); }
+.guide-liens strong { display: block; font-family: var(--font-heading); color: var(--color-black); margin-bottom: 0.3rem; }
+.guide-liens span { color: var(--color-muted); font-size: 0.95rem; line-height: 1.5; }
+.accueil-guides { text-align: center; margin-top: var(--space-lg); color: var(--color-muted); }
+.accueil-guides a { color: var(--color-red-dark); text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 600px) { .guide-encart { padding: var(--space-md); } .guide-etapes li { padding-left: 3rem; } }
