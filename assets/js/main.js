@@ -527,14 +527,31 @@ function initLiveDemos() {
   // Téléphone : la démo « Ma carte » remplace l'éditeur complet (trop large pour
   // un écran de 390 px). L'iframe est en loading="lazy" et loin sous la ligne de
   // flottaison : on change sa source avant qu'elle ne commence à charger.
-  if (window.matchMedia("(max-width: 700px)").matches) {
-    document.querySelectorAll("iframe[data-src-phone]").forEach((iframe) => {
-      iframe.src = iframe.dataset.srcPhone;
-      if (iframe.dataset.titlePhone) iframe.title = iframe.dataset.titlePhone;
+  // Un téléphone pliant (iPhone Duo : 466 px plié, 626 px ouvert, 890 px à
+  // l'horizontale) franchit ce seuil sans recharger la page : on rebascule alors.
+  const telephone = window.matchMedia("(max-width: 700px)");
+  const iframes = document.querySelectorAll("iframe[data-src-phone]");
+  iframes.forEach((iframe) => {
+    iframe.dataset.srcDesktop = iframe.getAttribute("src");
+    iframe.dataset.titleDesktop = iframe.title;
+  });
+  const choisirDemo = (initial) => {
+    iframes.forEach((iframe) => {
+      const tel = telephone.matches;
+      const src = tel ? iframe.dataset.srcPhone : iframe.dataset.srcDesktop;
+      if (iframe.getAttribute("src") !== src) {
+        iframe.src = src;
+        const titre = tel ? iframe.dataset.titlePhone : iframe.dataset.titleDesktop;
+        if (titre) iframe.title = titre;
+      }
       const bloc = iframe.closest(".live-demo");
-      if (bloc) bloc.classList.add("is-phone");
+      if (bloc) bloc.classList.toggle("is-phone", tel);
+      // après un pliage, on repart sur l'overlay « toucher pour essayer »
+      if (!initial) iframe.closest(".live-viewport")?.classList.remove("is-active");
     });
-  }
+  };
+  choisirDemo(true);
+  telephone.addEventListener("change", () => choisirDemo(false));
   document.querySelectorAll(".live-viewport .live-overlay").forEach((overlay) => {
     overlay.addEventListener("click", () => {
       overlay.closest(".live-viewport").classList.add("is-active");

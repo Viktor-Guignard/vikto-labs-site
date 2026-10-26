@@ -394,6 +394,10 @@ textarea:focus-visible {
   background: var(--color-red);
   flex-shrink: 0;
 }
+/* Accueil centré : la pastille suit le texte. En flex, sur deux lignes centrées
+   (téléphones, iPhone Duo plié ou ouvert), elle restait seule au bord gauche. */
+.hero-inner--solo .hero-support { display: block; }
+.hero-inner--solo .hero-support .dot { display: inline-block; vertical-align: 0.12em; margin-right: 0.5rem; }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1165,7 +1169,8 @@ textarea:focus-visible {
   .footer-grid { grid-template-columns: repeat(4, 1fr); }
   .footer-brand { grid-column: 1 / -1; }
 }
-@media (max-width: 600px) {
+/* Deux colonnes dès 700 px : à 626 px (iPhone Duo ouvert), quatre colonnes coupaient chaque lien en trois lignes */
+@media (max-width: 700px) {
   .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--space-lg) var(--space-md); }
   .footer-col--legal { grid-column: 1 / -1; }
   .footer-pay-note { margin-left: 0; width: 100%; }
@@ -1566,6 +1571,11 @@ textarea:focus-visible {
   /* Moins haute que l'écran : une fois la démo activée, elle capte le doigt ;
      il faut toujours voir la page au-dessous pour continuer à descendre. */
   .live-demo--single.is-phone .browser-frame .live-viewport { height: 440px; height: min(440px, 54svh); --zoom: 1; }
+}
+/* Écran large mais bas (iPhone Duo ouvert à l'horizontale, 890 × 626 ; petit portable) :
+   l'éditeur tient dans la hauteur visible au lieu de déborder sous l'écran. */
+@media (min-width: 701px) and (max-height: 760px) and (orientation: landscape) {
+  .live-demo--single .browser-frame .live-viewport { height: 680px; height: max(340px, calc(100svh - 190px)); --zoom: 0.6; }
 }
 /* Deux versions d'un même texte : ordinateur / téléphone (même seuil que la démo) */
 @media (min-width: 701px) { .only-phone { display: none !important; } }
