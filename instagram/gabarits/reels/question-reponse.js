@@ -6,7 +6,7 @@
 
    window.CONTENU = {
      gabarit: 'question-reponse',
-     question: { surTitre, texte, perso, cote },   // perso : 'gerante' (défaut) | 'chef' | 'cliente' | 'habitue'
+     question: { surTitre, texte, perso, cote, decor, expression },   // perso : 'gerante' (défaut) | 'chef' | 'cliente' | 'habitue'
      reponse:  { mot: 'Non.', titre: 'Votre QR code reste le même.', sousTitre },
      preuves:  [ { surTitre, titre, visuel, tampon }, … ],   // des « plans » (voir moteur/plans.js)
      fin:      { titre, appel, url },                         // facultatif
@@ -21,10 +21,7 @@ VL.gabarits.reels['question-reponse'] = function (c, film) {
     const cadre = VL.cadre(s, { surTitre: q.surTitre });
     s.entre(cadre.surTitre, 0.2, { y: 30, duree: 0.4 });
     cadre.visuel.classList.add('centre');
-    const v = VL.visuel(cadre.visuel, s, { type: 'perso', perso: q.perso, cote: q.cote, bulle: q.texte, taille: 480 }, 0.35);
-    const bulle = cadre.visuel.querySelector('.bulle');
-    bulle.style.fontSize = '76px';
-    VL.ajuster(bulle, 460, 48);
+    const v = VL.visuel(cadre.visuel, s, { type: 'perso', perso: q.perso, cote: q.cote, decor: q.decor, ardoise: q.ardoise, bulle: q.texte, expression: q.expression || 'interroge', tailleBulle: 72, hauteurBulle: 400 }, 0.35);
     s.duree = q.duree || Math.max(v.fin + 1.2, VL.lecture(q.texte) + 0.6);
   });
 
@@ -33,9 +30,9 @@ VL.gabarits.reels['question-reponse'] = function (c, film) {
   film.scene({ nom: 'reponse', fond: 'rouge', transition: 'monte' }, (s) => {
     const zone = el('div.zone', { parent: s.el });
     VL.signature(zone);
-    const bloc = el('div', { parent: zone, style: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '120px' } });
+    const bloc = el('div', { parent: zone, style: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '120px', maxWidth: '856px' } });
     const mot = el('div.titre', { parent: bloc, html: VL.riche(r.mot), 'data-cle': 'mot', style: { fontSize: '340px', lineHeight: '1', letterSpacing: '-.04em', transformOrigin: '20% 70%' } });
-    while (mot.scrollWidth > 900) mot.style.fontSize = parseFloat(mot.style.fontSize) - 10 + 'px';
+    while (mot.scrollWidth > 856) mot.style.fontSize = parseFloat(mot.style.fontSize) - 10 + 'px';
     s.surgit(mot, 0.45, { de: 0.4, duree: 0.55 });
     let t = 1.0;
     if (r.titre) {
@@ -44,6 +41,9 @@ VL.gabarits.reels['question-reponse'] = function (c, film) {
       t = s.lignes(titre, t);
     }
     if (r.sousTitre) { s.entre(el('div.sous-titre', { parent: bloc, html: VL.riche(r.sousTitre), 'data-cle': 'sous-titre' }), t - 0.15, { y: 30 }); t += 0.3; }
+    // le bloc avance très lentement vers nous : la réponse ne reste jamais figée
+    bloc.style.transformOrigin = '0 60%';
+    s.fonction(0, 1, (p, tt) => { bloc.style.transform = `scale(${(1 + 0.045 * Math.min(1, Math.max(0, tt) / 4)).toFixed(4)})`; });
     s.duree = r.duree || Math.max(t + 1.3, VL.lecture(r.mot, r.titre, r.sousTitre));
   });
 

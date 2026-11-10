@@ -160,7 +160,11 @@
       let t = s.lignes(titre, 0.45, 0.35);
       if (d.persos && d.persos.length) {
         const rang = el('div.fin-persos', { parent: fin });
-        d.persos.forEach((p, i) => s.surgit(VL.medaillon(rang, p), t + i * 0.1, { de: 0.3 }));
+        d.persos.forEach((p, i) => {
+          const m = VL.medaillon(rang, p);
+          s.surgit(m, t + i * 0.1, { de: 0.3 });
+          VL.animerPerso(s, m, { phase: i * 0.75 });   // ils clignent des yeux, chacun à son rythme
+        });
         t += 0.3;
       }
       const marque = el('div.fin-marque', { parent: fin, texte: 'VIKTO LABS', 'data-cle': 'large' });

@@ -15,6 +15,18 @@
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 700; src: url(../../assets/fonts/Inter-latin-3.woff2) format('woff2'); }
 @font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 500 700; src: url(../../assets/fonts/SpaceGrotesk-latin-5.woff2) format('woff2'); }
 
+/* ---- Cyrillique (carte en russe) ----
+   Les polices du site n'ont pas de cyrillique. On prend l'Inter complet installé sur la
+   machine (même dessin que le texte courant du site) ; pour les descriptions en italique,
+   Liberation Serif Italic, la plus proche d'EB Garamond parmi les polices présentes.
+   unicode-range : ces polices ne servent QUE pour les lettres cyrilliques. */
+@font-face { font-family: 'VL Cyr'; font-weight: 400; src: local('Inter Regular'), local('Inter-Regular'), local('Liberation Sans'); unicode-range: U+0400-04FF; }
+@font-face { font-family: 'VL Cyr'; font-weight: 500; src: local('Inter Medium'), local('Inter-Medium'), local('Liberation Sans'); unicode-range: U+0400-04FF; }
+@font-face { font-family: 'VL Cyr'; font-weight: 600; src: local('Inter SemiBold'), local('Inter-SemiBold'), local('Liberation Sans Bold'); unicode-range: U+0400-04FF; }
+@font-face { font-family: 'VL Cyr'; font-weight: 700; src: local('Inter Bold'), local('Inter-Bold'), local('Liberation Sans Bold'); unicode-range: U+0400-04FF; }
+@font-face { font-family: 'VL Cyr Titres'; font-weight: 500 700; src: local('Inter Display Bold'), local('InterDisplay-Bold'), local('Inter Bold'), local('Liberation Sans Bold'); unicode-range: U+0400-04FF; }
+@font-face { font-family: 'VL Cyr Plume'; font-style: italic; font-weight: 400; src: local('Liberation Serif Italic'), local('LiberationSerif-Italic'), local('FreeSerif Italic'); unicode-range: U+0400-04FF; size-adjust: 88%; }
+
 :root {
   --ivoire: #F8F9F4;
   --charbon: #1F1B1C;
@@ -31,9 +43,9 @@
   --ambre: #C9882B;          /* « Modifications non enregistrées » */
   --jaune: #F2D47A;          /* surlignage de recherche */
   --encre: #2A2324;          /* contour des dessins du film */
-  --titres: 'Space Grotesk', 'DejaVu Sans', sans-serif;
-  --texte: 'Inter', 'DejaVu Sans', sans-serif;
-  --plume: 'EB Garamond', 'DejaVu Serif', serif;
+  --titres: 'Space Grotesk', 'VL Cyr Titres', 'DejaVu Sans', sans-serif;
+  --texte: 'Inter', 'VL Cyr', 'DejaVu Sans', sans-serif;
+  --plume: 'EB Garamond', 'VL Cyr Plume', 'DejaVu Serif', serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -50,8 +62,8 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 .scene.fond-charbon { background: var(--charbon); color: var(--ivoire); }
 .scene.fond-rouge { background: var(--rouge); color: var(--blanc); }
 /* trame de points, comme le carton de fin du film */
-.scene.fond-charbon::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(#2E2A2B 3px, transparent 3.5px); background-size: 44px 44px; }
-.scene.fond-ivoire::before, .scene.fond-creme::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(31,27,28,.055) 3px, transparent 3.5px); background-size: 44px 44px; }
+.scene.fond-charbon::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(#2E2A2B 3px, transparent 3.5px); background-size: 44px 44px; background-position: 0 var(--derive, 0px); }
+.scene.fond-ivoire::before, .scene.fond-creme::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(31,27,28,.055) 3px, transparent 3.5px); background-size: 44px 44px; background-position: 0 var(--derive, 0px); }
 
 /* ---- La zone sûre : tout le contenu important vit ici ----
    Reel : x 90→990, y 250→1500 (hors bandeau du haut, légende et boutons d'Instagram).
@@ -98,7 +110,7 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 /* visuels sans téléphone : centrés dans la place qui reste */
 .visuel.centre { display: flex; flex-direction: column; justify-content: center; padding-bottom: 30px; }
 /* plan sans visuel : la légende occupe tout, centrée un peu au-dessus du milieu */
-.zone.sans-visuel .legende { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 0 170px; }
+.zone.sans-visuel .legende { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 0 170px; max-width: 860px; }
 .zone.sans-visuel .visuel { display: none; }
 
 /* ---- Téléphone (grossi : on n'en voit que le haut, le bas sort du cadre) ---- */
@@ -168,13 +180,40 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 .pdf-barre b { padding: 4px 12px; background: var(--rouge); color: var(--blanc); border-radius: 8px; font-size: 24px; }
 .pdf-fond { position: absolute; left: 0; right: 0; top: 168px; bottom: 0; background: #8E8A86; overflow: hidden; }
 .pdf-page { position: absolute; left: 50%; top: 40px; width: 560px; height: 792px; margin-left: -280px; background: var(--blanc); box-shadow: 0 6px 20px rgba(0,0,0,.3); padding: 36px 34px; transform-origin: 30% 22%; }
-.pdf-page h4 { margin: 0 0 4px; text-align: center; font-family: var(--titres); font-size: 22px; letter-spacing: .2em; }
-.pdf-page h5 { margin: 14px 0 4px; font-family: var(--titres); font-size: 11px; letter-spacing: .16em; border-bottom: 1px solid #999; padding-bottom: 2px; }
-.pdf-page p { margin: 0; text-align: center; font-family: var(--plume); font-style: italic; font-size: 11px; color: #666; }
-.pdf-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; }
-.pdf-l { display: flex; justify-content: space-between; gap: 6px; font-family: var(--texte); font-size: 8.5px; line-height: 1.5; color: #222; }
+.pdf-page h4 { margin: 0 0 2px; text-align: center; font-family: var(--titres); font-size: 17px; letter-spacing: .2em; }
+.pdf-page h5 { margin: 10px 0 3px; font-family: var(--titres); font-size: 8px; letter-spacing: .16em; border-bottom: 1px solid #999; padding-bottom: 2px; }
+.pdf-page p { margin: 0 0 4px; text-align: center; font-family: var(--plume); font-style: italic; font-size: 9px; color: #666; }
+.pdf-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 20px; }
+.pdf-l { display: flex; justify-content: space-between; gap: 6px; font-family: var(--texte); font-size: 6.2px; line-height: 1.38; color: #333; }
 .pdf-l span:first-child { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.pdf-l em { display: block; font-family: var(--plume); font-size: 8px; color: #777; }
+.pdf-l em { display: block; font-family: var(--plume); font-size: 5.8px; color: #888; }
+
+/* ---- Saynète : un personnage du film dans son décor (cuisine, salle, comptoir) ---- */
+.saynete-bloc { display: flex; flex-direction: column; }
+.saynete-bloc .bulle { align-self: flex-start; margin: 0 0 -34px 70px; z-index: 3; max-width: 800px; }
+.saynete-bloc.droite .bulle { align-self: flex-end; margin: 0 70px -34px 0; }
+.saynete { position: relative; width: 100%; height: 600px; border: 6px solid var(--encre); border-radius: 46px; overflow: hidden; background: var(--creme); box-shadow: 0 12px 0 rgba(31,27,28,.14); }
+.fond-charbon .saynete { border-color: var(--ivoire); box-shadow: none; }
+.saynete svg { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; display: block; }
+.sy-perso :is(path, rect, circle, ellipse)[fill]:not([fill="none"]):not(.cx-noink) { stroke: #2A2324; stroke-width: var(--ink, 4px); stroke-linejoin: round; }
+.cx-eyes, .cx-pup, .p-sourcil, .p-bouche { transform-box: fill-box; transform-origin: center; }
+.p-bouche { transform-origin: 50% 0; }
+.sy-corps { transform-box: fill-box; transform-origin: 50% 100%; }
+
+/* ---- Fenêtre de navigateur (le site du restaurant) ---- */
+.nav { position: absolute; left: 0; top: 0; width: 900px; height: 1500px; background: #FFFDF9; border: 6px solid var(--encre); border-radius: 40px; overflow: hidden; box-shadow: 0 40px 80px -30px rgba(31,27,28,.45); color: var(--charbon); }
+.nav-barre { display: flex; align-items: center; gap: 12px; padding: 20px 28px; background: var(--gris-100); border-bottom: 5px solid var(--encre); }
+.nav-barre i { width: 22px; height: 22px; border-radius: 50%; background: var(--gris-400); display: block; }
+.nav-barre span { flex: 1; margin-left: 14px; padding: 10px 26px; background: var(--blanc); border-radius: 26px; font-family: var(--texte); font-size: 30px; color: var(--gris-600); }
+.nav-tete { display: flex; align-items: center; justify-content: space-between; padding: 26px 44px; border-bottom: 3px solid var(--gris-100); font-family: var(--texte); font-weight: 600; font-size: 30px; color: var(--gris-600); }
+.nav-tete b { font-family: var(--titres); font-weight: 700; font-size: 36px; letter-spacing: .14em; text-transform: uppercase; color: var(--charbon); }
+.nav-tete u { text-decoration: none; color: var(--charbon); border-bottom: 5px solid var(--rouge); padding-bottom: 4px; margin-right: 26px; }
+.nav-titre { display: flex; align-items: baseline; justify-content: space-between; padding: 34px 44px 6px; font-family: var(--titres); font-weight: 700; font-size: 52px; }
+.nav .ca-jour { margin: 0; }
+
+/* ---- Filet rouge des plans sans visuel ---- */
+.filet { height: 12px; width: 220px; background: var(--rouge); border-radius: 6px; margin-top: 44px; transform-origin: 0 50%; }
+.fond-rouge .filet { background: var(--charbon); }
 
 /* ---- Doigt : le rond qui se déplace et « touche » l'écran ---- */
 .doigt { position: absolute; left: 0; top: 0; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; background: rgba(31,27,28,.2); border: 5px solid var(--encre); z-index: 30; pointer-events: none; }

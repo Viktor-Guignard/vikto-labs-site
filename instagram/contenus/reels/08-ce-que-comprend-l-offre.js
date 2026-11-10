@@ -5,7 +5,7 @@
 window.CONTENU = {
   gabarit: 'question-reponse',
 
-  question: { perso: 'chef', texte: 'Un site et un menu QR code… ça comprend quoi, exactement ?' },
+  question: { perso: 'gerante', cote: 'droite', texte: 'Un site et un menu QR code… ça comprend quoi, exactement ?' },
 
   reponse: {
     mot: '54 €',

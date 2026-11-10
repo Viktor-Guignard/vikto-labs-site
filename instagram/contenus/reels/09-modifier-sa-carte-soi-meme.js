@@ -3,7 +3,7 @@
 window.CONTENU = {
   gabarit: 'question-reponse',
 
-  question: { perso: 'habitue', surTitre: 'Question de restaurateur', texte: 'Je peux modifier ma carte moi-même ?' },
+  question: { perso: 'chef', surTitre: 'Question de restaurateur', texte: 'Je peux modifier ma carte moi-même ?' },
 
   reponse: { mot: 'Oui.', titre: 'Depuis votre téléphone,\nmême en plein service.' },
 

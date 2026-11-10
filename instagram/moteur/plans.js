@@ -30,6 +30,13 @@
       const c = VL.cadre(s, d, { hauteurTitre: d.visuel ? (d.tailleTitre === 'grand' ? 330 : 270) : 640, sansVisuel: !d.visuel });
       if (d.visuel && !['editeur', 'carte', 'pdf'].includes(d.visuel.type)) c.visuel.classList.add('centre');
       const t = VL.entreeCadre(s, c, 0.25);
+      if (!d.visuel) {
+        // plan de texte seul : un filet rouge se trace, et le bloc avance très lentement vers nous
+        const filet = VL.el('div.filet', { parent: c.legende });
+        s.anim(filet, t - 0.15, 0.7, { scaleX: [0, 1] }, 'douce');
+        c.legende.style.transformOrigin = '0 50%';
+        s.fonction(0, 1, (p, tt) => { c.legende.style.transform = `scale(${(1 + 0.04 * Math.min(1, Math.max(0, tt) / 5)).toFixed(4)})`; });
+      }
       const v = VL.visuel(c.visuel, s, d.visuel, Math.max(0.5, t - 0.25));
       let fin = Math.max(t, v.fin);
       if (d.tampon) {

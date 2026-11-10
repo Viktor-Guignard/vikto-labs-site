@@ -8,7 +8,7 @@ window.CONTENU = {
     surTitre: '11 h 45 au Petit Bistrot',
     titre: 'Plus de\n*burrata.*',
     sousTitre: 'Le service commence dans un quart d\'heure.',
-    visuel: { type: 'perso', perso: 'chef', bulle: 'Plus de burrata !' },
+    visuel: { type: 'perso', perso: 'chef', expression: 'surpris', bulle: 'Plus de burrata !' },
   },
 
   probleme: {

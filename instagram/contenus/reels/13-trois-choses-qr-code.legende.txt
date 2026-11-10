@@ -1,0 +1,9 @@
+Trois choses que votre QR code devrait faire :
+
+1. Rester le même quand votre carte change.
+2. Ouvrir une carte lisible sur un téléphone, sans zoomer.
+3. Afficher la carte dans la langue de votre client : français, anglais, espagnol ou russe.
+
+Le vôtre fait-il les trois ? La démo est en libre accès sur vikto-labs.fr (lien en bio).
+
+#restaurateur #restaurant #menuqrcode #qrcoderestaurant #cartederestaurant #menunumerique #restauration #bar #cafe #viktolabs

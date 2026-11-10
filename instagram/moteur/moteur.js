@@ -81,7 +81,7 @@
   VL.ajuster = function (e, hauteurMax, tailleMin) {
     let taille = parseFloat(getComputedStyle(e).fontSize);
     tailleMin = tailleMin || 48;
-    const deborde = () => e.scrollHeight > hauteurMax + 1 || e.scrollWidth > e.clientWidth + 1;
+    const deborde = () => e.scrollHeight > hauteurMax + 1 || e.scrollWidth > e.clientWidth - 3;
     while (deborde() && taille > tailleMin) {
       taille -= 2;
       e.style.fontSize = taille + 'px';
@@ -220,6 +220,18 @@
       o = o || {};
       return this.anim(e, t, o.duree || 0.3, { opacity: [1, 0] }, 'lin');
     }
+    /**
+     * Roulement : l'ancien contenu file vers le haut, le nouveau monte d'en dessous
+     * (changement de prix, de langue…). L'élément doit être un bloc (ou inline-block).
+     */
+    roule(e, t, html, o) {
+      o = o || {};
+      const dy = o.dy || 26;
+      this.anim(e, t, 0.16, { opacity: [1, 0], y: [0, -dy] }, 'entree');
+      this.texte(e, t + 0.16, html);
+      this.anim(e, t + 0.16, 0.3, { opacity: [0, 1], y: [dy, 0] }, 'sortie');
+      return t + 0.46;
+    }
     /** Frappe au clavier : le texte s'écrit caractère par caractère entre t et t + duree. */
     tape(e, t, duree, txt, prefixe) {
       const n = [...txt].length;
@@ -279,6 +291,8 @@
         this.scenes.forEach((s, i) => {
           const visible = t >= s.debut && (i === n - 1 || t < this.scenes[i + 1].debut + 0.6);
           s.el.style.display = visible ? '' : 'none';
+          // la trame de points dérive très lentement : aucune scène n'est jamais tout à fait figée
+          if (visible && this.format === 'reel') s.el.style.setProperty('--derive', (-(t - s.debut) * 9).toFixed(2) + 'px');
         });
       });
     }
@@ -363,7 +377,14 @@
         if (s.display === 'none' || s.visibility === 'hidden' || parseFloat(s.opacity) < 0.5) cache = true;
       }
       if (cache) continue;
-      const r = e.getBoundingClientRect();
+      // on mesure le texte lui-même (pas sa boîte, souvent plus large que lui)
+      const rt = { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity };
+      const marcheur = document.createTreeWalker(e, NodeFilter.SHOW_TEXT);
+      for (let n = marcheur.nextNode(); n; n = marcheur.nextNode()) {
+        const plage = document.createRange(); plage.selectNodeContents(n);
+        for (const q of plage.getClientRects()) { rt.left = Math.min(rt.left, q.left); rt.top = Math.min(rt.top, q.top); rt.right = Math.max(rt.right, q.right); rt.bottom = Math.max(rt.bottom, q.bottom); }
+      }
+      const r = rt.right > rt.left ? rt : e.getBoundingClientRect();
       const x0 = r.left - c.left, x1 = r.right - c.left, y0 = r.top - c.top, y1 = r.bottom - c.top;
       const quoi = (e.dataset.cle || e.className) + ' « ' + e.textContent.trim().slice(0, 30) + ' »';
       if (x0 < z.x0 - 1 || x1 > z.x1 + 1 || y0 < z.y0 - 1 || y1 > z.y1 + 1)
@@ -373,7 +394,7 @@
       if (e.scrollWidth > e.clientWidth + 2 && st.overflow !== 'visible') soucis.push(`texte coupé : ${quoi}`);
     }
     for (const v of VL.film.canevas.querySelectorAll('.visuel.centre')) {
-      if (v.offsetParent && v.closest('.scene').style.display !== 'none' && v.scrollHeight > v.clientHeight + 4) soucis.push(`visuel trop haut pour la place disponible (${v.scrollHeight} px pour ${v.clientHeight}) : raccourcir la légende ou le visuel`);
+      if (v.offsetParent && v.closest('.scene').style.display !== 'none' && v.firstElementChild && v.firstElementChild.offsetHeight > v.clientHeight - 26) soucis.push(`visuel trop haut pour la place disponible (${v.firstElementChild.offsetHeight} px pour ${v.clientHeight - 30}) : raccourcir la légende ou le visuel`);
     }
     return soucis;
   };
