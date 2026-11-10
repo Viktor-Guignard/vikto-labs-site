@@ -2915,3 +2915,134 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
 .accueil-guides { text-align: center; margin-top: var(--space-lg); color: var(--color-muted); }
 .accueil-guides a { color: var(--color-red-dark); text-decoration: underline; text-underline-offset: 2px; }
 @media (max-width: 600px) { .guide-encart { padding: var(--space-md); } .guide-etapes li { padding-left: 3rem; } }
+
+/* ==========================================================================
+   CLIENTS ÉTRANGERS — 4 langues + codes de plats (accueil, #langues)
+   Illustration en HTML/CSS pur : aucune image, aucune animation propre
+   (seule l'apparition [data-reveal] commune, coupée en reduced-motion).
+   ========================================================================== */
+.lang-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--space-xl);
+  align-items: center;
+}
+.lang-copy .section-head { margin-bottom: var(--space-lg); }
+.lang-points { display: grid; max-width: 620px; }
+.lang-points li {
+  padding: var(--space-md) 0;
+  border-top: 1px solid var(--color-gray-200);
+}
+.lang-points li:last-child { padding-bottom: 0; }
+.lang-points h3 { font-size: 1.08rem; margin-bottom: 0.4rem; }
+.lang-points p { color: var(--color-gray-600); font-size: 0.97rem; }
+
+.lang-figure { margin: 0; min-width: 0; }
+.lang-scene {
+  position: relative;
+  width: min(100%, 340px);
+  margin: 0 auto;
+  padding-bottom: 3.4rem;
+}
+.lang-phone {
+  width: min(100%, 290px);
+  padding: 9px;
+  background: var(--color-black);
+  border-radius: 36px;
+  box-shadow: 0 24px 48px -24px rgba(31, 27, 28, 0.45);
+}
+.lang-screen {
+  background: var(--color-white);
+  border-radius: 28px;
+  padding: 1.15rem 0.85rem 1.1rem;
+  overflow: hidden;
+}
+.lang-screen-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0 0.15rem 0.8rem;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+.lang-resto { font-family: var(--font-heading); font-weight: 700; font-size: 0.86rem; letter-spacing: -0.01em; }
+.lang-tabs { display: inline-flex; gap: 2px; padding: 2px; background: var(--color-gray-50); border-radius: 999px; flex-shrink: 0; }
+.lang-tabs span {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.32rem 0.4rem;
+  border-radius: 999px;
+  color: var(--color-gray-600);
+}
+.lang-tabs .is-on { background: var(--color-black); color: var(--color-white); }
+.lang-cat {
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0.95rem 0.15rem 0.3rem;
+}
+.lang-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.55rem;
+  padding: 0.42rem 0.4rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+.lang-row.is-pointed { background: var(--color-gray-50); box-shadow: inset 0 0 0 1px var(--color-gray-200); }
+.lang-dish { font-weight: 600; }
+.lang-dish small { display: block; font-weight: 400; font-size: 0.68rem; color: var(--color-muted); }
+.lang-price { font-family: var(--font-heading); font-weight: 600; white-space: nowrap; }
+.lang-code {
+  display: inline-block;
+  min-width: 2.1em;
+  padding: 0.18rem 0.3rem;
+  border-radius: 5px;
+  background: #FDECEB;
+  color: var(--color-red-dark);
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+.lang-note {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(86%, 250px);
+  padding: 0.8rem 0.9rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 32px -18px rgba(31, 27, 28, 0.4);
+}
+.lang-note-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-red-dark);
+  margin-bottom: 0.4rem;
+}
+.lang-note-line { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.84rem; font-weight: 600; line-height: 1.3; }
+.lang-note-line .lang-code { flex-shrink: 0; }
+.lang-figure figcaption {
+  max-width: 340px;
+  margin: var(--space-md) auto 0;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .lang-grid { grid-template-columns: 1fr; gap: var(--space-lg); }
+}

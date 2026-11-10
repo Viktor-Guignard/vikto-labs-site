@@ -175,7 +175,7 @@ const HELP_CENTER = [
       },
       {
         q: "Peut-on avoir la carte en plusieurs langues ?",
-        a: "C'est possible, notamment pour les établissements touristiques. Précisez-nous les langues souhaitées lors de notre échange."
+        a: "Oui. Le menu QR code s'affiche en français, en anglais, en espagnol et en russe. Les traductions se font automatiquement à partir de votre texte français, et vous pouvez les corriger à la main. Dans les langues étrangères, chaque plat porte un code court (P3, D1…)&nbsp;: le client le montre, votre serveur sait de quel plat il s'agit."
       },
       {
         q: "Puis-je imprimer ma carte sur papier ?",

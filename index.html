@@ -31,7 +31,8 @@
 <link rel="preload" href="assets/fonts/SpaceGrotesk-latin-5.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css?v=20260926e">
 
-<link rel="stylesheet" href="assets/css/style.css?v=20261026a">
+<link rel="stylesheet" href="assets/css/style.css?v=20261110a">
+<noscript><style>[data-reveal] { opacity: 1; transform: none; }</style></noscript>
 
 <script type="application/ld+json">
 {
@@ -130,7 +131,7 @@
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="logo-slot" aria-label="VIKTO LABS — accueil">
-      <img src="assets/images/vikto-labs.svg" alt="VIKTO LABS" class="logo-img">
+      <img src="assets/images/vikto-labs.svg" alt="VIKTO LABS" class="logo-img" width="211" height="209">
     </a>
 
     <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
@@ -254,6 +255,59 @@
     </div>
   </section>
 
+  <!-- SECTION CLIENTS ÉTRANGERS : 4 langues + codes de plats.
+       Illustration entièrement en HTML/CSS (aucune image, aucune requête). -->
+  <section class="section" id="langues">
+    <div class="container lang-grid">
+      <div class="lang-copy">
+        <div class="section-head" data-num="03" data-reveal>
+          <span class="eyebrow">Clients étrangers</span>
+          <h2>Votre carte en quatre langues, sans la retraduire.</h2>
+          <p>Le menu QR&nbsp;code se lit en français, en anglais, en espagnol et en russe. Vous modifiez le texte français&nbsp;: les traductions suivent.</p>
+        </div>
+        <ul class="lang-points">
+          <li data-reveal>
+            <h3>La traduction se fait toute seule</h3>
+            <p>Vous changez un plat ou une description en français, les trois autres langues se mettent à jour. Une tournure ne vous convient pas&nbsp;? Vous la corrigez à la main.</p>
+          </li>
+          <li data-reveal>
+            <h3>Un code sur chaque plat</h3>
+            <p>Dans les langues étrangères, chaque plat porte un code court, une lettre et un chiffre&nbsp;: P3, D1. Le client le montre du doigt, votre serveur sait tout de suite de quel plat il s'agit.</p>
+          </li>
+          <li data-reveal>
+            <h3>Toujours le même QR&nbsp;code</h3>
+            <p>Le QR&nbsp;code ne change pas, quelle que soit la langue. Et si un plat est épuisé en plein service, vous le masquez depuis votre iPhone&nbsp;: il disparaît du site et du menu, dans toutes les langues.</p>
+          </li>
+        </ul>
+      </div>
+
+      <figure class="lang-figure" data-reveal>
+        <div class="lang-scene" role="img" aria-label="Illustration : un téléphone affiche la carte d'un restaurant en anglais. Chaque plat est précédé d'un code, par exemple P3 pour le poisson du jour. À côté, un repère pour le serveur indique que P3 correspond au poisson du jour, légumes de saison.">
+          <div class="lang-phone" aria-hidden="true">
+            <div class="lang-screen">
+              <div class="lang-screen-head">
+                <span class="lang-resto">Le Petit Bistrot</span>
+                <span class="lang-tabs"><span>FR</span><span class="is-on">EN</span><span>ES</span><span>RU</span></span>
+              </div>
+              <p class="lang-cat">Mains</p>
+              <div class="lang-row"><span class="lang-code">P1</span><span class="lang-dish">Beef bourguignon<small>Slow-cooked in red wine</small></span><span class="lang-price">19&nbsp;€</span></div>
+              <div class="lang-row"><span class="lang-code">P2</span><span class="lang-dish">Roast chicken<small>Mashed potatoes, gravy</small></span><span class="lang-price">17&nbsp;€</span></div>
+              <div class="lang-row is-pointed"><span class="lang-code">P3</span><span class="lang-dish">Fish of the day<small>Seasonal vegetables</small></span><span class="lang-price">21&nbsp;€</span></div>
+              <p class="lang-cat">Desserts</p>
+              <div class="lang-row"><span class="lang-code">D1</span><span class="lang-dish">Crème brûlée</span><span class="lang-price">8&nbsp;€</span></div>
+              <div class="lang-row"><span class="lang-code">D2</span><span class="lang-dish">Chocolate mousse</span><span class="lang-price">7&nbsp;€</span></div>
+            </div>
+          </div>
+          <div class="lang-note" aria-hidden="true">
+            <span class="lang-note-label">Pour le serveur</span>
+            <span class="lang-note-line"><span class="lang-code">P3</span>Poisson du jour, légumes de saison</span>
+          </div>
+        </div>
+        <figcaption>La carte vue par un client anglophone. Le code sert de repère commun entre la table et le service.</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- Bande signature défilante -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
@@ -277,7 +331,7 @@
   <!-- 5. SECTION TARIFS -->
   <section class="section" id="tarifs">
     <div class="container">
-      <div class="section-head center" data-num="03" data-reveal>
+      <div class="section-head center" data-num="04" data-reveal>
         <span class="eyebrow">Tarifs</span>
         <h2>Une offre simple, sans surprise</h2>
       </div>
@@ -335,7 +389,7 @@
   <!-- 4. SECTION FONCTIONNEMENT -->
   <section class="section" id="fonctionnement">
     <div class="container">
-      <div class="section-head center" data-num="04" data-reveal>
+      <div class="section-head center" data-num="05" data-reveal>
         <span class="eyebrow">Comment ça marche</span>
         <h2>Une modification en quelques étapes</h2>
       </div>
@@ -377,7 +431,7 @@
   <!-- 10. FAQ -->
   <section class="section" id="faq">
     <div class="container">
-      <div class="section-head center" data-num="05" data-reveal>
+      <div class="section-head center" data-num="06" data-reveal>
         <span class="eyebrow">Questions fréquentes</span>
         <h2>Tout ce qu'il faut savoir</h2>
       </div>
@@ -440,6 +494,16 @@
           </button>
           <div class="faq-answer" id="faq-a11" role="region" aria-labelledby="faq-q11" data-open="false">
             <p>Oui. Carte du menu, carte des vins, desserts, version anglaise, carte d'événement : toutes vos cartes sont comprises dans l'abonnement, sans supplément mensuel et sans limite de nombre. Elles sont créées ou reprises lors de la mise en place, puis vous les modifiez librement.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-reveal>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-a12" id="faq-q12">
+            Mes clients étrangers peuvent-ils lire la carte ?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" id="faq-a12" role="region" aria-labelledby="faq-q12" data-open="false">
+            <p>Oui. Le menu QR&nbsp;code s'affiche en français, en anglais, en espagnol et en russe. Les traductions se font automatiquement à partir de votre texte français, et vous pouvez les corriger à la main. Dans les langues étrangères, chaque plat porte un code court (P3, D1…) : le client le montre, votre serveur sait de quel plat il s'agit.</p>
           </div>
         </div>
 
@@ -513,7 +577,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#top" class="footer-logo" aria-label="VIKTO LABS — accueil"><img src="assets/images/vikto-labs-dark.svg" alt="" class="logo-img"></a>
+        <a href="#top" class="footer-logo" aria-label="VIKTO LABS — accueil"><img src="assets/images/vikto-labs-dark.svg" alt="" class="logo-img" width="211" height="209"></a>
         <p>VIKTO LABS est le studio de <a href="a-propos.html">Viktor&nbsp;Guignard</a>&nbsp;: sites vitrines et menus numériques pour restaurants et commerces de bouche, à Bobigny (Seine-Saint-Denis).</p>
         <a href="#" class="footer-mail" data-contact-email>vikto.labs@gmail.com</a>
       </div>
@@ -573,6 +637,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20261026a"></script>
+<script src="assets/js/main.js?v=20261110a"></script>
 </body>
 </html>
