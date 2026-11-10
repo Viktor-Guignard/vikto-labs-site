@@ -9,7 +9,7 @@
      surTitre    : petite ligne rouge en capitales au-dessus du titre
      titre       : le texte principal ; \n = ligne suivante ; *rouge* ; _italique Garamond_
      sousTitre   : une phrase de précision
-     tailleTitre : 'geant' | 'grand' | 'moyen' | 'petit'  (défaut : 'grand' sans visuel, 'moyen' avec)
+     tailleTitre : 'geant' | 'grand' | 'moyen' | 'petit'  (défaut : 'geant' sans visuel, 'moyen' avec)
      visuel      : { type: 'editeur' | 'carte' | 'qr' | 'partout' | 'pdf' | 'liste' | 'perso' | 'codes', … }
      tampon      : texte d'un tampon rouge posé sur le visuel quand il a fini de jouer
      tamponY     : position verticale du tampon dans le visuel, en px (défaut 330)
@@ -26,8 +26,9 @@
   VL.plan = function (film, d, defauts) {
     d = Object.assign({}, defauts || {}, d);
     return film.scene({ nom: d.nom, fond: d.fond, transition: d.transition }, (s) => {
-      if (!d.tailleTitre && d.visuel) d.tailleTitre = 'moyen';
-      const c = VL.cadre(s, d, { hauteurTitre: d.visuel ? (d.tailleTitre === 'grand' ? 300 : 250) : 640 });
+      if (!d.tailleTitre) d.tailleTitre = d.visuel ? 'moyen' : 'geant';
+      const c = VL.cadre(s, d, { hauteurTitre: d.visuel ? (d.tailleTitre === 'grand' ? 330 : 270) : 640, sansVisuel: !d.visuel });
+      if (d.visuel && !['editeur', 'carte', 'pdf'].includes(d.visuel.type)) c.visuel.classList.add('centre');
       const t = VL.entreeCadre(s, c, 0.25);
       const v = VL.visuel(c.visuel, s, d.visuel, Math.max(0.5, t - 0.25));
       let fin = Math.max(t, v.fin);

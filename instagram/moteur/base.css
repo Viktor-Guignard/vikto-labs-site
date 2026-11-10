@@ -66,13 +66,15 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 
 /* ---- Textes ---- */
 .legende { flex: none; padding-top: 44px; }
-.sur-titre { font-family: var(--titres); font-weight: 700; font-size: 36px; letter-spacing: .14em; text-transform: uppercase; color: var(--rouge); margin-bottom: 22px; }
+.sur-titre { font-family: var(--titres); font-weight: 700; font-size: 38px; letter-spacing: .14em; text-transform: uppercase; color: var(--rouge); margin-bottom: 22px; }
 .fond-rouge .sur-titre { color: var(--charbon); }
-.titre { font-family: var(--titres); font-weight: 700; font-size: 92px; line-height: 1.04; letter-spacing: -.02em; margin: 0; }
-.titre.geant { font-size: 132px; line-height: 1; }
-.titre.moyen { font-size: 76px; }
+.titre { font-family: var(--titres); font-weight: 700; font-size: 104px; line-height: 1.04; letter-spacing: -.02em; margin: 0; }
+.titre.geant { font-size: 136px; line-height: 1; }
+.titre .ligne { white-space: nowrap; }
+.titre.libre .ligne { white-space: normal; }
+.titre.moyen { font-size: 84px; }
 .titre.petit { font-size: 62px; line-height: 1.1; }
-.sous-titre { font-family: var(--texte); font-weight: 500; font-size: 46px; line-height: 1.28; margin-top: 28px; color: var(--gris-600); }
+.sous-titre { font-family: var(--texte); font-weight: 500; font-size: 48px; line-height: 1.28; margin-top: 30px; color: var(--gris-600); max-width: 840px; }
 .fond-charbon .sous-titre { color: var(--gris-200); }
 .fond-rouge .sous-titre { color: var(--blanc); }
 .rouge { color: var(--rouge); }
@@ -85,7 +87,7 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 .pastille.sombre { background: var(--charbon); color: var(--ivoire); border-color: var(--charbon); }
 .tampon { display: inline-block; padding: 18px 40px 20px; background: var(--rouge); color: var(--blanc); border: 6px solid var(--encre); border-radius: 60px; font-family: var(--texte); font-weight: 700; font-size: 50px; white-space: nowrap; box-shadow: 0 10px 0 rgba(31,27,28,.18); }
 .tampon.vert { background: var(--vert); }
-.bulle { position: relative; display: inline-block; padding: 30px 44px; background: var(--blanc); color: var(--charbon); border: 6px solid var(--encre); border-radius: 44px; font-family: var(--texte); font-weight: 700; font-size: 62px; line-height: 1.15; }
+.bulle { position: relative; display: inline-block; padding: 30px 44px; background: var(--blanc); color: var(--charbon); border: 6px solid var(--encre); border-radius: 44px; font-family: var(--texte); font-weight: 700; font-size: 68px; line-height: 1.15; }
 .bulle::after { content: ''; position: absolute; left: 90px; bottom: -44px; width: 60px; height: 44px; background: var(--blanc); border-left: 6px solid var(--encre); border-right: 6px solid var(--encre); clip-path: polygon(0 0, 100% 0, 18% 100%); border: none; }
 .bulle::before { content: ''; position: absolute; left: 82px; bottom: -58px; width: 76px; height: 58px; background: var(--encre); clip-path: polygon(0 0, 100% 0, 14% 100%); }
 .bulle.droite::after { left: auto; right: 90px; clip-path: polygon(0 0, 100% 0, 82% 100%); }
@@ -93,6 +95,11 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 
 /* ---- Le visuel : la partie « image » d'une scène, sous la légende ---- */
 .visuel { position: relative; flex: 1; min-height: 0; margin-top: 50px; }
+/* visuels sans téléphone : centrés dans la place qui reste */
+.visuel.centre { display: flex; flex-direction: column; justify-content: center; padding-bottom: 30px; }
+/* plan sans visuel : la légende occupe tout, centrée un peu au-dessus du milieu */
+.zone.sans-visuel .legende { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 0 170px; }
+.zone.sans-visuel .visuel { display: none; }
 
 /* ---- Téléphone (grossi : on n'en voit que le haut, le bas sort du cadre) ---- */
 .tel { position: absolute; left: 50%; top: 0; width: 800px; height: 1500px; margin-left: -400px; background: var(--charbon); border-radius: 100px; padding: 20px; box-shadow: 0 40px 80px -30px rgba(31,27,28,.45); }
@@ -181,6 +188,7 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 .medaillon { position: relative; width: 420px; height: 420px; border-radius: 50%; background: var(--creme); border: 6px solid var(--encre); overflow: hidden; }
 .medaillon svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
 .fond-creme .medaillon { background: var(--blanc); }
+.fond-charbon .medaillon { border-color: var(--ivoire); }
 .perso-ink :is(path, rect, circle, ellipse)[fill]:not([fill="none"]):not(.cx-noink) { stroke: #2A2324; stroke-width: var(--ink, 4px); stroke-linejoin: round; }
 
 /* ---- Cartes blanches (schémas, listes, offres) ---- */
@@ -188,18 +196,18 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 .fiche-titre { font-family: var(--titres); font-weight: 700; font-size: 30px; letter-spacing: .12em; text-transform: uppercase; color: var(--gris-600); margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
 .a-jour { display: inline-flex; align-items: center; gap: 10px; font-family: var(--texte); font-weight: 700; font-size: 28px; color: var(--vert); letter-spacing: 0; text-transform: none; margin-left: auto; white-space: nowrap; }
 .a-jour i { width: 16px; height: 16px; border-radius: 50%; background: var(--vert); display: block; }
-.mini-plat { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-family: var(--titres); font-weight: 700; font-size: 38px; line-height: 1.15; }
+.mini-plat { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-family: var(--titres); font-weight: 700; font-size: 48px; line-height: 1.15; }
 .mini-plat b { color: var(--rouge); white-space: nowrap; display: inline-block; padding: 2px 10px; border-radius: 10px; }
 .mini-plat b.change, .gros-prix.change { background: var(--jaune); color: var(--charbon); }
-.gros-prix { display: inline-block; padding: 2px 12px; margin-left: -12px; border-radius: 10px; font-family: var(--titres); font-weight: 700; font-size: 52px; color: var(--rouge); white-space: nowrap; }
-.mini-desc { font-family: var(--plume); font-style: italic; font-size: 32px; color: var(--gris-600); margin-top: 4px; }
+.gros-prix { display: inline-block; padding: 2px 12px; margin-left: -12px; border-radius: 10px; font-family: var(--titres); font-weight: 700; font-size: 64px; color: var(--rouge); white-space: nowrap; }
+.mini-desc { font-family: var(--plume); font-style: italic; font-size: 38px; color: var(--gris-600); margin-top: 4px; }
 .mini-nav { display: flex; align-items: center; gap: 10px; margin: -34px -38px 24px; padding: 18px 26px; background: var(--gris-100); border-bottom: 4px solid var(--encre); border-radius: 30px 30px 0 0; }
 .mini-nav i { width: 18px; height: 18px; border-radius: 50%; background: var(--gris-400); display: block; }
 .mini-nav span { margin-left: 12px; flex: 1; padding: 6px 20px; background: var(--blanc); border-radius: 20px; font-family: var(--texte); font-size: 26px; color: var(--gris-600); white-space: nowrap; overflow: hidden; }
 
 /* ---- Liste à coches ---- */
-.liste { display: flex; flex-direction: column; gap: 22px; }
-.liste-item { display: flex; align-items: center; gap: 26px; padding: 24px 32px; background: var(--blanc); color: var(--charbon); border: 5px solid var(--encre); border-radius: 30px; font-family: var(--texte); font-weight: 600; font-size: 44px; line-height: 1.15; }
+.liste { display: flex; flex-direction: column; gap: 26px; }
+.liste-item { display: flex; align-items: center; gap: 28px; padding: 30px 34px; background: var(--blanc); color: var(--charbon); border: 5px solid var(--encre); border-radius: 30px; font-family: var(--texte); font-weight: 600; font-size: 50px; line-height: 1.15; }
 .liste-item.non { background: transparent; border-style: dashed; border-color: var(--gris-400); color: var(--gris-600); }
 .fond-charbon .liste-item.non { color: var(--gris-200); }
 .coche { flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--rouge); display: flex; align-items: center; justify-content: center; }
@@ -208,13 +216,13 @@ body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing:
 
 /* ---- Carton de fin ---- */
 .fin { position: absolute; left: 90px; right: 90px; top: 250px; height: 1250px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.fin .titre { font-size: 104px; }
+.fin .titre { font-size: 104px; width: 100%; }
 .fin-marque { margin-top: 90px; font-family: var(--titres); font-weight: 700; font-size: 54px; letter-spacing: .3em; padding-left: .3em; }
 .fin-point { width: 20px; height: 20px; border-radius: 50%; background: var(--rouge); margin: 26px auto 0; }
 .fin-url { margin-top: 40px; display: inline-block; padding: 20px 46px; border: 4px solid var(--ivoire); border-radius: 60px; font-family: var(--texte); font-weight: 700; font-size: 46px; }
 .fin-appel { margin-top: 30px; font-family: var(--texte); font-weight: 500; font-size: 40px; color: var(--gris-200); }
 .fin-persos { display: flex; gap: 26px; margin-top: 70px; }
-.fin-persos .medaillon { width: 190px; height: 190px; border-width: 5px; border-color: var(--ivoire); background: #2E2A2B; }
+.fin-persos .medaillon { width: 196px; height: 196px; border-width: 5px; border-color: var(--ivoire); background: #2E2A2B; }
 
 /* ---- Posts : pied de page ---- */
 .post-pied { position: absolute; left: 80px; right: 80px; bottom: 64px; display: flex; align-items: center; justify-content: space-between; font-family: var(--titres); font-weight: 700; font-size: 30px; letter-spacing: .26em; z-index: 40; }

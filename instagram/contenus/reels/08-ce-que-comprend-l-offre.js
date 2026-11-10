@@ -17,8 +17,7 @@ window.CONTENU = {
     {
       surTitre: 'Ce qui est compris',
       titre: 'Site + menu synchronisé',
-      tailleTitre: 'petit',
-      visuel: { type: 'liste', pas: 0.5, taille: 42, items: ['Création du site vitrine', 'Toutes vos cartes', 'Modifications illimitées', 'Votre espace de gestion', 'Le QR code', 'Hébergement et mises à jour'] },
+      visuel: { type: 'liste', pas: 0.5, items: ['Création du site vitrine', 'Toutes vos cartes', 'Modifications illimitées', 'Votre espace de gestion', 'Le QR code', 'Hébergement et mises à jour'] },
       tenue: 1.8,
     },
   ],

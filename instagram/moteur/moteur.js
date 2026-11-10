@@ -78,10 +78,13 @@
   VL.ajuster = function (e, hauteurMax, tailleMin) {
     let taille = parseFloat(getComputedStyle(e).fontSize);
     tailleMin = tailleMin || 48;
-    while (e.scrollHeight > hauteurMax && taille > tailleMin) {
+    const deborde = () => e.scrollHeight > hauteurMax + 1 || e.scrollWidth > e.clientWidth + 1;
+    while (deborde() && taille > tailleMin) {
       taille -= 2;
       e.style.fontSize = taille + 'px';
     }
+    // toujours trop large à la taille minimale : on laisse les lignes se replier
+    if (e.scrollWidth > e.clientWidth + 1) e.classList.add('libre');
     return taille;
   };
 
@@ -250,7 +253,10 @@
     scene(opts, construire) {
       const el = VL.el('div.scene.fond-' + (opts.fond || 'ivoire'), { parent: this.canevas });
       el.style.zIndex = this.scenes.length + 1;
-      const s = new Scene(this, el, this.duree, opts.nom || 'scene' + (this.scenes.length + 1));
+      // La première scène démarre un peu « avant » zéro : la toute première image du reel
+      // (celle qu'Instagram montre comme couverture par défaut) n'est donc jamais vide.
+      const debut = this.scenes.length ? this.duree : -(this.format === 'reel' ? (opts.avance == null ? 1.1 : opts.avance) : 0);
+      const s = new Scene(this, el, debut, opts.nom || 'scene' + (this.scenes.length + 1));
       construire(s);
       const tr = this.scenes.length ? opts.transition || 'fondu' : 'coupe';
       const D = 0.4;   // durée d'une transition
@@ -344,6 +350,7 @@
       let cache = false;
       for (let p = e; p && p !== VL.film.canevas; p = p.parentElement) {
         const s = getComputedStyle(p);
+        if (p.classList.contains('scene') && p !== [...VL.film.canevas.querySelectorAll('.scene')].filter((x) => x.style.display !== 'none').pop()) cache = true;
         if (s.display === 'none' || s.visibility === 'hidden' || parseFloat(s.opacity) < 0.5) cache = true;
       }
       if (cache) continue;
@@ -355,6 +362,9 @@
       else if (z.boutons && x1 > z.boutons.x0 + 1 && y1 > z.boutons.y0 + 1 && e.dataset.cle !== 'large')
         soucis.push(`sous les boutons d'Instagram : ${quoi} [x→${Math.round(x1)}, y→${Math.round(y1)}]`);
       if (e.scrollWidth > e.clientWidth + 2 && st.overflow !== 'visible') soucis.push(`texte coupé : ${quoi}`);
+    }
+    for (const v of VL.film.canevas.querySelectorAll('.visuel.centre')) {
+      if (v.offsetParent && v.closest('.scene').style.display !== 'none' && v.scrollHeight > v.clientHeight + 4) soucis.push(`visuel trop haut pour la place disponible (${v.scrollHeight} px pour ${v.clientHeight}) : raccourcir la légende ou le visuel`);
     }
     return soucis;
   };

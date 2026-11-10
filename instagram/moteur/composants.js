@@ -126,7 +126,8 @@
     }
     if (d.sousTitre) r.sousTitre = el('div.sous-titre', { parent: legende, html: VL.riche(d.sousTitre), 'data-cle': 'sous-titre' });
     r.visuel = el('div.visuel', { parent: zone });
-    if (r.titre && o.hauteurTitre) VL.ajuster(r.titre, o.hauteurTitre, 52);
+    if (o.sansVisuel) zone.classList.add('sans-visuel');
+    if (r.titre) VL.ajuster(r.titre, o.hauteurTitre || 640, 52);
     return r;
   };
 
@@ -155,7 +156,7 @@
       const fin = el('div.fin', { parent: s.el });
       const lignes = String(d.titre).split('\n').map((l) => `<span class="ligne">${VL.riche(l)}</span>`).join('');
       const titre = el('h1.titre', { parent: fin, html: lignes, 'data-cle': 'large' });
-      VL.ajuster(titre, 360, 60);
+      VL.ajuster(titre, 380, 56);
       let t = s.lignes(titre, 0.45, 0.35);
       if (d.persos && d.persos.length) {
         const rang = el('div.fin-persos', { parent: fin });

@@ -14,11 +14,11 @@ window.CONTENU = {
       tenue: 1.3,
     },
     {
-      titre: 'Il mène à votre carte,\ntelle qu\'elle est aujourd\'hui.',
+      titre: 'Il mène à votre carte,\ndans sa version du jour.',
       visuel: { type: 'carte', plats: ['tartare', 'risotto', 'bavette'], actions: [{ a: 'pause', duree: 0.3 }, { a: 'prix', plat: 'risotto', valeur: '15' }] },
       tenue: 1.3,
     },
   ],
 
-  fin: { titre: 'Un QR code.\n*Une carte toujours à jour.*' },
+  fin: { titre: 'Un seul QR code.\n*Toujours la bonne carte.*' },
 };

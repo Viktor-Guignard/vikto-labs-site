@@ -24,5 +24,5 @@ window.CONTENU = {
     tenue: 1.6,
   },
 
-  fin: { titre: 'Votre client lit dans sa langue.\n*Vous servez sans hésiter.*' },
+  fin: { titre: 'Il lit dans sa langue.\n*Vous servez sans hésiter.*' },
 };

@@ -240,20 +240,20 @@
   VL.visuels.qr = function (parent, s, o, t0) {
     const bloc = el('div', { parent, style: { display: 'flex', flexDirection: 'column', alignItems: 'center' } });
     const cadreQr = el('div', { parent: bloc, style: { position: 'relative' } });
-    const qr = VL.qr(cadreQr, o.taille || 330);
+    const qr = VL.qr(cadreQr, o.taille || 400);
     const etiquette = el('div.pastille.sombre', { parent: bloc, html: VL.riche(o.etiquette || 'Le Petit Bistrot · la carte'), style: { marginTop: '-30px', position: 'relative' } });
     s.surgit(qr, t0, { de: 0.7 }); s.entre(etiquette, t0 + 0.25, { y: 20 });
     const liste = el('div', { parent: bloc, style: { marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '18px', alignItems: 'center' } });
     let t = t0 + 0.9;
     for (const ev of o.evenements || []) {
-      const p = el('div.pastille', { parent: liste, html: VL.coche('vert') + '<span>' + VL.riche(ev) + '</span>', 'data-cle': 'large', style: { padding: '10px 34px 10px 12px', gap: '20px', fontSize: '42px' } });
+      const p = el('div.pastille', { parent: liste, html: VL.coche('vert') + '<span>' + VL.riche(ev) + '</span>', 'data-cle': 'large', style: { padding: '12px 38px 12px 14px', gap: '22px', fontSize: '46px' } });
       s.entre(p, t, { y: 40, duree: 0.4 });
       // le QR « encaisse » la modification sans bouger d'un module
       s.anim(qr, t + 0.1, 0.15, { scale: [1, 1.04] }); s.anim(qr, t + 0.25, 0.25, { scale: [1.04, 1] }, 'douce');
       t += o.pas || 0.85;
     }
     if (o.tampon !== false) {
-      const tp = el('div.tampon', { parent: cadreQr, html: VL.riche(o.tampon || 'Toujours le même'), 'data-cle': 'large', style: { position: 'absolute', left: '50%', top: '50%', marginLeft: '-250px', marginTop: '-20px', width: '500px', textAlign: 'center' } });
+      const tp = el('div.tampon', { parent: cadreQr, html: VL.riche(o.tampon || 'Toujours le même'), 'data-cle': 'large', style: { position: 'absolute', left: '50%', top: '50%', marginLeft: '-270px', marginTop: '-10px', width: '540px', textAlign: 'center' } });
       s.surgit(tp, t, { rotation: -7 }); t += 0.6;
     }
     return { el: bloc, fin: t };
@@ -275,11 +275,11 @@
       '<svg width="900" height="150" viewBox="0 0 900 150" fill="none" stroke="#E52824" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M330 12C330 70 215 60 215 126M196 104l19 24 21-22"/><path d="M570 12C570 70 685 60 685 126M664 106l21 22 19-24"/></svg>' });
     const bas = el('div', { parent: bloc, style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' } });
     const fiche = (titre, extra) => el('div.fiche', { parent: bas, style: { padding: '28px 30px' }, html:
-      `${extra}<div class="fiche-titre" style="margin-bottom:10px">${titre}</div><div class="mini-plat" style="font-size:36px;display:block">${plat.nom.fr}</div><div style="display:flex;align-items:center;margin-top:14px"><b class="gros-prix">${avant}</b><span class="a-jour" style="opacity:0"><i></i>À jour</span></div>` });
+      `${extra}<div class="fiche-titre" style="margin-bottom:14px;font-size:28px;white-space:nowrap">${titre}</div><div class="mini-plat" style="font-size:40px;display:block">${plat.nom.fr}</div><div style="display:flex;align-items:center;margin-top:18px"><b class="gros-prix">${avant}</b><span class="a-jour" style="opacity:0"><i></i>À jour</span></div>` });
     const site = fiche('Votre site', '<div class="mini-nav" style="margin:-28px -30px 20px"><i></i><i></i><span>lepetitbistrot.fr/carte</span></div>');
-    const qrF = fiche('Votre QR code', '');
-    const qr = VL.qr(qrF, 84); Object.assign(qr.style, { position: 'absolute', right: '24px', top: '22px', padding: '12px', borderWidth: '4px', borderRadius: '18px' });
-    qrF.style.position = 'relative';
+    const qrF = fiche('Votre QR code', '<div class="mini-nav" style="margin:-28px -30px 20px"><i></i><i></i><span>scan du QR code</span></div>');
+    const qr = VL.qr(qrF.querySelector('.mini-nav'), 40); Object.assign(qr.style, { padding: '5px', borderWidth: '3px', borderRadius: '8px', order: -1, marginRight: '4px' });
+    qrF.querySelectorAll('.mini-nav i').forEach((i) => i.remove());
 
     s.entre(haut, t0, { y: 40 });
     s.anim(fleches, t0 + 0.2, 0.4, { opacity: [0, 0.25] }, 'lin');
@@ -373,7 +373,10 @@
     const droite = o.cote === 'droite';
     const bloc = el('div', { parent, style: { display: 'flex', flexDirection: 'column', alignItems: droite ? 'flex-end' : 'flex-start', gap: '84px', paddingTop: '10px' } });
     const bulle = el('div.bulle' + (droite ? '.droite' : ''), { parent: bloc, html: VL.riche(o.bulle), 'data-cle': 'large', style: { maxWidth: '820px', transformOrigin: droite ? '85% 120%' : '15% 120%' } });
-    const m = VL.medaillon(bloc, o.perso || 'chef', o.taille || 500);
+    const m = VL.medaillon(bloc, o.perso || 'chef', o.taille || 540);
+    // si la place manque (légende longue), le médaillon rétrécit plutôt que de chevaucher le texte
+    const trop = bloc.offsetHeight - (parent.clientHeight - 30);
+    if (trop > 0) { const c = Math.max(260, m.offsetWidth - trop); m.style.width = c + 'px'; m.style.height = c + 'px'; }
     s.surgit(m, t0, { de: 0.6 });
     s.surgit(bulle, t0 + 0.45, { de: 0.3 });
     // le personnage respire : un très léger balancement
@@ -399,10 +402,10 @@
     const lib = Object.assign({ client: 'Votre client lit', vous: 'Vous comprenez' }, o.libelles || {});
     const bloc = el('div', { parent, style: { display: 'flex', flexDirection: 'column', alignItems: 'center' } });
     const fiche = (titre, icone, nom, desc) => el('div.fiche', { parent: bloc, style: { width: '100%' }, html:
-      `<div class="fiche-titre">${VL.icone(icone, 36)}${titre}</div><div style="display:flex;align-items:center;gap:24px"><span class="ca-code" style="display:block;font-size:44px;min-width:104px;padding:14px 0">${plat.code}</span><div><div class="mini-plat" style="font-size:46px" data-cle="large">${nom}</div><div class="mini-desc" style="font-size:36px">${desc}</div></div></div>` });
+      `<div class="fiche-titre">${VL.icone(icone, 36)}${titre}</div><div style="display:flex;align-items:center;gap:24px"><span class="ca-code" style="display:block;font-size:52px;min-width:124px;padding:18px 0">${plat.code}</span><div><div class="mini-plat" style="font-size:52px" data-cle="large">${nom}</div><div class="mini-desc" style="font-size:42px">${desc}</div></div></div>` });
     const a = fiche(lib.client, 'globe', plat.nom[lg], plat.desc[lg]);
-    const milieu = el('div', { parent: bloc, style: { height: '250px', display: 'flex', alignItems: 'center', gap: '30px' } });
-    const rond = el('div', { parent: milieu, texte: plat.code, 'data-cle': 'large', style: { width: '200px', height: '200px', borderRadius: '50%', background: '#E52824', color: '#fff', border: '6px solid #2A2324', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--titres)', fontWeight: 700, fontSize: '88px', boxShadow: '0 10px 0 rgba(31,27,28,.18)' } });
+    const milieu = el('div', { parent: bloc, style: { height: '300px', display: 'flex', alignItems: 'center', gap: '30px' } });
+    const rond = el('div', { parent: milieu, texte: plat.code, 'data-cle': 'large', style: { width: '230px', height: '230px', borderRadius: '50%', background: '#E52824', color: '#fff', border: '6px solid #2A2324', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--titres)', fontWeight: 700, fontSize: '100px', boxShadow: '0 10px 0 rgba(31,27,28,.18)' } });
     const b = fiche(lib.vous, 'coche', plat.nom.fr, plat.desc.fr);
     s.entre(a, t0, { y: 40 });
     s.surgit(rond, t0 + 1.1, { de: 0.3 });

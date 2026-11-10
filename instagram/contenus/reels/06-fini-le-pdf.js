@@ -12,9 +12,8 @@ window.CONTENU = {
   },
 
   solution: {
-    titre: 'Une vraie carte,\npensée pour le téléphone.',
+    titre: 'Une vraie carte,\n*lisible tout de suite.*',
     visuel: { type: 'carte', plats: ['tartare', 'risotto', 'bavette', 'tarte'], actions: [{ a: 'pause', duree: 0.4 }, { a: 'pointer', plat: 'risotto' }] },
-    tampon: 'Lisible tout de suite', tamponVert: true, tamponY: 800,
     tenue: 1.2,
   },
 

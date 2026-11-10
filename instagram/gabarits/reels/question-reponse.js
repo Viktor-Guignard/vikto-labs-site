@@ -17,14 +17,14 @@ VL.gabarits.reels['question-reponse'] = function (c, film) {
 
   // 1. La question, dans la bulle d'un personnage
   const q = Object.assign({ surTitre: 'On nous demande souvent', perso: 'gerante' }, c.question);
-  film.scene({ nom: 'question', fond: 'charbon' }, (s) => {
+  film.scene({ nom: 'question', fond: 'charbon', avance: 1.5 }, (s) => {
     const cadre = VL.cadre(s, { surTitre: q.surTitre });
     s.entre(cadre.surTitre, 0.2, { y: 30, duree: 0.4 });
-    cadre.visuel.style.marginTop = '30px';
-    const v = VL.visuel(cadre.visuel, s, { type: 'perso', perso: q.perso, cote: q.cote, bulle: q.texte, taille: 400 }, 0.35);
+    cadre.visuel.classList.add('centre');
+    const v = VL.visuel(cadre.visuel, s, { type: 'perso', perso: q.perso, cote: q.cote, bulle: q.texte, taille: 480 }, 0.35);
     const bulle = cadre.visuel.querySelector('.bulle');
-    bulle.style.fontSize = '64px';
-    VL.ajuster(bulle, 560, 44);
+    bulle.style.fontSize = '76px';
+    VL.ajuster(bulle, 460, 48);
     s.duree = q.duree || Math.max(v.fin + 1.2, VL.lecture(q.texte) + 0.6);
   });
 
@@ -34,7 +34,7 @@ VL.gabarits.reels['question-reponse'] = function (c, film) {
     const zone = el('div.zone', { parent: s.el });
     VL.signature(zone);
     const bloc = el('div', { parent: zone, style: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingBottom: '120px' } });
-    const mot = el('div.titre', { parent: bloc, html: VL.riche(r.mot), 'data-cle': 'mot', style: { fontSize: '300px', lineHeight: '1', letterSpacing: '-.04em', transformOrigin: '20% 70%' } });
+    const mot = el('div.titre', { parent: bloc, html: VL.riche(r.mot), 'data-cle': 'mot', style: { fontSize: '340px', lineHeight: '1', letterSpacing: '-.04em', transformOrigin: '20% 70%' } });
     while (mot.scrollWidth > 900) mot.style.fontSize = parseFloat(mot.style.fontSize) - 10 + 'px';
     s.surgit(mot, 0.45, { de: 0.4, duree: 0.55 });
     let t = 1.0;
