@@ -1,0 +1,226 @@
+/* ==========================================================================
+   VIKTO LABS — Instagram · feuille de style commune (reels et posts)
+
+   Règles d'or :
+   - AUCUNE transition ni animation CSS ici : tout mouvement passe par le
+     chrono virtuel (moteur.js), sinon le rendu image par image n'est plus exact.
+   - Les tailles sont en px sur un canevas fixe de 1080 px de large.
+     Sur un téléphone, 1080 px de canevas ≈ 390 pt d'écran : un texte de
+     moins de 30 px devient illisible. Texte courant ≥ 40 px, titres ≥ 64 px.
+   - Couleurs et polices : celles du site (assets/css/style.css).
+   ========================================================================== */
+
+/* ---- Polices locales (mêmes fichiers que le site, aucune requête réseau) ---- */
+@font-face { font-family: 'EB Garamond'; font-style: italic; font-weight: 400; src: url(../../assets/fonts/EBGaramond-latin-1.woff2) format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 700; src: url(../../assets/fonts/Inter-latin-3.woff2) format('woff2'); }
+@font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 500 700; src: url(../../assets/fonts/SpaceGrotesk-latin-5.woff2) format('woff2'); }
+
+:root {
+  --ivoire: #F8F9F4;
+  --charbon: #1F1B1C;
+  --rouge: #E52824;
+  --rouge-fonce: #C41F1C;
+  --blanc: #FFFFFF;
+  --creme: #F1EADF;          /* fond chaud du film */
+  --gris-50: #F1F2EC;
+  --gris-100: #EAEBE4;
+  --gris-200: #DFE0D8;
+  --gris-400: #98938F;
+  --gris-600: #5C5854;
+  --vert: #2E7D4F;           /* « Enregistré », « À jour » */
+  --ambre: #C9882B;          /* « Modifications non enregistrées » */
+  --jaune: #F2D47A;          /* surlignage de recherche */
+  --encre: #2A2324;          /* contour des dessins du film */
+  --titres: 'Space Grotesk', 'DejaVu Sans', sans-serif;
+  --texte: 'Inter', 'DejaVu Sans', sans-serif;
+  --plume: 'EB Garamond', 'DejaVu Serif', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #000; }
+body { font-family: var(--texte); color: var(--charbon); -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; }
+
+/* ---- Le canevas : 1080×1920 (reel) ou 1080×1350 (post) ---- */
+#canevas { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--ivoire); }
+#canevas.post { height: 1350px; }
+
+/* ---- Une scène : un plan plein cadre, empilé sur les autres ---- */
+.scene { position: absolute; inset: 0; overflow: hidden; background: var(--ivoire); color: var(--charbon); }
+.scene.fond-creme { background: var(--creme); }
+.scene.fond-charbon { background: var(--charbon); color: var(--ivoire); }
+.scene.fond-rouge { background: var(--rouge); color: var(--blanc); }
+/* trame de points, comme le carton de fin du film */
+.scene.fond-charbon::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(#2E2A2B 3px, transparent 3.5px); background-size: 44px 44px; }
+.scene.fond-ivoire::before, .scene.fond-creme::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(31,27,28,.055) 3px, transparent 3.5px); background-size: 44px 44px; }
+
+/* ---- La zone sûre : tout le contenu important vit ici ----
+   Reel : x 90→990, y 250→1500 (hors bandeau du haut, légende et boutons d'Instagram).
+   Post : x 80→1000, y 80→1270. */
+.zone { position: absolute; left: 90px; top: 250px; width: 900px; height: 1250px; display: flex; flex-direction: column; }
+.post .zone { left: 80px; top: 80px; width: 920px; height: 1190px; }
+
+/* ---- Signature discrète en haut de chaque scène ---- */
+.signature { display: flex; align-items: center; gap: 16px; height: 44px; flex: none; font-family: var(--titres); font-weight: 700; font-size: 30px; letter-spacing: .26em; }
+.signature i { width: 14px; height: 14px; border-radius: 50%; background: var(--rouge); display: block; }
+.signature span { opacity: .55; font-weight: 500; letter-spacing: .04em; font-size: 28px; margin-left: auto; }
+
+/* ---- Textes ---- */
+.legende { flex: none; padding-top: 44px; }
+.sur-titre { font-family: var(--titres); font-weight: 700; font-size: 36px; letter-spacing: .14em; text-transform: uppercase; color: var(--rouge); margin-bottom: 22px; }
+.fond-rouge .sur-titre { color: var(--charbon); }
+.titre { font-family: var(--titres); font-weight: 700; font-size: 92px; line-height: 1.04; letter-spacing: -.02em; margin: 0; }
+.titre.geant { font-size: 132px; line-height: 1; }
+.titre.moyen { font-size: 76px; }
+.titre.petit { font-size: 62px; line-height: 1.1; }
+.sous-titre { font-family: var(--texte); font-weight: 500; font-size: 46px; line-height: 1.28; margin-top: 28px; color: var(--gris-600); }
+.fond-charbon .sous-titre { color: var(--gris-200); }
+.fond-rouge .sous-titre { color: var(--blanc); }
+.rouge { color: var(--rouge); }
+.fond-rouge .rouge { color: var(--charbon); }
+.plume { font-family: var(--plume); font-style: italic; font-weight: 400; letter-spacing: 0; }
+.ligne { display: block; }   /* une ligne de titre animée séparément */
+
+/* ---- Pastille (étiquette blanche cerclée), tampon (rouge, penché), bulle ---- */
+.pastille { display: inline-flex; align-items: center; gap: 14px; padding: 14px 32px; background: var(--blanc); color: var(--charbon); border: 5px solid var(--encre); border-radius: 60px; font-family: var(--texte); font-weight: 700; font-size: 40px; white-space: nowrap; }
+.pastille.sombre { background: var(--charbon); color: var(--ivoire); border-color: var(--charbon); }
+.tampon { display: inline-block; padding: 18px 40px 20px; background: var(--rouge); color: var(--blanc); border: 6px solid var(--encre); border-radius: 60px; font-family: var(--texte); font-weight: 700; font-size: 50px; white-space: nowrap; box-shadow: 0 10px 0 rgba(31,27,28,.18); }
+.tampon.vert { background: var(--vert); }
+.bulle { position: relative; display: inline-block; padding: 30px 44px; background: var(--blanc); color: var(--charbon); border: 6px solid var(--encre); border-radius: 44px; font-family: var(--texte); font-weight: 700; font-size: 54px; line-height: 1.15; }
+.bulle::after { content: ''; position: absolute; left: 90px; bottom: -44px; width: 60px; height: 44px; background: var(--blanc); border-left: 6px solid var(--encre); border-right: 6px solid var(--encre); clip-path: polygon(0 0, 100% 0, 18% 100%); border: none; }
+.bulle::before { content: ''; position: absolute; left: 82px; bottom: -58px; width: 76px; height: 58px; background: var(--encre); clip-path: polygon(0 0, 100% 0, 14% 100%); }
+.bulle.droite::after { left: auto; right: 90px; clip-path: polygon(0 0, 100% 0, 82% 100%); }
+.bulle.droite::before { left: auto; right: 82px; clip-path: polygon(0 0, 100% 0, 86% 100%); }
+
+/* ---- Le visuel : la partie « image » d'une scène, sous la légende ---- */
+.visuel { position: relative; flex: 1; min-height: 0; margin-top: 50px; }
+
+/* ---- Téléphone (grossi : on n'en voit que le haut, le bas sort du cadre) ---- */
+.tel { position: absolute; left: 50%; top: 0; width: 800px; height: 1500px; margin-left: -400px; background: var(--charbon); border-radius: 100px; padding: 20px; box-shadow: 0 40px 80px -30px rgba(31,27,28,.45); }
+.fond-charbon .tel { background: #0F0D0E; box-shadow: 0 0 0 3px #3A3536; }
+.tel-ecran { position: relative; width: 100%; height: 100%; background: #FFFDF9; border-radius: 82px; overflow: hidden; color: var(--charbon); }
+.tel-barre { display: flex; align-items: center; justify-content: space-between; height: 92px; padding: 14px 58px 0; font-family: var(--texte); font-weight: 600; font-size: 30px; }
+.tel-ile { position: absolute; left: 50%; top: 22px; width: 190px; height: 54px; margin-left: -95px; background: var(--charbon); border-radius: 30px; }
+.tel-pile { width: 50px; height: 24px; border: 3px solid var(--charbon); border-radius: 8px; position: relative; }
+.tel-pile::after { content: ''; position: absolute; inset: 3px 10px 3px 3px; background: var(--charbon); border-radius: 3px; }
+
+/* ---- Écran « éditeur » (l'espace de gestion, sur téléphone) ---- */
+.ed-tete { display: flex; align-items: center; justify-content: space-between; padding: 22px 44px 26px; border-bottom: 3px solid var(--gris-100); }
+.ed-marque { font-family: var(--titres); font-weight: 700; font-size: 36px; letter-spacing: .1em; }
+.ed-resto { font-family: var(--texte); font-size: 28px; color: var(--gris-400); margin-top: 4px; }
+.ed-bouton { display: inline-block; padding: 18px 30px; background: var(--charbon); color: var(--blanc); border-radius: 18px; font-family: var(--texte); font-weight: 700; font-size: 32px; white-space: nowrap; }
+.ed-bouton.ok { background: var(--vert); }
+.ed-etat { height: 0; overflow: hidden; padding: 0 44px; font-family: var(--texte); font-weight: 600; font-size: 30px; line-height: 70px; white-space: nowrap; color: var(--ambre); background: #FBF3E4; }
+.ed-etat.ok { color: var(--vert); background: #E7F2EA; }
+.ed-recherche { display: flex; align-items: center; gap: 18px; margin: 28px 44px 8px; padding: 0 30px; height: 92px; background: var(--gris-50); border: 3px solid var(--gris-200); border-radius: 46px; font-family: var(--texte); font-size: 36px; color: var(--gris-400); }
+.ed-recherche.actif { border-color: var(--charbon); color: var(--charbon); background: var(--blanc); }
+.ed-recherche svg { flex: none; }
+.ed-rubrique { display: flex; justify-content: space-between; align-items: baseline; margin: 26px 44px 0; padding-bottom: 12px; border-bottom: 3px solid var(--gris-200); font-family: var(--titres); font-weight: 700; font-size: 30px; letter-spacing: .12em; text-transform: uppercase; }
+.ed-rubrique small { font-family: var(--texte); font-weight: 400; font-size: 26px; letter-spacing: 0; text-transform: none; color: var(--gris-400); }
+.ed-ligne { display: flex; align-items: center; gap: 22px; margin: 0 44px; height: 168px; overflow: hidden; border-bottom: 2px solid var(--gris-100); }
+.ed-plat { flex: 1; min-width: 0; }
+.ed-nom { font-family: var(--titres); font-weight: 700; font-size: 34px; line-height: 1.12; letter-spacing: .04em; text-transform: uppercase; }
+.ed-nom mark { background: var(--jaune); color: inherit; }
+.ed-desc { font-family: var(--plume); font-style: italic; font-size: 33px; color: var(--gris-600); margin-top: 6px; white-space: nowrap; }
+.ed-prix { flex: none; min-width: 84px; padding: 8px 12px; text-align: center; border: 4px solid transparent; border-radius: 14px; font-family: var(--titres); font-weight: 700; font-size: 42px; color: var(--rouge); }
+.ed-prix.edition { border-color: var(--rouge); background: var(--blanc); box-shadow: 0 0 0 8px rgba(229,40,36,.14); }
+.ed-oeil { flex: none; width: 92px; height: 92px; display: flex; align-items: center; justify-content: center; background: var(--blanc); border: 3px solid var(--gris-200); border-radius: 22px; }
+.ed-oeil .ferme { display: none; }
+.ed-etiquette { display: none; padding: 4px 14px; background: var(--gris-100); border-radius: 10px; font-family: var(--texte); font-weight: 600; font-size: 24px; letter-spacing: 0; text-transform: none; color: var(--gris-600); vertical-align: middle; }
+.ed-ligne.masque .ed-desc { display: none; }
+.ed-ligne.masque .ed-etiquette { display: inline-block; margin: 10px 0 0; }
+.ed-etat svg { vertical-align: -5px; }
+.ed-ligne.masque .ed-nom, .ed-ligne.masque .ed-prix { opacity: .38; }
+.ed-ligne.masque .ed-nom-texte { text-decoration: line-through; text-decoration-thickness: 3px; }
+.ed-ligne.masque .ed-oeil { background: var(--charbon); border-color: var(--charbon); }
+.ed-ligne.masque .ed-oeil .ouvert { display: none; }
+.ed-ligne.masque .ed-oeil .ferme { display: block; }
+
+/* ---- Écran « carte » (ce que voit le client après avoir scanné) ---- */
+.ca-tete { padding: 18px 44px 26px; text-align: center; border-bottom: 3px solid var(--gris-100); }
+.ca-resto { font-family: var(--titres); font-weight: 700; font-size: 40px; letter-spacing: .16em; text-transform: uppercase; }
+.ca-sous { font-family: var(--plume); font-style: italic; font-size: 34px; color: var(--gris-600); margin-top: 2px; }
+.ca-langues { display: flex; justify-content: center; gap: 14px; margin-top: 22px; }
+.ca-langue { width: 110px; padding: 12px 0; text-align: center; border: 3px solid var(--gris-200); border-radius: 40px; font-family: var(--texte); font-weight: 700; font-size: 30px; color: var(--gris-600); background: var(--blanc); }
+.ca-langue.actif { background: var(--charbon); border-color: var(--charbon); color: var(--blanc); }
+.ca-jour { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; font-family: var(--texte); font-weight: 600; font-size: 28px; color: var(--vert); }
+.ca-jour i { width: 16px; height: 16px; border-radius: 50%; background: var(--vert); display: block; }
+.ca-rubrique { margin: 26px 44px 0; padding-bottom: 10px; border-bottom: 3px solid var(--gris-200); font-family: var(--titres); font-weight: 700; font-size: 30px; letter-spacing: .12em; text-transform: uppercase; color: var(--charbon); }
+.ca-ligne { display: flex; align-items: center; gap: 20px; margin: 0 44px; height: 156px; overflow: hidden; border-bottom: 2px solid var(--gris-100); }
+.ca-ligne.pointe { background: #FBEDEC; margin: 0 20px; padding: 0 24px; border-radius: 22px; border-bottom-color: transparent; }
+.ca-code { flex: none; display: none; min-width: 84px; padding: 10px 0; text-align: center; background: var(--charbon); color: var(--blanc); border-radius: 16px; font-family: var(--titres); font-weight: 700; font-size: 36px; }
+.ca-ligne.avec-code .ca-code { display: block; }
+.ca-ligne.pointe .ca-code { background: var(--rouge); }
+.ca-plat { flex: 1; min-width: 0; }
+.ca-nom { font-family: var(--titres); font-weight: 700; font-size: 37px; line-height: 1.1; }
+.ca-desc { font-family: var(--plume); font-style: italic; font-size: 33px; line-height: 1.1; color: var(--gris-600); margin-top: 6px; }
+.ca-prix { flex: none; font-family: var(--titres); font-weight: 700; font-size: 40px; color: var(--rouge); white-space: nowrap; }
+.ca-ligne.neuf .ca-prix { background: var(--jaune); padding: 4px 12px; border-radius: 10px; color: var(--charbon); }
+
+/* ---- Écran « PDF » : la carte en fichier, minuscule sur un téléphone ---- */
+.pdf-barre { display: flex; align-items: center; gap: 16px; padding: 14px 44px 22px; font-family: var(--texte); font-weight: 600; font-size: 30px; color: var(--gris-600); border-bottom: 3px solid var(--gris-100); background: var(--gris-50); }
+.pdf-barre b { padding: 4px 12px; background: var(--rouge); color: var(--blanc); border-radius: 8px; font-size: 24px; }
+.pdf-fond { position: absolute; left: 0; right: 0; top: 168px; bottom: 0; background: #8E8A86; overflow: hidden; }
+.pdf-page { position: absolute; left: 50%; top: 40px; width: 560px; height: 792px; margin-left: -280px; background: var(--blanc); box-shadow: 0 6px 20px rgba(0,0,0,.3); padding: 36px 34px; transform-origin: 30% 22%; }
+.pdf-page h4 { margin: 0 0 4px; text-align: center; font-family: var(--titres); font-size: 22px; letter-spacing: .2em; }
+.pdf-page h5 { margin: 14px 0 4px; font-family: var(--titres); font-size: 11px; letter-spacing: .16em; border-bottom: 1px solid #999; padding-bottom: 2px; }
+.pdf-page p { margin: 0; text-align: center; font-family: var(--plume); font-style: italic; font-size: 11px; color: #666; }
+.pdf-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; }
+.pdf-l { display: flex; justify-content: space-between; gap: 6px; font-family: var(--texte); font-size: 8.5px; line-height: 1.5; color: #222; }
+.pdf-l span:first-child { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.pdf-l em { display: block; font-family: var(--plume); font-size: 8px; color: #777; }
+
+/* ---- Doigt : le rond qui se déplace et « touche » l'écran ---- */
+.doigt { position: absolute; left: 0; top: 0; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; background: rgba(31,27,28,.2); border: 5px solid var(--encre); z-index: 30; pointer-events: none; }
+.doigt-onde { position: absolute; left: 0; top: 0; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; border: 6px solid var(--rouge); z-index: 29; opacity: 0; }
+
+/* ---- QR code ---- */
+.qr { display: inline-block; padding: 34px; background: var(--blanc); border: 6px solid var(--encre); border-radius: 44px; color: var(--charbon); line-height: 0; }
+.qr svg { display: block; }
+
+/* ---- Médaillon de personnage (bustes repris du film du site) ---- */
+.medaillon { position: relative; width: 420px; height: 420px; border-radius: 50%; background: var(--creme); border: 6px solid var(--encre); overflow: hidden; }
+.medaillon svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+.fond-creme .medaillon { background: var(--blanc); }
+.perso-ink :is(path, rect, circle, ellipse)[fill]:not([fill="none"]):not(.cx-noink) { stroke: #2A2324; stroke-width: var(--ink, 4px); stroke-linejoin: round; }
+
+/* ---- Cartes blanches (schémas, listes, offres) ---- */
+.fiche { background: var(--blanc); color: var(--charbon); border: 5px solid var(--encre); border-radius: 36px; padding: 34px 38px; }
+.fiche-titre { font-family: var(--titres); font-weight: 700; font-size: 30px; letter-spacing: .12em; text-transform: uppercase; color: var(--gris-600); margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
+.a-jour { display: inline-flex; align-items: center; gap: 10px; font-family: var(--texte); font-weight: 700; font-size: 28px; color: var(--vert); letter-spacing: 0; text-transform: none; margin-left: auto; white-space: nowrap; }
+.a-jour i { width: 16px; height: 16px; border-radius: 50%; background: var(--vert); display: block; }
+.mini-plat { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-family: var(--titres); font-weight: 700; font-size: 38px; line-height: 1.15; }
+.mini-plat b { color: var(--rouge); white-space: nowrap; display: inline-block; padding: 2px 10px; border-radius: 10px; }
+.mini-plat b.change, .gros-prix.change { background: var(--jaune); color: var(--charbon); }
+.gros-prix { display: inline-block; padding: 2px 12px; margin-left: -12px; border-radius: 10px; font-family: var(--titres); font-weight: 700; font-size: 52px; color: var(--rouge); white-space: nowrap; }
+.mini-desc { font-family: var(--plume); font-style: italic; font-size: 32px; color: var(--gris-600); margin-top: 4px; }
+.mini-nav { display: flex; align-items: center; gap: 10px; margin: -34px -38px 24px; padding: 18px 26px; background: var(--gris-100); border-bottom: 4px solid var(--encre); border-radius: 30px 30px 0 0; }
+.mini-nav i { width: 18px; height: 18px; border-radius: 50%; background: var(--gris-400); display: block; }
+.mini-nav span { margin-left: 12px; flex: 1; padding: 6px 20px; background: var(--blanc); border-radius: 20px; font-family: var(--texte); font-size: 26px; color: var(--gris-600); white-space: nowrap; overflow: hidden; }
+
+/* ---- Liste à coches ---- */
+.liste { display: flex; flex-direction: column; gap: 22px; }
+.liste-item { display: flex; align-items: center; gap: 26px; padding: 24px 32px; background: var(--blanc); color: var(--charbon); border: 5px solid var(--encre); border-radius: 30px; font-family: var(--texte); font-weight: 600; font-size: 44px; line-height: 1.15; }
+.liste-item.non { background: transparent; border-style: dashed; border-color: var(--gris-400); color: var(--gris-600); }
+.fond-charbon .liste-item.non { color: var(--gris-200); }
+.coche { flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--rouge); display: flex; align-items: center; justify-content: center; }
+.coche.vert { background: var(--vert); }
+.coche.gris { background: var(--gris-400); }
+
+/* ---- Carton de fin ---- */
+.fin { position: absolute; left: 90px; right: 90px; top: 250px; height: 1250px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.fin .titre { font-size: 104px; }
+.fin-marque { margin-top: 90px; font-family: var(--titres); font-weight: 700; font-size: 54px; letter-spacing: .3em; padding-left: .3em; }
+.fin-point { width: 20px; height: 20px; border-radius: 50%; background: var(--rouge); margin: 26px auto 0; }
+.fin-url { margin-top: 40px; display: inline-block; padding: 20px 46px; border: 4px solid var(--ivoire); border-radius: 60px; font-family: var(--texte); font-weight: 700; font-size: 46px; }
+.fin-appel { margin-top: 30px; font-family: var(--texte); font-weight: 500; font-size: 40px; color: var(--gris-200); }
+.fin-persos { display: flex; gap: 26px; margin-top: 70px; }
+.fin-persos .medaillon { width: 190px; height: 190px; border-width: 5px; border-color: var(--ivoire); background: #2E2A2B; }
+
+/* ---- Posts : pied de page ---- */
+.post-pied { position: absolute; left: 80px; right: 80px; bottom: 64px; display: flex; align-items: center; justify-content: space-between; font-family: var(--titres); font-weight: 700; font-size: 30px; letter-spacing: .26em; z-index: 40; }
+.post-pied span { font-family: var(--texte); font-weight: 600; letter-spacing: 0; font-size: 30px; opacity: .7; }
+.post-pied i { display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: var(--rouge); margin-right: 16px; }
+
+/* ---- Repères de contrôle (?zones=1) : jamais dans un rendu final ---- */
+.reperes { position: absolute; inset: 0; z-index: 999; pointer-events: none; }
+.reperes div { position: absolute; background: rgba(0,120,255,.16); border: 2px dashed rgba(0,120,255,.7); }
