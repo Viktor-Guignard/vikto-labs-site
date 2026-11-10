@@ -6,6 +6,7 @@ window.CONTENU = {
   titre: {
     surTitre: 'À vérifier chez vous',
     titre: '3 choses que\nvotre QR code\n*devrait faire.*',
+    lecture: 1.25,
   },
 
   numeroter: true,

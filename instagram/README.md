@@ -23,6 +23,10 @@ node scripts/rendre.js posts 03-codes-plats      # un seul post
 node scripts/rendre.js reels 01-rupture-11h45 --controle   # contrôle rapide, sans vidéo
 node scripts/rendre.js reels --controle --zones            # idem, zones interdites dessinées en bleu
 node scripts/rendre.js reels 01-rupture-11h45 --controle --images   # garde les images pleine taille
+
+node scripts/bande.js 01-rupture-11h45           # bande d'images du MP4, une toutes les 0,5 s : contrôle du mouvement
+node scripts/bande.js 01-rupture-11h45 8 16 0.25 # de 8 s à 16 s, une image toutes les 0,25 s
+node scripts/bandes.js                           # la bande de tous les reels rendus
 ```
 
 Les sorties vont dans `out/` (non versionné) :
@@ -31,6 +35,7 @@ Les sorties vont dans `out/` (non versionné) :
 |---|---|
 | `out/reels/NOM.mp4` | le reel : 1080×1920, 30 i/s, H.264 yuv420p, piste audio muette |
 | `out/reels/NOM.planche.jpg` | planche-contact : 1re image, chaque scène, dernière image |
+| `out/reels/NOM.bande.jpg` | bande de contrôle du mouvement (après `bande.js`) |
 | `out/reels/NOM.legende.txt` | la légende à coller dans Instagram |
 | `out/posts/NOM.png` | le post, 1080×1350 |
 | `out/posts/NOM.legende.txt` | sa légende |
@@ -53,17 +58,18 @@ Pour voir un reel bouger sans le rendre, ouvrir dans un navigateur
      (texte hors zone sûre, texte coupé, visuel trop haut, durée hors 12–30 s).
    - Regarder `out/reels/NN-sujet-court.planche.jpg` : fautes, retours à la
      ligne maladroits, chevauchements.
-4. **Corriger** jusqu'à zéro `!`, puis rendre pour de bon (sans `--controle`)
-   et regarder la planche tirée du MP4.
+4. **Corriger** jusqu'à zéro `!`, puis rendre pour de bon (sans `--controle`),
+   regarder la planche tirée du MP4, puis la bande (`node scripts/bande.js NN-sujet-court`) :
+   chaque scène doit bouger pour une raison, sans temps mort ni coupure sèche.
 5. **Écrire la légende** dans `NN-sujet-court.legende.txt` (voir les règles plus bas).
 
 ### Les trois gabarits de reels (`gabarits/reels/`)
 
 | Gabarit | Déroulé | Exemples |
 |---|---|---|
-| `probleme-solution` | accroche → problème → solution → résultat → (plus) → fin | 01, 03, 06 |
-| `demonstration` | titre → étape 1 → étape 2… → fin | 02, 05, 07 |
-| `question-reponse` | question (bulle d'un personnage) → réponse en un mot géant → preuves → fin | 04, 08, 09 |
+| `probleme-solution` | accroche → problème → solution → résultat → (plus) → fin | 01, 03, 06, 11, 14 |
+| `demonstration` | titre → étape 1 → étape 2… → fin | 02, 05, 07, 10, 12, 13 |
+| `question-reponse` | question (un personnage la pose, dans son décor) → réponse en un mot géant → preuves → fin | 04, 08, 09, 15 |
 
 Chaque partie est un **plan**, toujours décrit de la même façon
 (détail complet en tête de `moteur/plans.js`) :
@@ -96,25 +102,26 @@ baisser `tenue`, retirer une action ou un plan.
 
 Les champs attendus sont écrits en tête de chaque fichier de gabarit.
 
-### Les visuels (`moteur/visuels.js`)
+### Les visuels (`moteur/visuels.js` et `moteur/saynete.js`)
 
 Un visuel est la partie « image » d'un plan. Mêmes visuels pour les reels
 (animés) et les posts (figés sur leur état final, ou sur `figer: 3.2`).
 
 | `type` | Ce qu'on voit | Options principales |
 |---|---|---|
-| `editeur` | l'espace de gestion sur téléphone | `plats`, `recherche: false`, `actions` : `chercher`, `masquer`, `afficher`, `prix`, `nom`, `enregistrer`, `pause` |
-| `carte` | la carte vue par le client | `plats`, `langue`, `masques`, `prix`, `neufs`, `actions` : `langue`, `pointer`, `retirer`, `prix`, `pause` |
+| `editeur` | l'espace de gestion sur téléphone | `plats`, `recherche: false`, `masques`, `prix`, `noms`, `descs`, `actions` : `chercher`, `masquer`, `afficher`, `prix`, `nom`, `desc`, `enregistrer`, `pause` |
+| `carte` | la carte vue par le client, sur son téléphone ou sur le site (`cadre: 'site'`) | `plats`, `langue`, `masques`, `prix`, `noms`, `descs`, `neufs`, `actions` : `langue`, `pointer`, `retirer`, `prix`, `pause` |
 | `qr` | le QR code qui ne bouge pas pendant que la carte change | `evenements`, `tampon` |
 | `partout` | une modification → le site et le QR code | `plat`, `apres` |
 | `pdf` | une carte en PDF, illisible sans zoomer | `tampon` |
 | `codes` | le client lit dans sa langue, montre un code, vous comprenez | `plat`, `langue` |
 | `liste` | des lignes à coche | `items`, `pas` |
-| `perso` | un personnage du film du site et sa bulle | `perso` (`chef`, `cliente`, `gerante`, `habitue`), `bulle`, `cote` |
+| `perso` | un personnage du film du site dans son décor, avec sa bulle | `perso` (`chef`, `cliente`, `gerante`, `habitue`), `bulle`, `expression` (`surpris`, `content`, `interroge`), `decor` (`cuisine`, `salle`, `comptoir`, `aucun`), `ardoise`, `cote` |
 
-Toutes les options sont décrites au-dessus de chaque fonction dans `moteur/visuels.js`.
+Toutes les options sont décrites au-dessus de chaque fonction dans `moteur/visuels.js`
+(et en tête de `moteur/saynete.js` pour `perso`).
 Les plats viennent de la carte fictive `contenus/commun/petit-bistrot.js`
-(identifiants : `burrata`, `tartare`, `risotto`, `bavette`, `tarte`, `cafe`).
+(identifiants : `burrata`, `tartare`, `risotto`, `bavette`, `jour`, `tarte`, `cafe`).
 Un téléphone ne montre que **3 lignes** dans la zone sûre (1 de moins avec la
 recherche) : mettre en premier les plats qui comptent.
 
@@ -146,6 +153,8 @@ recherche) : mettre en premier les plats qui comptent.
   Le bas des téléphones dépasse exprès : rien d'important n'y figure.
 - **Lisibilité** : 1080 px de canevas ≈ la largeur d'un téléphone. Pas de texte
   porteur de sens sous 40 px ; titres de 84 à 136 px.
+- **Accroche** : le texte d'accroche est déjà lisible sur la toute première image
+  (la première scène démarre « avant zéro »). Ne jamais ouvrir sur un plan vide.
 - Un titre trop long rétrécit tout seul, mais mieux vaut le raccourcir :
   2 lignes, 25 caractères par ligne au plus.
 - Couleurs : ivoire `#F8F9F4`, charbon `#1F1B1C`, rouge `#E52824`. Polices
@@ -171,7 +180,8 @@ instagram/
 ├── moteur/                    ← le socle commun (à ne modifier qu'en connaissance de cause)
 │   ├── moteur.js          horloge virtuelle, scènes, vérificateur de zones
 │   ├── composants.js      icônes, QR code, téléphone, médaillons, doigt, carton de fin
-│   ├── visuels.js         les 8 visuels (editeur, carte, qr, partout, pdf, codes, liste, perso)
+│   ├── visuels.js         les visuels editeur, carte, qr, partout, pdf, codes, liste
+│   ├── saynete.js         le visuel perso : personnage, décor dessiné, expressions
 │   ├── plans.js           le plan standard des reels (légende + visuel + tampon)
 │   ├── personnages.js     GÉNÉRÉ : bustes des personnages du film du site
 │   ├── base.css           couleurs, polices, tous les composants
@@ -180,6 +190,7 @@ instagram/
 │   └── post.html          page hôte 1080×1350  (?c=nom)
 ├── scripts/
 │   ├── rendre.js                  rendu + contrôles + planches
+│   ├── bande.js · bandes.js       bandes d'images pour contrôler le mouvement
 │   └── extraire-personnages.js    régénère moteur/personnages.js depuis assets/film/en-situation.svg
 └── out/                       ← rendus (ignorés par git)
 ```
@@ -198,3 +209,11 @@ instagram/
   (la couverture par défaut) n'est jamais vide.
 - Tout élément important porte l'attribut `data-cle` : le vérificateur signale
   ceux qui sortent de la zone sûre.
+- **Mouvement** : un changement de valeur « roule » (`s.roule` : prix, langue),
+  une ligne qui disparaît glisse puis la liste se resserre, chaque appui montre
+  le doigt et son onde, la trame de points dérive lentement en fond. Un plan
+  sans visuel trace un filet rouge et avance très lentement vers le spectateur.
+- **Russe** : les polices du site n'ont pas de cyrillique. `base.css` prend
+  l'Inter installé sur la machine (titres et texte) et Liberation Serif Italic
+  (descriptions), uniquement pour les lettres cyrilliques. Sur une machine sans
+  ces polices, le russe retombe sur DejaVu : vérifier la planche du reel 02.

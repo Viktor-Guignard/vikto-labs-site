@@ -7,7 +7,7 @@ window.CONTENU = {
     surTitre: 'Chaque matin',
     titre: 'Le plat du jour\n*a changé.*',
     visuel: { type: 'perso', perso: 'gerante', decor: 'comptoir', ardoise: ['Plat du jour', 'Blanquette'], bulle: 'Aujourd\'hui : blanquette !', expression: 'content' },
-    tenue: 1.3,
+    tenue: 1.9,
   },
 
   solution: {

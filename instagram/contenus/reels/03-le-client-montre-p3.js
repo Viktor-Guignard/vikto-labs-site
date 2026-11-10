@@ -9,7 +9,7 @@ window.CONTENU = {
     surTitre: '12 h 30, une table de touristes',
     titre: 'Il vous montre\nun plat. *Lequel ?*',
     visuel: { type: 'perso', perso: 'habitue', bulle: 'Вот это, пожалуйста!', expression: 'content' },
-    tenue: 1.3,
+    tenue: 1.8,
   },
 
   solution: {
@@ -21,7 +21,7 @@ window.CONTENU = {
   resultat: {
     titre: 'Il montre *P3.*\nVous savez quoi servir.',
     visuel: { type: 'codes', plat: 'risotto', langue: 'ru' },
-    tenue: 1.6,
+    tenue: 1.2,
   },
 
   fin: { titre: 'Il lit dans sa langue.\n*Vous servez sans hésiter.*' },

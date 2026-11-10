@@ -18,6 +18,7 @@
      transition  : 'fondu' | 'monte' | 'coupe'
      duree       : durée imposée en secondes (sinon calculée : fin du visuel + `tenue`)
      tenue       : temps de pause après la dernière animation (défaut 1,3 s)
+     lecture     : coefficient sur le temps de lecture minimal du texte (défaut 1 ; 0.8 = plus vif)
    ========================================================================== */
 (function () {
   'use strict';
@@ -37,7 +38,8 @@
         c.legende.style.transformOrigin = '0 50%';
         s.fonction(0, 1, (p, tt) => { c.legende.style.transform = `scale(${(1 + 0.04 * Math.min(1, Math.max(0, tt) / 5)).toFixed(4)})`; });
       }
-      const v = VL.visuel(c.visuel, s, d.visuel, Math.max(0.5, t - 0.25));
+      // le visuel entre presque en même temps que le titre : pas de temps mort en début de plan
+      const v = VL.visuel(c.visuel, s, d.visuel, Math.max(0.35, t - 0.7));
       let fin = Math.max(t, v.fin);
       if (d.tampon) {
         const tp = VL.el('div.tampon' + (d.tamponVert ? '.vert' : ''), { parent: c.visuel, html: VL.riche(d.tampon), 'data-cle': 'large',
@@ -46,7 +48,7 @@
         s.surgit(tp, fin, { rotation: -6 });
         fin += 0.6;
       }
-      s.duree = d.duree || Math.max(fin + (d.tenue == null ? 1.3 : d.tenue), VL.lecture(d.surTitre, d.titre, d.sousTitre));
+      s.duree = d.duree || Math.max(fin + (d.tenue == null ? 1.3 : d.tenue), VL.lecture(d.surTitre, d.titre, d.sousTitre) * (d.lecture || 1));
       s.controles = [Math.min(fin + 0.4, s.duree - 0.1)];
     });
   };

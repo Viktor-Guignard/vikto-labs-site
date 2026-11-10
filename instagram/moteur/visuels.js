@@ -422,7 +422,7 @@
     const [codeA, codeB] = [a.querySelector('.ca-code'), b.querySelector('.ca-code')];
     // si la place manque, on resserre l'espace autour du rond (et le rond lui-même)
     const trop = bloc.offsetHeight - (parent.clientHeight - 40);
-    if (trop > 0) { const h = Math.max(170, 300 - trop); milieu.style.height = h + 'px'; const c = Math.min(230, h - 30); Object.assign(rond.style, { width: c + 'px', height: c + 'px', fontSize: Math.round(c * 0.43) + 'px' }); }
+    if (trop > 0) { const h = Math.max(110, 300 - trop); milieu.style.height = h + 'px'; const c = Math.min(230, h - 14); Object.assign(rond.style, { width: c + 'px', height: c + 'px', fontSize: Math.round(c * 0.43) + 'px' }); }
     s.entre(a, t0, { y: 40 });
     battre(s, codeA, t0 + 0.8, 1.2);                      // le code du plat, côté client…
     s.surgit(rond, t0 + 1.1, { de: 0.3 });                // …c'est lui qu'il montre…

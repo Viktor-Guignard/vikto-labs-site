@@ -7,7 +7,7 @@ window.CONTENU = {
     surTitre: '13 h 10, en plein service',
     titre: 'Plus de\n*tarte au citron.*',
     visuel: { type: 'perso', perso: 'chef', expression: 'surpris', bulle: 'La dernière vient de partir !' },
-    tenue: 1.2,
+    tenue: 1.9,
   },
 
   solution: {

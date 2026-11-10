@@ -5,7 +5,7 @@ window.CONTENU = {
 
   titre: {
     surTitre: 'Votre carte, vos prix',
-    titre: 'Changer un prix,\nen *quelques secondes.*',
+    titre: 'Changer un prix,\nen *quelques*\n*secondes.*',
     sousTitre: 'Vous le faites vous-même, depuis votre téléphone.',
   },
 

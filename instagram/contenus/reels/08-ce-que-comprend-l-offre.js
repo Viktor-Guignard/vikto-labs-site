@@ -11,6 +11,7 @@ window.CONTENU = {
     mot: '54 €',
     titre: 'HT par mois.\nSite vitrine offert.',
     sousTitre: 'Mise en place de vos cartes : 150 € HT, une seule fois. Engagement 12 mois.',
+    duree: 4.1,
   },
 
   preuves: [

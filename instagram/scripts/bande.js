@@ -14,9 +14,9 @@ const dossier = path.join(__dirname, '..', 'out', 'reels');
 const mp4 = path.join(dossier, nom + '.mp4');
 const duree = parseFloat(spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', mp4]).stdout.toString());
 const a = parseFloat(debut), b = Math.min(parseFloat(fin), duree - 0.04), p = parseFloat(pas);
-const n = Math.floor((b - a) / p) + 1, colonnes = Math.min(n, 8);
+const n = Math.floor((b - a) / p) + 1, colonnes = Math.min(n, 10);
 const sortie = path.join(dossier, nom + '.bande.jpg');
 const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-ss', String(a), '-t', String(b - a + 0.04), '-i', mp4,
-  '-vf', `fps=${1 / p},scale=270:480,tile=${colonnes}x${Math.ceil(n / colonnes)}:padding=4:margin=4:color=0x333333`, '-frames:v', '1', '-q:v', '3', sortie]);
+  '-vf', `fps=${1 / p},scale=216:384,tile=${colonnes}x${Math.ceil(n / colonnes)}:padding=4:margin=4:color=0x333333`, '-frames:v', '1', '-q:v', '3', sortie]);
 if (r.status !== 0) { console.log(r.stderr.toString()); process.exit(1); }
 console.log(`${sortie} : ${n} images de ${a} s à ${b.toFixed(1)} s, toutes les ${p} s`);

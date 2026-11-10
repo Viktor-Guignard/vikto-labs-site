@@ -6,7 +6,7 @@ window.CONTENU = {
 
   titre: {
     surTitre: 'Votre site',
-    titre: 'Votre carte, à jour\n*sur votre site aussi.*',
+    titre: 'Votre carte,\nà jour *sur votre*\n*site aussi.*',
     sousTitre: 'Pas seulement derrière le QR code.',
   },
 

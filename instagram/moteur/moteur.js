@@ -81,13 +81,19 @@
   VL.ajuster = function (e, hauteurMax, tailleMin) {
     let taille = parseFloat(getComputedStyle(e).fontSize);
     tailleMin = tailleMin || 48;
-    const deborde = () => e.scrollHeight > hauteurMax + 1 || e.scrollWidth > e.clientWidth - 3;
+    // largeur réelle du texte : celle de la plus longue ligne (une .ligne est un bloc, sa boîte ne dit rien)
+    const largeur = () => {
+      const lignes = [...e.querySelectorAll('.ligne')];
+      if (!lignes.length) return e.scrollWidth > e.clientWidth + 1 ? e.scrollWidth + 4 : 0;   // sans .ligne : seul un vrai débordement compte
+      return Math.max(...lignes.map((l) => { const p = document.createRange(); p.selectNodeContents(l); return p.getBoundingClientRect().width; }));
+    };
+    const deborde = () => e.scrollHeight > hauteurMax + 1 || largeur() > e.clientWidth - 2;
     while (deborde() && taille > tailleMin) {
       taille -= 2;
       e.style.fontSize = taille + 'px';
     }
     // toujours trop large à la taille minimale : on laisse les lignes se replier
-    if (e.scrollWidth > e.clientWidth + 1) e.classList.add('libre');
+    if (largeur() > e.clientWidth + 1) e.classList.add('libre');
     return taille;
   };
 

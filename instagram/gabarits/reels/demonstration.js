@@ -14,7 +14,7 @@
    };
    ========================================================================== */
 VL.gabarits.reels['demonstration'] = function (c, film) {
-  if (c.titre) VL.plan(film, c.titre, { nom: 'titre', surTitre: 'Démonstration', fond: 'charbon', tenue: 1.2 });
+  if (c.titre) VL.plan(film, c.titre, { nom: 'titre', surTitre: 'Démonstration', fond: 'charbon', tenue: 0.7, lecture: 0.85 });
   const n = (c.etapes || []).length;
   (c.etapes || []).forEach((e, i) => {
     const defauts = { nom: 'etape' + (i + 1), fond: i % 2 ? 'creme' : 'ivoire', transition: i === 0 ? 'monte' : 'fondu' };
