@@ -19,7 +19,7 @@ window.CONTENU = {
     },
     {
       titre: 'Vous, vous écrivez\nen français.',
-      visuel: { type: 'liste', pas: 0.7, items: ['Vous saisissez le plat une fois', 'La traduction est automatique', 'Anglais, espagnol, russe : prêts'] },
+      visuel: { type: 'liste', pas: 0.7, items: ['Vous saisissez le plat une fois', 'La traduction est automatique', 'Anglais, espagnol et russe'] },
       tenue: 1.6,
     },
   ],

@@ -57,7 +57,8 @@
    *   *mot*   → en rouge            _mot_ → en EB Garamond italique
    *   \n      → retour à la ligne
    * Pose aussi les espaces insécables de la typographie française
-   * (avant ? ! : ; » et €, après «, dans « 11 h 45 », « 54 € HT »).
+   * (avant ? ! : ; » et €, après «, dans « 11 h 45 », « 54 € HT »)
+   * et empêche la coupure des mots à trait d'union.
    */
   VL.riche = function (s) {
     if (s == null) return '';
@@ -65,6 +66,8 @@
     s = s.replace(/ ([?!:;»€])/g, ' $1').replace(/« /g, '« ');
     s = s.replace(/(\d) h (\d)/g, '$1 h $2').replace(/(\d) h\b/g, '$1 h');
     s = s.replace(/€ (HT|TTC)/g, '€ $1').replace(/(HT|TTC) ?\/ ?mois/g, '$1/mois').replace(/€ ?\/ ?mois/g, '€/mois');
+    // un mot à trait d'union (« moi-même ») ne se coupe jamais en fin de ligne
+    s = s.replace(/[^\s*_<>]+-[^\s*_<>]+/g, '<span style="white-space:nowrap">$&</span>');
     s = s.replace(/\*([^*]+)\*/g, '<span class="rouge">$1</span>');
     s = s.replace(/(^|[\s(«'’>])_([^_]+)_/g, '$1<span class="plume">$2</span>');
     return s.replace(/\n/g, '<br>');
@@ -325,6 +328,12 @@
     VL.poser = (t) => film.chrono.poser(t);
     // Un post est figé sur l'état final de sa scène (ou sur contenu.figer, en secondes).
     VL.poser(format === 'post' ? (contenu.figer != null ? contenu.figer : 999) : (q.get('t') ? parseFloat(q.get('t')) : 0));
+    // ?lecture=1 : aperçu en temps réel dans un navigateur (jamais utilisé pour le rendu)
+    if (q.get('lecture') && format === 'reel') {
+      const depart = performance.now();
+      const boucle = () => { VL.poser(((performance.now() - depart) / 1000) % film.duree); requestAnimationFrame(boucle); };
+      requestAnimationFrame(boucle);
+    }
     VL.pret = true;
   };
 
