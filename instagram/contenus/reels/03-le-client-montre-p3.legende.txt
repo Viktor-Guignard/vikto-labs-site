@@ -1,0 +1,9 @@
+Votre client lit la carte en russe. Il vous montre un plat du doigt. Lequel ?
+
+Sur la carte traduite, chaque plat porte un code : une lettre et un numéro. Il montre P3, vous savez que c'est le risotto aux cèpes. Pas besoin de parler la même langue pour prendre la commande.
+
+La carte s'affiche en français, anglais, espagnol et russe.
+
+Démo en libre accès sur vikto-labs.fr (lien en bio).
+
+#restaurateur #restaurant #menuqrcode #cartederestaurant #serviceensalle #tourisme #clienteleetrangere #restauration #menutraduit #viktolabs

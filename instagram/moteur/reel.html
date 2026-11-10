@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>VIKTO LABS — reel</title>
+<!-- Page hôte d'un reel (1080×1920). Ouvrir avec  ?c=nom-du-contenu
+     Options :  &t=4.2 (se placer à 4,2 s)   &lecture=1 (jouer en temps réel)   &zones=1 (zones interdites) -->
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<div id="canevas"></div>
+<script src="moteur.js"></script>
+<script src="personnages.js"></script>
+<script src="composants.js"></script>
+<script src="visuels.js"></script>
+<script src="plans.js"></script>
+<script src="../contenus/commun/petit-bistrot.js"></script>
+<script>
+  VL.demarrer('reel').catch(function (e) { VL.erreur = e.message; document.body.textContent = 'Erreur : ' + e.message; });
+</script>
+</body>
+</html>
