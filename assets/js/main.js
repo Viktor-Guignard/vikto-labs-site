@@ -116,7 +116,7 @@ const HELP_CENTER = [
     questions: [
       {
         q: "Quels sont vos tarifs ?",
-        a: "Deux formules&nbsp;:<br><br><strong>Site vitrine</strong> — 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC).<br><br><strong>Site + menu synchronisé</strong> — 54&nbsp;€ HT/mois soit 64,80&nbsp;€ TTC, site vitrine offert, avec un engagement initial de 12 mois. La mise en place de vos cartes (création ou reprise) est facturée 150&nbsp;€ HT, une seule fois.<br><br>La carte en anglais est comprise&nbsp;; chaque <strong>langue supplémentaire</strong> est une option à 5,99&nbsp;€ HT/mois, à choisir juste avant le paiement."
+        a: "Deux formules&nbsp;:<br><br><strong>Site vitrine</strong> — 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC).<br><br><strong>Site + menu synchronisé</strong> — 54&nbsp;€ HT/mois soit 64,80&nbsp;€ TTC, site vitrine offert, avec un engagement initial de 12 mois. La mise en place de vos cartes (création ou reprise) est facturée 150&nbsp;€ HT, une seule fois.<br><br>La carte en anglais est comprise&nbsp;; chaque <strong>langue supplémentaire</strong> est une option à 5,99&nbsp;€ HT/mois, à choisir juste avant le paiement, avec le même engagement de 12&nbsp;mois."
       },
       {
         q: "Que comprend l'abonnement à 54 € HT/mois ?",
@@ -181,7 +181,7 @@ const HELP_CENTER = [
       },
       {
         q: "Peut-on avoir la carte en plusieurs langues ?",
-        a: "Oui. La carte en anglais est comprise dans l'abonnement. Chaque langue supplémentaire (allemand, espagnol, italien…) coûte <strong>5,99&nbsp;€ HT par mois</strong> (7,19&nbsp;€ TTC), pour toutes vos cartes. L'option se choisit juste avant le paiement de la formule Site + menu synchronisé&nbsp;; pour en ajouter plus tard, écrivez-nous."
+        a: "Oui. La carte en anglais est comprise dans l'abonnement. Chaque langue supplémentaire (allemand, espagnol, italien…) coûte <strong>5,99&nbsp;€ HT par mois</strong> (7,19&nbsp;€ TTC), pour toutes vos cartes. L'option se choisit juste avant le paiement de la formule Site + menu synchronisé, avec le même engagement de 12&nbsp;mois&nbsp;; pour en ajouter plus tard, écrivez-nous."
       },
       {
         q: "Puis-je imprimer ma carte sur papier ?",
