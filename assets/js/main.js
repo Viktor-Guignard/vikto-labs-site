@@ -32,9 +32,11 @@ const SITE_CONFIG = {
   // aucun souci à les laisser dans ce fichier.
   STRIPE_LINK_SITE: "https://buy.stripe.com/cNi3cogoX84F3c790n4ZG01", // Site vitrine — 500 € HT, paiement unique
   // Menu Synchro — 150 € HT (mise en place des cartes) à la souscription, puis 54 € HT/mois après 30 jours.
-  // La page de paiement propose en plus l'option « Langue supplémentaire » (5,99 € HT/mois, quantité 1 à 10,
-  // produit prod_VdiVjssy32eRFn) : c'est un produit recommandé de ce lien, pas un lien séparé.
-  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/9B628ka0z70B4gb4K74ZG03"
+  // On y arrive depuis option.html quand le client répond « Non » à l'option langue supplémentaire.
+  STRIPE_LINK_SUBSCRIPTION: "https://buy.stripe.com/9B628ka0z70B4gb4K74ZG03",
+  // Même formule + ligne « Langue supplémentaire » (5,99 € HT/mois, quantité 1 à 10 choisie sur la page de paiement).
+  // On y arrive depuis option.html, quand le client répond « Oui » à l'option.
+  STRIPE_LINK_SUBSCRIPTION_LANGUAGE: "https://buy.stripe.com/cNiaEQc8H3Op4gb4K74ZG05"
 };
 
 // Branche les boutons de tarifs sur les liens de paiement Stripe.
@@ -42,7 +44,8 @@ const SITE_CONFIG = {
 function injectStripeLinks() {
   const map = {
     site: SITE_CONFIG.STRIPE_LINK_SITE,
-    subscription: SITE_CONFIG.STRIPE_LINK_SUBSCRIPTION
+    subscription: SITE_CONFIG.STRIPE_LINK_SUBSCRIPTION,
+    "subscription-language": SITE_CONFIG.STRIPE_LINK_SUBSCRIPTION_LANGUAGE
   };
   document.querySelectorAll("[data-stripe-link]").forEach((el) => {
     const url = map[el.getAttribute("data-stripe-link")];
@@ -113,7 +116,7 @@ const HELP_CENTER = [
     questions: [
       {
         q: "Quels sont vos tarifs ?",
-        a: "Deux formules&nbsp;:<br><br><strong>Site vitrine</strong> — 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC).<br><br><strong>Site + menu synchronisé</strong> — 54&nbsp;€ HT/mois soit 64,80&nbsp;€ TTC, site vitrine offert, avec un engagement initial de 12 mois. La mise en place de vos cartes (création ou reprise) est facturée 150&nbsp;€ HT, une seule fois.<br><br>La carte en anglais est comprise&nbsp;; chaque <strong>langue supplémentaire</strong> est une option à 5,99&nbsp;€ HT/mois, à cocher au moment du paiement."
+        a: "Deux formules&nbsp;:<br><br><strong>Site vitrine</strong> — 500&nbsp;€ HT en paiement unique (600&nbsp;€ TTC).<br><br><strong>Site + menu synchronisé</strong> — 54&nbsp;€ HT/mois soit 64,80&nbsp;€ TTC, site vitrine offert, avec un engagement initial de 12 mois. La mise en place de vos cartes (création ou reprise) est facturée 150&nbsp;€ HT, une seule fois.<br><br>La carte en anglais est comprise&nbsp;; chaque <strong>langue supplémentaire</strong> est une option à 5,99&nbsp;€ HT/mois, à choisir juste avant le paiement."
       },
       {
         q: "Que comprend l'abonnement à 54 € HT/mois ?",
@@ -178,7 +181,7 @@ const HELP_CENTER = [
       },
       {
         q: "Peut-on avoir la carte en plusieurs langues ?",
-        a: "Oui. La carte en anglais est comprise dans l'abonnement. Chaque langue supplémentaire (allemand, espagnol, italien…) coûte <strong>5,99&nbsp;€ HT par mois</strong> (7,19&nbsp;€ TTC), pour toutes vos cartes. C'est une option à cocher au moment du paiement de la formule Site + menu synchronisé&nbsp;; pour en ajouter plus tard, écrivez-nous."
+        a: "Oui. La carte en anglais est comprise dans l'abonnement. Chaque langue supplémentaire (allemand, espagnol, italien…) coûte <strong>5,99&nbsp;€ HT par mois</strong> (7,19&nbsp;€ TTC), pour toutes vos cartes. L'option se choisit juste avant le paiement de la formule Site + menu synchronisé&nbsp;; pour en ajouter plus tard, écrivez-nous."
       },
       {
         q: "Puis-je imprimer ma carte sur papier ?",
