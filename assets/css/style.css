@@ -892,8 +892,7 @@ textarea:focus-visible {
 }
 .pricing-notes li { position: relative; padding-left: 1.2rem; }
 .pricing-notes li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 6px; border-radius: 50%; background: var(--color-red); }
-.pricing-notes strong { color: var(--color-black); font-weight: 600; }
-.pricing-more {
+.pricing-notes strong { color: var(--color-black); font-weight: 600; }.pricing-more {
   max-width: 760px;
   margin: var(--space-md) auto 0;
   text-align: center;
