@@ -2961,3 +2961,13 @@ body.vl-choreo.vl-ready .hero .hero-visual { transition-delay: 0.55s; }
 .option-noscript { margin-top: var(--space-md); font-size: 0.9rem; }
 .option-back { margin-top: var(--space-lg); font-size: 0.9rem; text-align: center; color: var(--color-gray-600); }
 .option-back a { color: var(--color-red-dark); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+/* Comparatif (comparatif-menu-qr-code-restaurant.html) : tableau défilant sur téléphone */
+.guide-tableau-defile { overflow-x: auto; margin: 0 0 var(--space-md); border: 1px solid var(--color-gray-200); border-radius: var(--radius-md); background: var(--color-white); }
+.guide-tableau { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.95rem; }
+.guide-tableau th, .guide-tableau td { padding: 0.75rem 0.9rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--color-gray-200); color: var(--color-gray-600); line-height: 1.5; }
+.guide-tableau thead th { font-family: var(--font-heading); color: var(--color-black); font-size: 0.9rem; background: var(--color-gray-100, #f3f3ee); }
+.guide-tableau tbody th { color: var(--color-black); font-weight: 600; }
+.guide-tableau tbody tr:last-child th, .guide-tableau tbody tr:last-child td { border-bottom: 0; }
+.guide-tableau .guide-tableau-nous th, .guide-tableau .guide-tableau-nous td { background: #fff4f2; }
+.guide-note { font-size: 0.9rem !important; color: var(--color-muted) !important; margin-top: var(--space-lg); }
